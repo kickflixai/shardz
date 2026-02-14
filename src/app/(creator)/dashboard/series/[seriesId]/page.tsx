@@ -73,7 +73,10 @@ export default async function SeriesDetailPage({
 		.eq("series_id", seriesId)
 		.order("sort_order", { ascending: true });
 
-	const deleteAction = deleteSeries.bind(null, seriesId);
+	async function deleteAction() {
+		"use server";
+		await deleteSeries(seriesId);
+	}
 
 	return (
 		<div className="mx-auto max-w-3xl py-8 space-y-8">
