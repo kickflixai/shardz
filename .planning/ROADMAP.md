@@ -33,12 +33,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. The application renders with deep blacks and cinematic yellow branding on both mobile and desktop viewports
   3. The database schema for Series > Seasons > Episodes exists and enforces the content hierarchy (1-3 min episodes, 8-70 episodes per season)
   4. Page navigation works across all major route groups (home, browse, series detail, auth, creator, admin) with loading states
-**Plans**: TBD
+**Plans**: 3 plans (2 waves)
 
 Plans:
-- [ ] 01-01: Next.js project setup, Supabase integration, Tailwind + shadcn/ui theming
-- [ ] 01-02: Database schema design and migration (content hierarchy, users, creators)
-- [ ] 01-03: App shell layout, route groups, PWA manifest, responsive scaffolding
+- [ ] 01-01-PLAN.md — Next.js 16 project setup, Supabase clients, Tailwind v4 + shadcn/ui cinematic theme, Biome (Wave 1)
+- [ ] 01-02-PLAN.md — Database schema migration: content hierarchy, profiles, CHECK constraints, RLS policies (Wave 2)
+- [ ] 01-03-PLAN.md — Route group scaffolding, layout components, PWA manifest + service worker, loading/error states (Wave 2)
 
 ### Phase 2: Authentication + Access
 **Goal**: Users can create accounts, log in persistently, and watch free episodes without any account barrier
@@ -192,7 +192,7 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 5 > 6 > 7 > 8 > 9
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation + App Shell | 0/3 | Not started | - |
+| 1. Foundation + App Shell | 0/3 | Planned | - |
 | 2. Authentication + Access | 0/3 | Not started | - |
 | 3. Video Player | 0/3 | Not started | - |
 | 4. Content Browsing + Sharing | 0/3 | Not started | - |
