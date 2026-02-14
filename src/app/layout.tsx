@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { SerwistProvider } from "@/components/providers/serwist-provider";
 import "./globals.css";
 
 const APP_NAME = "MicroShort";
@@ -42,7 +43,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 					enableSystem={false}
 					disableTransitionOnChange
 				>
-					{children}
+					<SerwistProvider swUrl="/serwist/sw.js">
+						{children}
+					</SerwistProvider>
 				</ThemeProvider>
 			</body>
 		</html>
