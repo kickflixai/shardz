@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-14)
 ## Current Position
 
 Phase: 1 of 9 (Foundation + App Shell)
-Plan: 2 of 3 in current phase
-Status: Executing
-Last activity: 2026-02-14 -- Completed 01-02-PLAN.md (Database Schema)
+Plan: 3 of 3 in current phase (PHASE COMPLETE)
+Status: Phase Complete
+Last activity: 2026-02-14 -- Completed 01-03-PLAN.md (App Shell + PWA)
 
-Progress: [▓▓░░░░░░░░] 7%
+Progress: [▓▓░░░░░░░░] 10%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 2
+- Total plans completed: 3
 - Average duration: 5min
-- Total execution time: 0.17 hours
+- Total execution time: 0.27 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01-foundation-app-shell | 2 | 10min | 5min |
+| 01-foundation-app-shell | 3 | 16min | 5min |
 
 **Recent Trend:**
-- Last 5 plans: 7min, 3min
-- Trend: improving
+- Last 5 plans: 7min, 3min, 6min
+- Trend: stable
 
 *Updated after each plan completion*
 
@@ -52,6 +52,9 @@ Recent decisions affecting current work:
 - [01-01]: pnpm.onlyBuiltDependencies for @swc/core and esbuild build script approval
 - [01-02]: Supabase CLI installed via npx (Homebrew blocked by Xcode CLT version mismatch)
 - [01-02]: Docker unavailable for local DB validation; migration SQL manually verified
+- [01-03]: createSerwistRoute uses main @serwist/turbopack import, not /route subpath (research docs incorrect)
+- [01-03]: createSerwistRoute requires {swSrc, useNativeEsbuild} options (not zero-arg as research showed)
+- [01-03]: Global error boundary uses inline styles to survive root layout failures
 
 ### Pending Todos
 
@@ -66,5 +69,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-14
-Stopped at: Completed 01-02-PLAN.md (Database Schema)
-Resume file: .planning/phases/01-foundation-app-shell/01-02-SUMMARY.md
+Stopped at: Completed 01-03-PLAN.md (App Shell + PWA) -- Phase 1 complete
+Resume file: .planning/phases/01-foundation-app-shell/01-03-SUMMARY.md
