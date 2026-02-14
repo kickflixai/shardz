@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-14)
 
 **Core value:** Creators can monetize short-form video content with minimal friction -- upload a series, set a price, and earn revenue from a platform purpose-built for microshorts.
-**Current focus:** Phase 4 - Content Browsing + Sharing (IN PROGRESS)
+**Current focus:** Phase 4 - Content Browsing + Sharing (COMPLETE)
 
 ## Current Position
 
 Phase: 4 of 9 (Content Browsing + Sharing)
-Plan: 2 of 3 in current phase
-Status: Plan 04-02 Complete
-Last activity: 2026-02-14 -- Completed 04-02-PLAN.md (Series Detail Page)
+Plan: 3 of 3 in current phase
+Status: Phase 04 Complete
+Last activity: 2026-02-14 -- Completed 04-03-PLAN.md (SEO & Social Sharing)
 
-Progress: [▓▓▓▓░░░░░░] 41%
+Progress: [▓▓▓▓▓░░░░░] 44%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 11
+- Total plans completed: 12
 - Average duration: 4min
-- Total execution time: 0.67 hours
+- Total execution time: 0.72 hours
 
 **By Phase:**
 
@@ -30,10 +30,10 @@ Progress: [▓▓▓▓░░░░░░] 41%
 | 01-foundation-app-shell | 3 | 16min | 5min |
 | 02-authentication-access | 3 | 8min | 3min |
 | 03-video-player | 3 | 9min | 3min |
-| 04-content-browsing-sharing | 2 | 7min | 4min |
+| 04-content-browsing-sharing | 3 | 10min | 3min |
 
 **Recent Trend:**
-- Last 5 plans: 4min, 3min, 2min, 3min, 4min
+- Last 5 plans: 3min, 2min, 3min, 4min, 3min
 - Trend: stable
 
 *Updated after each plan completion*
@@ -84,6 +84,9 @@ Recent decisions affecting current work:
 - [04-02]: Exported FREE_EPISODE_LIMIT from access module for cross-component usage (was unexported const)
 - [04-02]: Single-season series skip tab bar -- episodes show directly without unnecessary tabs
 - [04-02]: View count formatted with K/M suffixes (1.2K, 3.5M) for compact header display
+- [04-03]: generateStaticParams uses direct Supabase client (not cookies-based) since it runs at build time outside request scope
+- [04-03]: OG image uses Node.js runtime (not edge) to avoid Supabase client cookie context issues
+- [04-03]: SeriesDetail uses generateShareUrl for UTM-tracked share links instead of raw URL construction
 
 ### Pending Todos
 
@@ -98,5 +101,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-14
-Stopped at: Completed 04-02-PLAN.md (Series Detail Page)
-Resume file: .planning/phases/04-content-browsing-sharing/04-02-SUMMARY.md
+Stopped at: Completed 04-03-PLAN.md (SEO & Social Sharing) -- Phase 04 Complete
+Resume file: .planning/phases/04-content-browsing-sharing/04-03-SUMMARY.md
