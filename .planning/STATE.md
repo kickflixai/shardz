@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-14)
 ## Current Position
 
 Phase: 5 of 9 (Payments + Monetization)
-Plan: 1 of 3 in current phase
+Plan: 2 of 3 in current phase
 Status: Executing
-Last activity: 2026-02-14 -- Completed 05-01-PLAN.md (Stripe Payment Infrastructure)
+Last activity: 2026-02-14 -- Completed 05-02-PLAN.md (Paywall UI and Purchase Integration)
 
-Progress: [▓▓▓▓▓▓░░░░] 48%
+Progress: [▓▓▓▓▓▓░░░░] 52%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 13
+- Total plans completed: 14
 - Average duration: 4min
-- Total execution time: 0.79 hours
+- Total execution time: 0.87 hours
 
 **By Phase:**
 
@@ -31,10 +31,10 @@ Progress: [▓▓▓▓▓▓░░░░] 48%
 | 02-authentication-access | 3 | 8min | 3min |
 | 03-video-player | 3 | 9min | 3min |
 | 04-content-browsing-sharing | 3 | 10min | 3min |
-| 05-payments-monetization | 1 | 4min | 4min |
+| 05-payments-monetization | 2 | 9min | 5min |
 
 **Recent Trend:**
-- Last 5 plans: 2min, 3min, 4min, 3min, 4min
+- Last 5 plans: 3min, 4min, 3min, 4min, 5min
 - Trend: stable
 
 *Updated after each plan completion*
@@ -92,6 +92,10 @@ Recent decisions affecting current work:
 - [05-01]: Bundle purchases use proportional price distribution across seasons based on individual price ratios
 - [05-01]: Webhook stores composite stripe_session_id per season in bundles (sessionId_seasonId) for idempotency with unique constraint
 - [05-01]: Platform fee calculated as 20% with creator receiving remainder (subtraction-based to avoid rounding loss)
+- [05-02]: Value before account: both auth_required and payment_required show SeasonPaywall; UnlockButton handles login redirect for unauthenticated users
+- [05-02]: Backup fulfillment on checkout success page handles webhook race condition with same idempotency guards
+- [05-02]: Episode page restructured with early metadata fetch for episodes beyond free limit to support paywall rendering
+- [05-02]: Bundle offer section on series page only shows when 2+ unpurchased seasons exist
 
 ### Pending Todos
 
@@ -106,5 +110,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-14
-Stopped at: Completed 05-01-PLAN.md (Stripe Payment Infrastructure)
-Resume file: .planning/phases/05-payments-monetization/05-01-SUMMARY.md
+Stopped at: Completed 05-02-PLAN.md (Paywall UI and Purchase Integration)
+Resume file: .planning/phases/05-payments-monetization/05-02-SUMMARY.md
