@@ -19,9 +19,9 @@ Progress: [▓▓▓▓▓▓▓░░░] 74%
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 19
+- Total plans completed: 20
 - Average duration: 4min
-- Total execution time: 1.17 hours
+- Total execution time: 1.25 hours
 
 **By Phase:**
 
@@ -32,7 +32,7 @@ Progress: [▓▓▓▓▓▓▓░░░] 74%
 | 03-video-player | 3 | 9min | 3min |
 | 04-content-browsing-sharing | 3 | 10min | 3min |
 | 05-payments-monetization | 3 | 15min | 5min |
-| 06-creator-dashboard | 4 | 12min | 3min |
+| 06-creator-dashboard | 5 | 17min | 3min |
 
 **Recent Trend:**
 - Last 5 plans: 6min, 4min, 2min, 3min, 3min
@@ -105,6 +105,10 @@ Recent decisions affecting current work:
 - [06-01]: Rejected applicants can reapply (old application deleted, new one inserted to maintain UNIQUE constraint)
 - [06-01]: Follower count denormalized via database trigger (increment/decrement) to avoid COUNT queries on profile pages
 - [06-01]: Textarea component added to shadcn UI set (was missing, needed for multi-line form fields)
+- [06-02]: Used playback_policies (plural, current) instead of deprecated playback_policy in Mux SDK v12.8
+- [06-02]: Two-step upload form: metadata creates episode row first, then MuxUploader uploads video
+- [06-02]: Thumbnail images use unoptimized Next.js Image to avoid remotePatterns config for dynamic Supabase Storage URLs
+- [06-02]: Episode ID passed via Mux passthrough field; existing webhook handler automatically links processed asset
 - [06-04]: Analytics computed from existing tables (series.view_count, purchases) -- no separate analytics tables
 - [06-04]: Per-series breakdown maps purchases through seasons to parent series for aggregation
 - [06-04]: Dashboard home is role-aware: viewer gets apply CTA, creator/admin gets overview stats
@@ -127,5 +131,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-14
-Stopped at: Completed 06-06-PLAN.md (Creator Public Profile and Settings) -- Phase 6 complete
-Resume file: .planning/phases/06-creator-dashboard/06-06-SUMMARY.md
+Stopped at: Completed 06-02-PLAN.md (Content Upload Pipeline) -- backfill
+Resume file: .planning/phases/06-creator-dashboard/06-02-SUMMARY.md
