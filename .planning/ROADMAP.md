@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Foundation + App Shell** - Project scaffolding, data model, branding, PWA setup (completed 2026-02-14)
 - [x] **Phase 2: Authentication + Access** - User accounts, zero-friction free viewing, session management (completed 2026-02-14)
 - [x] **Phase 3: Video Player** - Vertical-first player with theater mode, auto-continue, subtitles (completed 2026-02-14)
-- [ ] **Phase 4: Content Browsing + Sharing** - Genre discovery, series pages, smart share links, SEO
+- [x] **Phase 4: Content Browsing + Sharing** - Genre discovery, series pages, smart share links, SEO (completed 2026-02-14)
 - [ ] **Phase 5: Payments + Monetization** - Per-season unlock via Stripe, paywall, creator payouts
 - [ ] **Phase 6: Creator Dashboard** - Self-serve upload, series management, analytics, community spaces
 - [ ] **Phase 7: Admin Panel** - Creator approval, content management, homepage curation, platform metrics
@@ -87,9 +87,9 @@ Plans:
 **Plans**: 3 plans (2 waves)
 
 Plans:
-- [ ] 04-01-PLAN.md — Genre browsing page with series cards, nuqs genre filter, and Supabase data queries (Wave 1)
-- [ ] 04-02-PLAN.md — Series detail page with season tabs, episode list, creator info, and share button (Wave 1)
-- [ ] 04-03-PLAN.md — SEO metadata (generateMetadata), OG images, JSON-LD structured data, ISR, and share links (Wave 2)
+- [x] 04-01-PLAN.md — Genre browsing page with series cards, nuqs genre filter, and Supabase data queries (Wave 1)
+- [x] 04-02-PLAN.md — Series detail page with season tabs, episode list, creator info, and share button (Wave 1)
+- [x] 04-03-PLAN.md — SEO metadata (generateMetadata), OG images, JSON-LD structured data, ISR, and share links (Wave 2)
 
 ### Phase 5: Payments + Monetization
 **Goal**: Users can pay to unlock full seasons and creators receive their revenue share -- the business model works end-to-end
@@ -195,7 +195,7 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 5 > 6 > 7 > 8 > 9
 | 1. Foundation + App Shell | 3/3 | ✓ Complete | 2026-02-14 |
 | 2. Authentication + Access | 3/3 | ✓ Complete | 2026-02-14 |
 | 3. Video Player | 3/3 | ✓ Complete | 2026-02-14 |
-| 4. Content Browsing + Sharing | 0/3 | Not started | - |
+| 4. Content Browsing + Sharing | 3/3 | ✓ Complete | 2026-02-14 |
 | 5. Payments + Monetization | 0/3 | Not started | - |
 | 6. Creator Dashboard | 0/6 | Not started | - |
 | 7. Admin Panel | 0/4 | Not started | - |
