@@ -1,0 +1,2 @@
+-- Seed data will be added in Phase 8 (Mock Data)
+-- For now, use the Supabase dashboard or API to create test data
