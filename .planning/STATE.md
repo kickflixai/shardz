@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-14)
 
 **Core value:** Creators can monetize short-form video content with minimal friction -- upload a series, set a price, and earn revenue from a platform purpose-built for microshorts.
-**Current focus:** Phase 3 - Video Player (COMPLETE)
+**Current focus:** Phase 4 - Content Browsing + Sharing (IN PROGRESS)
 
 ## Current Position
 
-Phase: 3 of 9 (Video Player) -- COMPLETE
-Plan: 3 of 3 in current phase
-Status: Phase Complete
-Last activity: 2026-02-14 -- Completed 03-03-PLAN.md (Auto-Continue, Subtitles & Content Protection)
+Phase: 4 of 9 (Content Browsing + Sharing)
+Plan: 1 of 3 in current phase
+Status: Plan 04-01 Complete
+Last activity: 2026-02-14 -- Completed 04-01-PLAN.md (Genre Browse Page)
 
-Progress: [▓▓▓▓░░░░░░] 33%
+Progress: [▓▓▓▓░░░░░░] 37%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 9
+- Total plans completed: 10
 - Average duration: 4min
-- Total execution time: 0.55 hours
+- Total execution time: 0.60 hours
 
 **By Phase:**
 
@@ -30,9 +30,10 @@ Progress: [▓▓▓▓░░░░░░] 33%
 | 01-foundation-app-shell | 3 | 16min | 5min |
 | 02-authentication-access | 3 | 8min | 3min |
 | 03-video-player | 3 | 9min | 3min |
+| 04-content-browsing-sharing | 1 | 3min | 3min |
 
 **Recent Trend:**
-- Last 5 plans: 2min, 2min, 4min, 3min, 2min
+- Last 5 plans: 2min, 4min, 3min, 2min, 3min
 - Trend: stable
 
 *Updated after each plan completion*
@@ -76,6 +77,10 @@ Recent decisions affecting current work:
 - [03-03]: AutoContinue uses SVG ring countdown animation with pure Tailwind/CSS -- no external animation libraries
 - [03-03]: Client-side navigation via router.push() for seamless episode transition without full page reload
 - [03-03]: Next episode title fetched in same query as next episode detection -- single additional select column
+- [04-01]: nuqs with history: push for genre filter so browser back button navigates genre changes
+- [04-01]: Supabase inner join on profiles for creator display name -- series without valid creator_id excluded
+- [04-01]: Episode count computed by flattening seasons->episodes nested arrays from Supabase response
+- [04-01]: Genre filter clears URL param for "All" (no ?genre=all) to keep clean unfiltered URLs
 
 ### Pending Todos
 
@@ -90,5 +95,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-14
-Stopped at: Completed 03-03-PLAN.md (Auto-Continue, Subtitles & Content Protection) -- Phase 3 COMPLETE
-Resume file: .planning/phases/03-video-player/03-03-SUMMARY.md
+Stopped at: Completed 04-01-PLAN.md (Genre Browse Page)
+Resume file: .planning/phases/04-content-browsing-sharing/04-01-SUMMARY.md
