@@ -119,15 +119,15 @@ Plans:
   4. Creator can set per-season pricing and choose a release strategy (all at once or drip release)
   5. Creator can view full-funnel analytics (views, free watches, signups, unlocks, revenue, community engagement) and payout history
   6. Creator has a public profile page showing bio, all series, follower count, and social links
-**Plans**: TBD
+**Plans**: 6 plans (3 waves)
 
 Plans:
-- [ ] 06-01: Creator application form and onboarding flow
-- [ ] 06-02: Content upload pipeline (Mux direct upload, metadata form, thumbnail upload)
-- [ ] 06-03: Series/season/episode management (CRUD, reorder, release strategy, pricing)
-- [ ] 06-04: Creator analytics dashboard and payout history
-- [ ] 06-05: Community spaces (discussion feed + polls/voting per series) and optional trailer upload
-- [ ] 06-06: Creator public profile page (bio, series, followers, social links)
+- [ ] 06-01-PLAN.md -- DB migration (all Phase 6 tables/columns/storage), TypeScript types, validation schemas, creator application form (Wave 1)
+- [ ] 06-02-PLAN.md -- Mux Direct Upload helper, upload API route, episode upload form with MuxUploader, thumbnail upload component (Wave 2)
+- [ ] 06-03-PLAN.md -- Series/season/episode CRUD server actions, catalog pages, management UI, reorder, pricing, release strategy (Wave 3)
+- [ ] 06-04-PLAN.md -- Creator analytics dashboard with full-funnel metrics, dashboard home page with overview stats (Wave 2)
+- [ ] 06-05-PLAN.md -- Community discussion feed with Supabase Realtime, polls/voting, post management, trailer upload (Wave 3)
+- [ ] 06-06-PLAN.md -- Public creator profile page, follow/unfollow, profile settings (Wave 2)
 
 ### Phase 7: Admin Panel
 **Goal**: Platform operators can review creator applications, manage all content and users, curate the homepage, and monitor platform health
