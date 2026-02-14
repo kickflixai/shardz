@@ -36,38 +36,71 @@ export async function POST(request: Request) {
 			const assetId = data.id;
 			const playbackId = data.playback_ids?.[0]?.id;
 			const duration = data.duration;
-			const episodeId = data.passthrough;
+			const passthrough = data.passthrough;
 
-			if (!episodeId) {
+			if (!passthrough) {
 				console.warn(
-					"[mux-webhook] video.asset.ready missing passthrough (episode ID), skipping DB update",
+					"[mux-webhook] video.asset.ready missing passthrough, skipping DB update",
 				);
 				break;
 			}
 
-			const { error } = await supabase
-				.from("episodes")
-				.update({
-					mux_asset_id: assetId,
-					mux_playback_id: playbackId ?? null,
-					duration_seconds: duration ? Math.round(duration) : null,
-					status: "ready",
-				})
-				.eq("id", episodeId);
+			// Distinguish trailer uploads from episode uploads via passthrough prefix
+			if (passthrough.startsWith("trailer_")) {
+				const seriesId = passthrough.replace("trailer_", "");
+				const trailerPlaybackId = playbackId
+					? `mux:${playbackId}`
+					: null;
 
-			if (error) {
-				console.error(
-					"[mux-webhook] Failed to update episode:",
-					episodeId,
-					error,
-				);
+				const { error } = await supabase
+					.from("series")
+					.update({ trailer_url: trailerPlaybackId })
+					.eq("id", seriesId);
+
+				if (error) {
+					console.error(
+						"[mux-webhook] Failed to update series trailer:",
+						seriesId,
+						error,
+					);
+				} else {
+					console.log(
+						"[mux-webhook] Trailer ready for series:",
+						seriesId,
+						"playbackId:",
+						playbackId,
+					);
+				}
 			} else {
-				console.log(
-					"[mux-webhook] Episode ready:",
-					episodeId,
-					"asset:",
-					assetId,
-				);
+				// Episode upload: passthrough is the episodeId
+				const episodeId = passthrough;
+
+				const { error } = await supabase
+					.from("episodes")
+					.update({
+						mux_asset_id: assetId,
+						mux_playback_id: playbackId ?? null,
+						duration_seconds: duration
+							? Math.round(duration)
+							: null,
+						status: "ready",
+					})
+					.eq("id", episodeId);
+
+				if (error) {
+					console.error(
+						"[mux-webhook] Failed to update episode:",
+						episodeId,
+						error,
+					);
+				} else {
+					console.log(
+						"[mux-webhook] Episode ready:",
+						episodeId,
+						"asset:",
+						assetId,
+					);
+				}
 			}
 			break;
 		}
