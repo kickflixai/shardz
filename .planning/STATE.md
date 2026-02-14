@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-14)
 ## Current Position
 
 Phase: 2 of 9 (Authentication + Access)
-Plan: 1 of 3 in current phase
+Plan: 2 of 3 in current phase
 Status: In Progress
-Last activity: 2026-02-14 -- Completed 02-01-PLAN.md (Email/Password Auth)
+Last activity: 2026-02-14 -- Completed 02-02-PLAN.md (Route Protection + Episode Access)
 
-Progress: [▓▓▓░░░░░░░] 15%
+Progress: [▓▓▓▓░░░░░░] 19%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 4
+- Total plans completed: 5
 - Average duration: 5min
-- Total execution time: 0.34 hours
+- Total execution time: 0.37 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-foundation-app-shell | 3 | 16min | 5min |
-| 02-authentication-access | 1 | 4min | 4min |
+| 02-authentication-access | 2 | 6min | 3min |
 
 **Recent Trend:**
-- Last 5 plans: 7min, 3min, 6min, 4min
+- Last 5 plans: 7min, 3min, 6min, 4min, 2min
 - Trend: stable
 
 *Updated after each plan completion*
@@ -59,6 +59,9 @@ Recent decisions affecting current work:
 - [02-01]: Zod v4 API differs from v3: z.email(), .check() with ctx.issues.push(), standalone z.flattenError()
 - [02-01]: Mobile nav receives user prop from header instead of own auth listener (avoids duplicate subscriptions)
 - [02-01]: FieldError children pattern used for string[] from Zod flattenError (instead of errors prop)
+- [02-02]: Episode access gate is application-level (UI gating), not RLS -- RLS already makes published episodes visible
+- [02-02]: checkEpisodeAccess is a synchronous pure function for testability and Phase 5 payment integration
+- [02-02]: Auth redirect includes next query param for future post-login redirect enhancement
 
 ### Pending Todos
 
@@ -73,5 +76,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-14
-Stopped at: Completed 02-01-PLAN.md (Email/Password Auth)
-Resume file: .planning/phases/02-authentication-access/02-01-SUMMARY.md
+Stopped at: Completed 02-02-PLAN.md (Route Protection + Episode Access)
+Resume file: .planning/phases/02-authentication-access/02-02-SUMMARY.md
