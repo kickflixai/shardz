@@ -1,6 +1,7 @@
 import type Stripe from "stripe";
 import { stripe } from "@/lib/stripe/client";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { batchTransferToCreator } from "@/lib/stripe/transfers";
 
 /**
  * Stripe webhook endpoint.
@@ -191,6 +192,46 @@ export async function POST(request: Request) {
 						session.id,
 						"season:",
 						seasonId,
+					);
+				}
+			}
+			break;
+		}
+
+		case "account.updated": {
+			// Stripe Connect account status change -- backup path for onboarding completion.
+			// The return URL (onboarding route) may fail if the user navigates away,
+			// but this webhook will still fire reliably.
+			const account = event.data.object as Stripe.Account;
+
+			if (account.charges_enabled && account.payouts_enabled) {
+				// Find the creator with this Connect account
+				const { data: profile } = await supabase
+					.from("profiles")
+					.select("id, stripe_onboarding_complete")
+					.eq("stripe_account_id", account.id)
+					.single();
+
+				if (profile && !profile.stripe_onboarding_complete) {
+					// Mark onboarding as complete
+					await supabase
+						.from("profiles")
+						.update({ stripe_onboarding_complete: true })
+						.eq("id", profile.id);
+
+					// Trigger batch transfer of accumulated revenue
+					const result = await batchTransferToCreator(
+						profile.id,
+						account.id,
+					);
+
+					console.log(
+						"[stripe-webhook] account.updated: onboarding complete for",
+						profile.id,
+						"- transferred:",
+						result.transferred,
+						"purchases,",
+						`$${(result.totalCents / 100).toFixed(2)}`,
 					);
 				}
 			}
