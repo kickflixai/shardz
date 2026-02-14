@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Authentication + Access** - User accounts, zero-friction free viewing, session management (completed 2026-02-14)
 - [x] **Phase 3: Video Player** - Vertical-first player with theater mode, auto-continue, subtitles (completed 2026-02-14)
 - [x] **Phase 4: Content Browsing + Sharing** - Genre discovery, series pages, smart share links, SEO (completed 2026-02-14)
-- [ ] **Phase 5: Payments + Monetization** - Per-season unlock via Stripe, paywall, creator payouts
+- [x] **Phase 5: Payments + Monetization** - Per-season unlock via Stripe, paywall, creator payouts (completed 2026-02-14)
 - [ ] **Phase 6: Creator Dashboard** - Self-serve upload, series management, analytics, community spaces
 - [ ] **Phase 7: Admin Panel** - Creator approval, content management, homepage curation, platform metrics
 - [ ] **Phase 8: Mock Data + Pitch Assets** - Seed 15-25 series, pitch pages, showcase dashboards, creator landing page
@@ -104,9 +104,9 @@ Plans:
 **Plans**: 3 plans (2 waves)
 
 Plans:
-- [ ] 05-01-PLAN.md — Stripe SDK, DB migration (purchases/price_tiers/payout_records), webhook handler, checkout API, purchase queries (Wave 1)
-- [ ] 05-02-PLAN.md — Paywall UI, episode access integration, checkout success/cancel pages, series page pricing + bundle CTA (Wave 2)
-- [ ] 05-03-PLAN.md — Stripe Connect onboarding, batch transfers, account.updated webhook, creator payouts dashboard (Wave 2)
+- [x] 05-01-PLAN.md — Stripe SDK, DB migration (purchases/price_tiers/payout_records), webhook handler, checkout API, purchase queries (Wave 1)
+- [x] 05-02-PLAN.md — Paywall UI, episode access integration, checkout success/cancel pages, series page pricing + bundle CTA (Wave 2)
+- [x] 05-03-PLAN.md — Stripe Connect onboarding, batch transfers, account.updated webhook, creator payouts dashboard (Wave 2)
 
 ### Phase 6: Creator Dashboard
 **Goal**: Creators can apply, upload content, manage their series, set pricing, track analytics, and engage their community -- all self-serve
@@ -196,7 +196,7 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 5 > 6 > 7 > 8 > 9
 | 2. Authentication + Access | 3/3 | ✓ Complete | 2026-02-14 |
 | 3. Video Player | 3/3 | ✓ Complete | 2026-02-14 |
 | 4. Content Browsing + Sharing | 3/3 | ✓ Complete | 2026-02-14 |
-| 5. Payments + Monetization | 0/3 | Not started | - |
+| 5. Payments + Monetization | 3/3 | ✓ Complete | 2026-02-14 |
 | 6. Creator Dashboard | 0/6 | Not started | - |
 | 7. Admin Panel | 0/4 | Not started | - |
 | 8. Mock Data + Pitch Assets | 0/6 | Not started | - |
