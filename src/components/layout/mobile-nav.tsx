@@ -1,13 +1,16 @@
 "use client";
 
 import Link from "next/link";
+import type { User } from "@supabase/supabase-js";
+import { LogoutButton } from "@/components/auth/logout-button";
 
 interface MobileNavProps {
 	open: boolean;
 	onClose: () => void;
+	user: User | null;
 }
 
-export function MobileNav({ open, onClose }: MobileNavProps) {
+export function MobileNav({ open, onClose, user }: MobileNavProps) {
 	if (!open) return null;
 
 	return (
@@ -27,7 +30,11 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
 						strokeWidth="1.5"
 						stroke="currentColor"
 					>
-						<path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+						<path
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							d="M6 18L18 6M6 6l12 12"
+						/>
 					</svg>
 				</button>
 			</div>
@@ -46,20 +53,28 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
 				>
 					Browse
 				</Link>
-				<Link
-					href="/login"
-					className="rounded-md bg-primary px-6 py-2 text-lg font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-					onClick={onClose}
-				>
-					Sign In
-				</Link>
-				<Link
-					href="/signup"
-					className="text-lg text-muted-foreground transition-colors hover:text-primary"
-					onClick={onClose}
-				>
-					Create Account
-				</Link>
+				{user ? (
+					<div onClick={onClose}>
+						<LogoutButton />
+					</div>
+				) : (
+					<>
+						<Link
+							href="/login"
+							className="rounded-md bg-primary px-6 py-2 text-lg font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+							onClick={onClose}
+						>
+							Sign In
+						</Link>
+						<Link
+							href="/signup"
+							className="text-lg text-muted-foreground transition-colors hover:text-primary"
+							onClick={onClose}
+						>
+							Create Account
+						</Link>
+					</>
+				)}
 			</nav>
 		</div>
 	);

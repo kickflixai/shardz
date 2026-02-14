@@ -1,11 +1,31 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import type { User } from "@supabase/supabase-js";
+import { createClient } from "@/lib/supabase/client";
+import { LogoutButton } from "@/components/auth/logout-button";
 import { MobileNav } from "@/components/layout/mobile-nav";
 
 export function Header() {
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+	const [user, setUser] = useState<User | null>(null);
+
+	useEffect(() => {
+		const supabase = createClient();
+
+		supabase.auth.getUser().then(({ data }) => setUser(data.user));
+
+		const {
+			data: { subscription },
+		} = supabase.auth.onAuthStateChange((_event, session) => {
+			setUser(session?.user ?? null);
+		});
+
+		return () => {
+			subscription.unsubscribe();
+		};
+	}, []);
 
 	return (
 		<>
@@ -28,12 +48,16 @@ export function Header() {
 						>
 							Browse
 						</Link>
-						<Link
-							href="/login"
-							className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-						>
-							Sign In
-						</Link>
+						{user ? (
+							<LogoutButton />
+						) : (
+							<Link
+								href="/login"
+								className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+							>
+								Sign In
+							</Link>
+						)}
 					</nav>
 
 					<button
@@ -59,7 +83,11 @@ export function Header() {
 				</div>
 			</header>
 			<div className="h-14" />
-			<MobileNav open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
+			<MobileNav
+				open={mobileMenuOpen}
+				onClose={() => setMobileMenuOpen(false)}
+				user={user}
+			/>
 		</>
 	);
 }
