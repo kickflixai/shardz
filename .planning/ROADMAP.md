@@ -84,12 +84,12 @@ Plans:
   3. User can open a series page with full description, season list, episode list, and creator info
   4. User can share a series via a link that renders a rich preview (thumbnail, title, hook) on iMessage, WhatsApp, X, and Facebook
   5. Series pages are indexable by search engines with structured data / rich snippets
-**Plans**: TBD
+**Plans**: 3 plans (2 waves)
 
 Plans:
-- [ ] 04-01: Genre browsing page, series card components, and category filtering
-- [ ] 04-02: Series detail page with season/episode list, creator info, and deep link routing
-- [ ] 04-03: Open Graph tags, structured data, SEO metadata, and smart share link generation
+- [ ] 04-01-PLAN.md — Genre browsing page with series cards, nuqs genre filter, and Supabase data queries (Wave 1)
+- [ ] 04-02-PLAN.md — Series detail page with season tabs, episode list, creator info, and share button (Wave 1)
+- [ ] 04-03-PLAN.md — SEO metadata (generateMetadata), OG images, JSON-LD structured data, ISR, and share links (Wave 2)
 
 ### Phase 5: Payments + Monetization
 **Goal**: Users can pay to unlock full seasons and creators receive their revenue share -- the business model works end-to-end
