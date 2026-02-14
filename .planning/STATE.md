@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-14)
 ## Current Position
 
 Phase: 1 of 9 (Foundation + App Shell)
-Plan: 1 of 3 in current phase
+Plan: 2 of 3 in current phase
 Status: Executing
-Last activity: 2026-02-14 -- Completed 01-01-PLAN.md (Project Setup)
+Last activity: 2026-02-14 -- Completed 01-02-PLAN.md (Database Schema)
 
-Progress: [▓░░░░░░░░░] 3%
+Progress: [▓▓░░░░░░░░] 7%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 1
-- Average duration: 7min
-- Total execution time: 0.12 hours
+- Total plans completed: 2
+- Average duration: 5min
+- Total execution time: 0.17 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01-foundation-app-shell | 1 | 7min | 7min |
+| 01-foundation-app-shell | 2 | 10min | 5min |
 
 **Recent Trend:**
-- Last 5 plans: 7min
-- Trend: --
+- Last 5 plans: 7min, 3min
+- Trend: improving
 
 *Updated after each plan completion*
 
@@ -50,6 +50,8 @@ Recent decisions affecting current work:
 - [01-01]: Disabled noNonNullAssertion lint rule for Supabase env vars (standard Supabase pattern)
 - [01-01]: Enabled tailwindDirectives in Biome CSS parser for Tailwind v4 support
 - [01-01]: pnpm.onlyBuiltDependencies for @swc/core and esbuild build script approval
+- [01-02]: Supabase CLI installed via npx (Homebrew blocked by Xcode CLT version mismatch)
+- [01-02]: Docker unavailable for local DB validation; migration SQL manually verified
 
 ### Pending Todos
 
@@ -64,5 +66,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-14
-Stopped at: Completed 01-01-PLAN.md (Project Setup)
-Resume file: .planning/phases/01-foundation-app-shell/01-01-SUMMARY.md
+Stopped at: Completed 01-02-PLAN.md (Database Schema)
+Resume file: .planning/phases/01-foundation-app-shell/01-02-SUMMARY.md
