@@ -50,12 +50,12 @@ Plans:
   3. User can reset their password via an email link and log in with the new password
   4. User can log out from any page in the application
   5. User receives transactional emails for account actions (signup confirmation, password reset)
-**Plans**: TBD
+**Plans**: 3 plans (2 waves)
 
 Plans:
-- [ ] 02-01: Supabase Auth setup (email/password signup, login, logout, session persistence)
-- [ ] 02-02: Free episode access gate (3 free episodes, no auth required) and auth-gated routes
-- [ ] 02-03: Password reset flow and transactional email templates
+- [ ] 02-01-PLAN.md — Supabase Auth setup: Zod schemas, profile trigger, auth callback, login/signup/logout forms, header auth state (Wave 1)
+- [ ] 02-02-PLAN.md — Middleware route protection, free episode access gate (episodes 1-3 free), episode page with access gating (Wave 2)
+- [ ] 02-03-PLAN.md — Password reset flow (forgot/reset pages), auth-code-error page, PKCE-compatible email templates (Wave 2)
 
 ### Phase 3: Video Player
 **Goal**: Users can watch episodes in a polished, vertical-first video player that feels cinematic and handles the core viewing experience
