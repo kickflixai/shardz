@@ -4,7 +4,7 @@ export type EpisodeAccessResult =
 	| { allowed: false; reason: "auth_required" }
 	| { allowed: false; reason: "payment_required" };
 
-const FREE_EPISODE_LIMIT = 3;
+export const FREE_EPISODE_LIMIT = 3;
 
 export function checkEpisodeAccess(
 	episodeNumber: number,
