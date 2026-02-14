@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-14)
 ## Current Position
 
 Phase: 4 of 9 (Content Browsing + Sharing)
-Plan: 1 of 3 in current phase
-Status: Plan 04-01 Complete
-Last activity: 2026-02-14 -- Completed 04-01-PLAN.md (Genre Browse Page)
+Plan: 2 of 3 in current phase
+Status: Plan 04-02 Complete
+Last activity: 2026-02-14 -- Completed 04-02-PLAN.md (Series Detail Page)
 
-Progress: [▓▓▓▓░░░░░░] 37%
+Progress: [▓▓▓▓░░░░░░] 41%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 10
+- Total plans completed: 11
 - Average duration: 4min
-- Total execution time: 0.60 hours
+- Total execution time: 0.67 hours
 
 **By Phase:**
 
@@ -30,10 +30,10 @@ Progress: [▓▓▓▓░░░░░░] 37%
 | 01-foundation-app-shell | 3 | 16min | 5min |
 | 02-authentication-access | 3 | 8min | 3min |
 | 03-video-player | 3 | 9min | 3min |
-| 04-content-browsing-sharing | 1 | 3min | 3min |
+| 04-content-browsing-sharing | 2 | 7min | 4min |
 
 **Recent Trend:**
-- Last 5 plans: 2min, 4min, 3min, 2min, 3min
+- Last 5 plans: 4min, 3min, 2min, 3min, 4min
 - Trend: stable
 
 *Updated after each plan completion*
@@ -81,6 +81,9 @@ Recent decisions affecting current work:
 - [04-01]: Supabase inner join on profiles for creator display name -- series without valid creator_id excluded
 - [04-01]: Episode count computed by flattening seasons->episodes nested arrays from Supabase response
 - [04-01]: Genre filter clears URL param for "All" (no ?genre=all) to keep clean unfiltered URLs
+- [04-02]: Exported FREE_EPISODE_LIMIT from access module for cross-component usage (was unexported const)
+- [04-02]: Single-season series skip tab bar -- episodes show directly without unnecessary tabs
+- [04-02]: View count formatted with K/M suffixes (1.2K, 3.5M) for compact header display
 
 ### Pending Todos
 
@@ -95,5 +98,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-14
-Stopped at: Completed 04-01-PLAN.md (Genre Browse Page)
-Resume file: .planning/phases/04-content-browsing-sharing/04-01-SUMMARY.md
+Stopped at: Completed 04-02-PLAN.md (Series Detail Page)
+Resume file: .planning/phases/04-content-browsing-sharing/04-02-SUMMARY.md
