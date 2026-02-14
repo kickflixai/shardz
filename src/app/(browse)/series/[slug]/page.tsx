@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
+import { createClient } from "@/lib/supabase/server";
 import { getSeriesBySlug } from "@/modules/content/queries/get-series-by-slug";
+import { getUserSeasonPurchases } from "@/modules/purchases/queries/get-user-purchases";
 import { generateSeriesJsonLd } from "@/lib/seo/structured-data";
 import { SeriesDetail } from "@/components/series/series-detail";
 
@@ -84,6 +86,17 @@ export default async function SeriesPage({ params }: SeriesPageProps) {
 		notFound();
 	}
 
+	// Check auth and get purchased seasons
+	const supabase = await createClient();
+	const {
+		data: { user },
+	} = await supabase.auth.getUser();
+
+	const seasonIds = series.seasons.map((s: { id: string }) => s.id);
+	const purchasedSeasonIds = user
+		? await getUserSeasonPurchases(user.id, seasonIds)
+		: new Set<string>();
+
 	const siteUrl =
 		process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 
@@ -102,7 +115,10 @@ export default async function SeriesPage({ params }: SeriesPageProps) {
 					__html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
 				}}
 			/>
-			<SeriesDetail series={series} />
+			<SeriesDetail
+				series={series}
+				purchasedSeasonIds={purchasedSeasonIds}
+			/>
 		</div>
 	);
 }

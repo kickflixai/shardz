@@ -9,6 +9,7 @@ interface EpisodeListItemProps {
 	seriesSlug: string;
 	isFree: boolean;
 	isPublished: boolean;
+	isPurchased?: boolean;
 }
 
 function formatDuration(seconds: number): string {
@@ -24,6 +25,7 @@ export function EpisodeListItem({
 	seriesSlug,
 	isFree,
 	isPublished,
+	isPurchased,
 }: EpisodeListItemProps) {
 	const episodeLabel = String(episodeNumber).padStart(2, "0");
 
@@ -50,7 +52,7 @@ export function EpisodeListItem({
 					>
 						Free
 					</Badge>
-				) : (
+				) : isPurchased ? null : (
 					<Lock className="h-4 w-4 text-muted-foreground" />
 				)}
 			</div>

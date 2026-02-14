@@ -5,7 +5,9 @@ import { getGenreLabel } from "@/config/genres";
 import { ShareButton } from "@/components/share/share-button";
 import { CreatorInfo } from "@/components/series/creator-info";
 import { SeasonTabs } from "@/components/series/season-tabs";
+import { UnlockButton } from "@/components/paywall/unlock-button";
 import { generateShareUrl } from "@/lib/seo/share";
+import { formatPrice, calculateBundlePrice } from "@/lib/stripe/prices";
 import type { Genre } from "@/db/types";
 
 interface SeriesDetailProps {
@@ -16,6 +18,7 @@ interface SeriesDetailProps {
 		genre: Genre;
 		thumbnail_url: string | null;
 		view_count: number;
+		bundle_discount_percent: number | null;
 		profiles: {
 			id: string;
 			display_name: string | null;
@@ -27,6 +30,7 @@ interface SeriesDetailProps {
 			id: string;
 			season_number: number;
 			title: string | null;
+			price_cents: number | null;
 			episodes: Array<{
 				id: string;
 				episode_number: number;
@@ -38,6 +42,7 @@ interface SeriesDetailProps {
 			}>;
 		}>;
 	};
+	purchasedSeasonIds?: Set<string>;
 }
 
 function formatViewCount(count: number): string {
@@ -50,9 +55,30 @@ function formatViewCount(count: number): string {
 	return count.toString();
 }
 
-export function SeriesDetail({ series }: SeriesDetailProps) {
+export function SeriesDetail({
+	series,
+	purchasedSeasonIds = new Set(),
+}: SeriesDetailProps) {
 	const creatorName = series.profiles.display_name || "Creator";
 	const seriesUrl = generateShareUrl({ slug: series.slug });
+
+	// Calculate bundle info for multiple seasons
+	const unpurchasedSeasons = series.seasons.filter(
+		(s) => !purchasedSeasonIds.has(s.id) && s.price_cents,
+	);
+	const hasMultipleSeasons = series.seasons.length > 1;
+	const hasUnpurchasedSeasons = unpurchasedSeasons.length > 1;
+	const showBundle = hasMultipleSeasons && hasUnpurchasedSeasons;
+
+	let bundlePriceCents = 0;
+	let originalTotalCents = 0;
+	const discountPercent = series.bundle_discount_percent ?? 15;
+
+	if (showBundle) {
+		const prices = unpurchasedSeasons.map((s) => s.price_cents!);
+		originalTotalCents = prices.reduce((sum, p) => sum + p, 0);
+		bundlePriceCents = calculateBundlePrice(prices, discountPercent);
+	}
 
 	return (
 		<div className="space-y-8">
@@ -112,6 +138,35 @@ export function SeriesDetail({ series }: SeriesDetailProps) {
 				url={seriesUrl}
 			/>
 
+			{/* Bundle Offer */}
+			{showBundle && (
+				<div className="rounded-xl border border-brand-yellow/20 bg-brand-yellow/5 p-6">
+					<h3 className="text-lg font-bold text-foreground">
+						Unlock All Seasons
+					</h3>
+					<p className="mt-1 text-sm text-muted-foreground">
+						Get access to all {unpurchasedSeasons.length} remaining
+						seasons at {discountPercent}% off
+					</p>
+					<div className="mt-4 flex items-center gap-3">
+						<span className="text-sm text-muted-foreground line-through">
+							{formatPrice(originalTotalCents)}
+						</span>
+						<span className="text-2xl font-bold text-brand-yellow">
+							{formatPrice(bundlePriceCents)}
+						</span>
+					</div>
+					<div className="mt-4">
+						<UnlockButton
+							seasonId=""
+							seriesSlug={series.slug}
+							priceCents={bundlePriceCents}
+							purchaseType="bundle"
+						/>
+					</div>
+				</div>
+			)}
+
 			{/* Creator Info */}
 			<div className="space-y-2">
 				<h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
@@ -133,6 +188,7 @@ export function SeriesDetail({ series }: SeriesDetailProps) {
 				<SeasonTabs
 					seasons={series.seasons}
 					seriesSlug={series.slug}
+					purchasedSeasonIds={purchasedSeasonIds}
 				/>
 			</div>
 		</div>

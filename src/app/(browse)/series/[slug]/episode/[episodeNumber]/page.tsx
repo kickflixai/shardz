@@ -1,7 +1,9 @@
 import { createClient } from "@/lib/supabase/server";
-import { checkEpisodeAccess } from "@/lib/access";
+import { checkEpisodeAccess, FREE_EPISODE_LIMIT } from "@/lib/access";
+import { hasUserPurchasedSeason } from "@/modules/purchases/queries/get-user-purchases";
 import { VideoPlayerShell } from "@/components/player/video-player-shell";
 import { PlayerLayout } from "@/components/player/player-layout";
+import { SeasonPaywall } from "@/components/paywall/season-paywall";
 import Link from "next/link";
 
 interface EpisodePageProps {
@@ -31,55 +33,183 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
 		data: { user },
 	} = await supabase.auth.getUser();
 
-	// Check access (hasPurchased = false for now, Phase 5 will add purchase checks)
-	const access = checkEpisodeAccess(episodeNumber, user, false);
+	// For episodes beyond the free limit, fetch episode metadata first
+	// so we have season_id for purchase check and paywall rendering
+	if (episodeNumber > FREE_EPISODE_LIMIT) {
+		// Fetch episode with season data for paywall
+		const { data: episodeData } = await supabase
+			.from("episodes")
+			.select(
+				`
+				id,
+				episode_number,
+				title,
+				season_id,
+				seasons!inner (
+					id,
+					season_number,
+					title,
+					price_cents,
+					series_id,
+					series!inner (
+						slug,
+						title,
+						thumbnail_url
+					),
+					episodes (
+						id
+					)
+				)
+			`,
+			)
+			.eq("episode_number", episodeNumber)
+			.eq("seasons.series.slug", slug)
+			.eq("seasons.episodes.status", "published")
+			.single();
 
-	if (!access.allowed && access.reason === "auth_required") {
+		if (!episodeData) {
+			return (
+				<div className="mx-auto max-w-2xl px-4 py-16 text-center">
+					<h1 className="text-2xl font-bold text-foreground">
+						Episode Not Found
+					</h1>
+					<p className="mt-2 text-muted-foreground">
+						This episode could not be found.
+					</p>
+					<Link
+						href={`/series/${slug}`}
+						className="mt-6 inline-block text-sm text-brand-yellow transition-opacity hover:opacity-80"
+					>
+						Back to series
+					</Link>
+				</div>
+			);
+		}
+
+		const season = episodeData.seasons as unknown as {
+			id: string;
+			season_number: number;
+			title: string | null;
+			price_cents: number | null;
+			series_id: string;
+			series: {
+				slug: string;
+				title: string;
+				thumbnail_url: string | null;
+			};
+			episodes: Array<{ id: string }>;
+		};
+
+		// Check purchase status
+		const hasPurchased = user
+			? await hasUserPurchasedSeason(user.id, season.id)
+			: false;
+
+		const access = checkEpisodeAccess(episodeNumber, user, hasPurchased);
+
+		// For both auth_required and payment_required, show the paywall.
+		// "Value before account" pattern: unauthenticated users see the paywall,
+		// and the UnlockButton inside handles login redirect when clicked.
+		if (!access.allowed) {
+			const priceCents = season.price_cents ?? 499;
+			const totalEpisodes = season.episodes?.length ?? 0;
+
+			return (
+				<div className="bg-cinema-black">
+					<div className="mx-auto max-w-4xl px-4 pt-4 pb-2">
+						<Link
+							href={`/series/${slug}`}
+							className="text-sm text-muted-foreground transition-colors hover:text-primary"
+						>
+							&larr; Back to series
+						</Link>
+					</div>
+					<div className="mx-auto max-w-4xl px-4 py-8">
+						<SeasonPaywall
+							seasonId={season.id}
+							seriesSlug={slug}
+							seriesTitle={season.series.title}
+							seasonTitle={season.title}
+							seasonNumber={season.season_number}
+							priceCents={priceCents}
+							totalEpisodes={totalEpisodes}
+							episodeNumber={episodeNumber}
+							thumbnailUrl={season.series.thumbnail_url}
+						/>
+					</div>
+				</div>
+			);
+		}
+
+		// Access granted -- render player
+		let nextEpisodeUrl: string | undefined;
+		let nextEpisodeTitle: string | undefined;
+		const { data: nextEpisode } = await supabase
+			.from("episodes")
+			.select("episode_number, title")
+			.eq("season_id", episodeData.season_id)
+			.eq("episode_number", episodeNumber + 1)
+			.single();
+
+		if (nextEpisode) {
+			nextEpisodeUrl = `/series/${slug}/episode/${episodeNumber + 1}`;
+			nextEpisodeTitle = nextEpisode.title;
+		}
+
 		return (
-			<div className="mx-auto max-w-2xl px-4 py-16 text-center">
-				<h1 className="text-2xl font-bold text-foreground">
-					Sign Up to Continue Watching
-				</h1>
-				<p className="mt-4 text-muted-foreground">
-					Episodes 1-3 are free. Create an account to unlock more
-					episodes.
-				</p>
-				<div className="mt-8 flex justify-center gap-4">
+			<div className="bg-cinema-black">
+				<div className="mx-auto max-w-4xl px-4 pt-4 pb-2">
 					<Link
-						href="/signup"
-						className="rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+						href={`/series/${slug}`}
+						className="text-sm text-muted-foreground transition-colors hover:text-primary"
 					>
-						Create Account
+						&larr; Back to series
 					</Link>
-					<Link
-						href="/login"
-						className="rounded-md border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-muted"
-					>
-						Sign In
-					</Link>
+				</div>
+
+				<PlayerLayout>
+					<VideoPlayerShell
+						episodeId={episodeData.id}
+						nextEpisodeUrl={nextEpisodeUrl}
+						nextEpisodeTitle={nextEpisodeTitle}
+					/>
+				</PlayerLayout>
+
+				<div className="mx-auto max-w-4xl px-4 py-6">
+					<h1 className="text-xl font-bold text-foreground">
+						{episodeData.title}
+					</h1>
+					<p className="mt-1 text-sm text-muted-foreground">
+						{season.series.title}
+					</p>
+					{access.reason === "purchased" && (
+						<p className="mt-3 text-xs text-muted-foreground">
+							Purchased
+						</p>
+					)}
 				</div>
 			</div>
 		);
 	}
 
-	if (!access.allowed && access.reason === "payment_required") {
+	// Free episodes (1-3): simple access check, no purchase lookup needed
+	const access = checkEpisodeAccess(episodeNumber, user, false);
+
+	// This should always be allowed for episodes 1-3, but guard anyway
+	if (!access.allowed) {
 		return (
 			<div className="mx-auto max-w-2xl px-4 py-16 text-center">
 				<h1 className="text-2xl font-bold text-foreground">
-					Unlock This Season
+					Access Denied
 				</h1>
-				<p className="mt-4 text-muted-foreground">
-					This episode requires a season unlock. Payments coming soon.
-				</p>
-				<p className="mt-2 text-sm text-muted-foreground">
-					Coming in Phase 5.
+				<p className="mt-2 text-muted-foreground">
+					You do not have access to this episode.
 				</p>
 			</div>
 		);
 	}
 
-	// Access granted -- fetch episode data for player
-	// Query the episode by matching slug -> series -> seasons -> episodes
+	// Fetch episode data for player (free episodes)
 	const { data: episode } = await supabase
 		.from("episodes")
 		.select(
@@ -92,7 +222,8 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
 				id,
 				series_id,
 				series!inner (
-					slug
+					slug,
+					title
 				)
 			)
 		`,
@@ -101,7 +232,7 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
 		.eq("seasons.series.slug", slug)
 		.single();
 
-	// Determine next episode URL and title (same season, next episode number)
+	// Determine next episode URL and title
 	let nextEpisodeUrl: string | undefined;
 	let nextEpisodeTitle: string | undefined;
 	if (episode) {
@@ -118,9 +249,16 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
 		}
 	}
 
+	const seriesTitle = episode
+		? (
+				episode.seasons as unknown as {
+					series: { slug: string; title: string };
+				}
+			).series.title
+		: slug;
+
 	return (
 		<div className="bg-cinema-black">
-			{/* Navigation: back to series */}
 			<div className="mx-auto max-w-4xl px-4 pt-4 pb-2">
 				<Link
 					href={`/series/${slug}`}
@@ -130,7 +268,6 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
 				</Link>
 			</div>
 
-			{/* Player: hero element */}
 			<PlayerLayout>
 				{episode ? (
 					<VideoPlayerShell
@@ -145,13 +282,12 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
 				)}
 			</PlayerLayout>
 
-			{/* Episode info below player */}
 			<div className="mx-auto max-w-4xl px-4 py-6">
 				<h1 className="text-xl font-bold text-foreground">
 					{episode ? episode.title : `Episode ${episodeNumber}`}
 				</h1>
 				<p className="mt-1 text-sm text-muted-foreground">
-					Series: {slug}
+					{seriesTitle}
 				</p>
 				{access.reason === "free" && (
 					<p className="mt-3 text-sm text-muted-foreground">
