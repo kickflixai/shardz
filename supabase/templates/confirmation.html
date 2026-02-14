@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <body style="background-color: #141414; color: #f2f2f2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 40px 20px; margin: 0;">
+    <div style="max-width: 480px; margin: 0 auto;">
+      <h1 style="color: #E0B800; font-size: 24px; margin-bottom: 24px;">Welcome to MicroShort</h1>
+      <p style="font-size: 16px; line-height: 1.6; margin-bottom: 24px;">
+        Confirm your email address to start watching premium microshort series.
+      </p>
+      <a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email"
+         style="display: inline-block; background-color: #E0B800; color: #141414; padding: 12px 32px; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 16px;">
+        Confirm Email
+      </a>
+      <p style="font-size: 13px; color: #999; margin-top: 32px;">
+        If you didn't create a MicroShort account, you can safely ignore this email.
+      </p>
+    </div>
+  </body>
+</html>
