@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-14)
 ## Current Position
 
 Phase: 6 of 9 (Creator Dashboard)
-Plan: 4 of 6 in current phase
-Status: In Progress
-Last activity: 2026-02-14 -- Completed 06-04-PLAN.md (Creator Analytics Dashboard)
+Plan: 6 of 6 in current phase
+Status: Phase Complete
+Last activity: 2026-02-14 -- Completed 06-06-PLAN.md (Creator Public Profile and Settings)
 
-Progress: [▓▓▓▓▓▓▓░░░] 70%
+Progress: [▓▓▓▓▓▓▓░░░] 74%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 17
+- Total plans completed: 19
 - Average duration: 4min
-- Total execution time: 1.07 hours
+- Total execution time: 1.17 hours
 
 **By Phase:**
 
@@ -32,10 +32,10 @@ Progress: [▓▓▓▓▓▓▓░░░] 70%
 | 03-video-player | 3 | 9min | 3min |
 | 04-content-browsing-sharing | 3 | 10min | 3min |
 | 05-payments-monetization | 3 | 15min | 5min |
-| 06-creator-dashboard | 2 | 6min | 3min |
+| 06-creator-dashboard | 4 | 12min | 3min |
 
 **Recent Trend:**
-- Last 5 plans: 4min, 5min, 6min, 4min, 2min
+- Last 5 plans: 6min, 4min, 2min, 3min, 3min
 - Trend: stable
 
 *Updated after each plan completion*
@@ -109,6 +109,10 @@ Recent decisions affecting current work:
 - [06-04]: Per-series breakdown maps purchases through seasons to parent series for aggregation
 - [06-04]: Dashboard home is role-aware: viewer gets apply CTA, creator/admin gets overview stats
 - [06-04]: Both analytics queries wrapped in React.cache for request-level deduplication
+- [06-06]: Social links stored as JSONB keyed by hostname (twitter.com, instagram.com, etc.) for structured display
+- [06-06]: FollowButton uses React 19 useOptimistic for instant toggle without server roundtrip wait
+- [06-06]: Social platform icons as inline SVGs for brand-accurate logos (not generic lucide-react icons)
+- [06-06]: Profile settings uses individual URL fields per platform (not free-text) for better validation
 
 ### Pending Todos
 
@@ -123,5 +127,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-14
-Stopped at: Completed 06-04-PLAN.md (Creator Analytics Dashboard)
-Resume file: .planning/phases/06-creator-dashboard/06-04-SUMMARY.md
+Stopped at: Completed 06-06-PLAN.md (Creator Public Profile and Settings) -- Phase 6 complete
+Resume file: .planning/phases/06-creator-dashboard/06-06-SUMMARY.md
