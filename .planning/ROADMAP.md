@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation + App Shell** - Project scaffolding, data model, branding, PWA setup (completed 2026-02-14)
 - [x] **Phase 2: Authentication + Access** - User accounts, zero-friction free viewing, session management (completed 2026-02-14)
-- [ ] **Phase 3: Video Player** - Vertical-first player with theater mode, auto-continue, subtitles
+- [x] **Phase 3: Video Player** - Vertical-first player with theater mode, auto-continue, subtitles (completed 2026-02-14)
 - [ ] **Phase 4: Content Browsing + Sharing** - Genre discovery, series pages, smart share links, SEO
 - [ ] **Phase 5: Payments + Monetization** - Per-season unlock via Stripe, paywall, creator payouts
 - [ ] **Phase 6: Creator Dashboard** - Self-serve upload, series management, analytics, community spaces
@@ -70,9 +70,9 @@ Plans:
 **Plans**: 3 plans (3 waves)
 
 Plans:
-- [ ] 03-01-PLAN.md — Mux SDK client, JWT token signing, webhook handler for asset lifecycle events (Wave 1)
-- [ ] 03-02-PLAN.md — Video player component with vertical-first mobile + theater-mode desktop layout, iOS PWA fix (Wave 2)
-- [ ] 03-03-PLAN.md — Auto-continue countdown, subtitle defaults, content protection hardening (Wave 3)
+- [x] 03-01-PLAN.md — Mux SDK client, JWT token signing, webhook handler for asset lifecycle events (Wave 1)
+- [x] 03-02-PLAN.md — Video player component with vertical-first mobile + theater-mode desktop layout, iOS PWA fix (Wave 2)
+- [x] 03-03-PLAN.md — Auto-continue countdown, subtitle defaults, content protection hardening (Wave 3)
 
 ### Phase 4: Content Browsing + Sharing
 **Goal**: Users can discover series by genre, view detailed series pages, and share content with rich social previews
@@ -194,7 +194,7 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 5 > 6 > 7 > 8 > 9
 |-------|----------------|--------|-----------|
 | 1. Foundation + App Shell | 3/3 | ✓ Complete | 2026-02-14 |
 | 2. Authentication + Access | 3/3 | ✓ Complete | 2026-02-14 |
-| 3. Video Player | 0/3 | Not started | - |
+| 3. Video Player | 3/3 | ✓ Complete | 2026-02-14 |
 | 4. Content Browsing + Sharing | 0/3 | Not started | - |
 | 5. Payments + Monetization | 0/3 | Not started | - |
 | 6. Creator Dashboard | 0/6 | Not started | - |
