@@ -101,12 +101,12 @@ Plans:
   3. After successful payment, all remaining episodes in the season are immediately playable
   4. User receives an email confirmation after purchase
   5. Creator revenue share is routed to their Stripe Connect account for payout
-**Plans**: TBD
+**Plans**: 3 plans (2 waves)
 
 Plans:
-- [ ] 05-01: Stripe Checkout integration (session creation, webhook handling, payment confirmation)
-- [ ] 05-02: Paywall UI, episode access control (free vs. locked), and post-purchase unlock flow
-- [ ] 05-03: Stripe Connect setup for creator payouts, revenue split logic, and payout records
+- [ ] 05-01-PLAN.md — Stripe SDK, DB migration (purchases/price_tiers/payout_records), webhook handler, checkout API, purchase queries (Wave 1)
+- [ ] 05-02-PLAN.md — Paywall UI, episode access integration, checkout success/cancel pages, series page pricing + bundle CTA (Wave 2)
+- [ ] 05-03-PLAN.md — Stripe Connect onboarding, batch transfers, account.updated webhook, creator payouts dashboard (Wave 2)
 
 ### Phase 6: Creator Dashboard
 **Goal**: Creators can apply, upload content, manage their series, set pricing, track analytics, and engage their community -- all self-serve
