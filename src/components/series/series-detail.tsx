@@ -5,6 +5,7 @@ import { getGenreLabel } from "@/config/genres";
 import { ShareButton } from "@/components/share/share-button";
 import { CreatorInfo } from "@/components/series/creator-info";
 import { SeasonTabs } from "@/components/series/season-tabs";
+import { generateShareUrl } from "@/lib/seo/share";
 import type { Genre } from "@/db/types";
 
 interface SeriesDetailProps {
@@ -51,9 +52,7 @@ function formatViewCount(count: number): string {
 
 export function SeriesDetail({ series }: SeriesDetailProps) {
 	const creatorName = series.profiles.display_name || "Creator";
-	const siteUrl =
-		process.env.NEXT_PUBLIC_APP_URL || "https://microshort.tv";
-	const seriesUrl = `${siteUrl}/series/${series.slug}`;
+	const seriesUrl = generateShareUrl({ slug: series.slug });
 
 	return (
 		<div className="space-y-8">
