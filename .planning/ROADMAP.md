@@ -12,7 +12,7 @@ MicroShort is a freemium microshort video platform where creators monetize seria
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation + App Shell** - Project scaffolding, data model, branding, PWA setup
+- [x] **Phase 1: Foundation + App Shell** - Project scaffolding, data model, branding, PWA setup (completed 2026-02-14)
 - [ ] **Phase 2: Authentication + Access** - User accounts, zero-friction free viewing, session management
 - [ ] **Phase 3: Video Player** - Vertical-first player with theater mode, auto-continue, subtitles
 - [ ] **Phase 4: Content Browsing + Sharing** - Genre discovery, series pages, smart share links, SEO
@@ -36,9 +36,9 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 3 plans (2 waves)
 
 Plans:
-- [ ] 01-01-PLAN.md — Next.js 16 project setup, Supabase clients, Tailwind v4 + shadcn/ui cinematic theme, Biome (Wave 1)
-- [ ] 01-02-PLAN.md — Database schema migration: content hierarchy, profiles, CHECK constraints, RLS policies (Wave 2)
-- [ ] 01-03-PLAN.md — Route group scaffolding, layout components, PWA manifest + service worker, loading/error states (Wave 2)
+- [x] 01-01-PLAN.md — Next.js 16 project setup, Supabase clients, Tailwind v4 + shadcn/ui cinematic theme, Biome (Wave 1)
+- [x] 01-02-PLAN.md — Database schema migration: content hierarchy, profiles, CHECK constraints, RLS policies (Wave 2)
+- [x] 01-03-PLAN.md — Route group scaffolding, layout components, PWA manifest + service worker, loading/error states (Wave 2)
 
 ### Phase 2: Authentication + Access
 **Goal**: Users can create accounts, log in persistently, and watch free episodes without any account barrier
@@ -192,7 +192,7 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 5 > 6 > 7 > 8 > 9
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation + App Shell | 0/3 | Planned | - |
+| 1. Foundation + App Shell | 3/3 | ✓ Complete | 2026-02-14 |
 | 2. Authentication + Access | 0/3 | Not started | - |
 | 3. Video Player | 0/3 | Not started | - |
 | 4. Content Browsing + Sharing | 0/3 | Not started | - |
