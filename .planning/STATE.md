@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-14)
 
 **Core value:** Creators can monetize short-form video content with minimal friction -- upload a series, set a price, and earn revenue from a platform purpose-built for microshorts.
-**Current focus:** Phase 4 - Content Browsing + Sharing (COMPLETE)
+**Current focus:** Phase 5 - Payments + Monetization
 
 ## Current Position
 
-Phase: 4 of 9 (Content Browsing + Sharing)
-Plan: 3 of 3 in current phase
-Status: Phase 04 Complete
-Last activity: 2026-02-14 -- Completed 04-03-PLAN.md (SEO & Social Sharing)
+Phase: 5 of 9 (Payments + Monetization)
+Plan: 1 of 3 in current phase
+Status: Executing
+Last activity: 2026-02-14 -- Completed 05-01-PLAN.md (Stripe Payment Infrastructure)
 
-Progress: [▓▓▓▓▓░░░░░] 44%
+Progress: [▓▓▓▓▓▓░░░░] 48%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 12
+- Total plans completed: 13
 - Average duration: 4min
-- Total execution time: 0.72 hours
+- Total execution time: 0.79 hours
 
 **By Phase:**
 
@@ -31,9 +31,10 @@ Progress: [▓▓▓▓▓░░░░░] 44%
 | 02-authentication-access | 3 | 8min | 3min |
 | 03-video-player | 3 | 9min | 3min |
 | 04-content-browsing-sharing | 3 | 10min | 3min |
+| 05-payments-monetization | 1 | 4min | 4min |
 
 **Recent Trend:**
-- Last 5 plans: 3min, 2min, 3min, 4min, 3min
+- Last 5 plans: 2min, 3min, 4min, 3min, 4min
 - Trend: stable
 
 *Updated after each plan completion*
@@ -87,6 +88,10 @@ Recent decisions affecting current work:
 - [04-03]: generateStaticParams uses direct Supabase client (not cookies-based) since it runs at build time outside request scope
 - [04-03]: OG image uses Node.js runtime (not edge) to avoid Supabase client cookie context issues
 - [04-03]: SeriesDetail uses generateShareUrl for UTM-tracked share links instead of raw URL construction
+- [05-01]: Stripe client uses Proxy-based lazy initialization to avoid build-time errors when STRIPE_SECRET_KEY is not set
+- [05-01]: Bundle purchases use proportional price distribution across seasons based on individual price ratios
+- [05-01]: Webhook stores composite stripe_session_id per season in bundles (sessionId_seasonId) for idempotency with unique constraint
+- [05-01]: Platform fee calculated as 20% with creator receiving remainder (subtraction-based to avoid rounding loss)
 
 ### Pending Todos
 
@@ -101,5 +106,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-14
-Stopped at: Completed 04-03-PLAN.md (SEO & Social Sharing) -- Phase 04 Complete
-Resume file: .planning/phases/04-content-browsing-sharing/04-03-SUMMARY.md
+Stopped at: Completed 05-01-PLAN.md (Stripe Payment Infrastructure)
+Resume file: .planning/phases/05-payments-monetization/05-01-SUMMARY.md
