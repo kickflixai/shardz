@@ -42,6 +42,9 @@ function getBase64EnvVar(name: ServerEnvVar): string {
 }
 
 export const env = {
+	app: {
+		url: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
+	},
 	supabase: {
 		url: getEnvVar("NEXT_PUBLIC_SUPABASE_URL"),
 		publishableKey: getEnvVar("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"),
