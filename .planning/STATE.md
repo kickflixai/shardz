@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-14)
 
 **Core value:** Creators can monetize short-form video content with minimal friction -- upload a series, set a price, and earn revenue from a platform purpose-built for microshorts.
-**Current focus:** Phase 2 - Authentication + Access
+**Current focus:** Phase 3 - Video Player
 
 ## Current Position
 
-Phase: 2 of 9 (Authentication + Access)
-Plan: 3 of 3 in current phase
-Status: Phase Complete
-Last activity: 2026-02-14 -- Completed 02-03-PLAN.md (Password Reset & Email Templates)
+Phase: 3 of 9 (Video Player)
+Plan: 1 of 3 in current phase
+Status: In Progress
+Last activity: 2026-02-14 -- Completed 03-01-PLAN.md (Mux Infrastructure)
 
-Progress: [▓▓▓▓░░░░░░] 22%
+Progress: [▓▓▓░░░░░░░] 26%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 6
-- Average duration: 5min
-- Total execution time: 0.40 hours
+- Total plans completed: 7
+- Average duration: 4min
+- Total execution time: 0.47 hours
 
 **By Phase:**
 
@@ -29,9 +29,10 @@ Progress: [▓▓▓▓░░░░░░] 22%
 |-------|-------|-------|----------|
 | 01-foundation-app-shell | 3 | 16min | 5min |
 | 02-authentication-access | 3 | 8min | 3min |
+| 03-video-player | 1 | 4min | 4min |
 
 **Recent Trend:**
-- Last 5 plans: 3min, 6min, 4min, 2min, 2min
+- Last 5 plans: 6min, 4min, 2min, 2min, 4min
 - Trend: stable
 
 *Updated after each plan completion*
@@ -64,6 +65,10 @@ Recent decisions affecting current work:
 - [02-02]: Auth redirect includes next query param for future post-login redirect enhancement
 - [02-03]: Anti-enumeration: forgot-password always returns success message regardless of whether email exists
 - [02-03]: Recovery email template includes next=/reset-password param so auth callback redirects to password form
+- [03-01]: Mux SDK v12.8 signPlaybackId is async (returns Promise<string>), not sync as commonly documented
+- [03-01]: Used SDK built-in mux.webhooks.unwrap() for webhook verification instead of hand-rolling HMAC-SHA256
+- [03-01]: Created Supabase admin client (service role) for webhook handler -- cookies-based server client cannot work in webhook context
+- [03-01]: Mux constructor auto-reads all env vars (MUX_TOKEN_ID, MUX_TOKEN_SECRET, MUX_SIGNING_KEY, MUX_PRIVATE_KEY, MUX_WEBHOOK_SECRET)
 
 ### Pending Todos
 
@@ -78,5 +83,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-14
-Stopped at: Completed 02-03-PLAN.md (Password Reset & Email Templates) -- Phase 2 complete
-Resume file: .planning/phases/02-authentication-access/02-03-SUMMARY.md
+Stopped at: Completed 03-01-PLAN.md (Mux Infrastructure)
+Resume file: .planning/phases/03-video-player/03-01-SUMMARY.md
