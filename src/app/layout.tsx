@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
+import { Toaster } from "sonner";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { SerwistProvider } from "@/components/providers/serwist-provider";
 import "./globals.css";
@@ -44,7 +46,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 					disableTransitionOnChange
 				>
 					<SerwistProvider swUrl="/serwist/sw.js">
-						{children}
+						<NuqsAdapter>
+							{children}
+							<Toaster
+								theme="dark"
+								richColors
+								position="bottom-center"
+							/>
+						</NuqsAdapter>
 					</SerwistProvider>
 				</ThemeProvider>
 			</body>
