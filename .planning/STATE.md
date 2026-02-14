@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-14)
 ## Current Position
 
 Phase: 3 of 9 (Video Player)
-Plan: 1 of 3 in current phase
+Plan: 2 of 3 in current phase
 Status: In Progress
-Last activity: 2026-02-14 -- Completed 03-01-PLAN.md (Mux Infrastructure)
+Last activity: 2026-02-14 -- Completed 03-02-PLAN.md (Video Player & Layout)
 
-Progress: [▓▓▓░░░░░░░] 26%
+Progress: [▓▓▓░░░░░░░] 30%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 7
+- Total plans completed: 8
 - Average duration: 4min
-- Total execution time: 0.47 hours
+- Total execution time: 0.52 hours
 
 **By Phase:**
 
@@ -29,10 +29,10 @@ Progress: [▓▓▓░░░░░░░] 26%
 |-------|-------|-------|----------|
 | 01-foundation-app-shell | 3 | 16min | 5min |
 | 02-authentication-access | 3 | 8min | 3min |
-| 03-video-player | 1 | 4min | 4min |
+| 03-video-player | 2 | 7min | 4min |
 
 **Recent Trend:**
-- Last 5 plans: 6min, 4min, 2min, 2min, 4min
+- Last 5 plans: 4min, 2min, 2min, 4min, 3min
 - Trend: stable
 
 *Updated after each plan completion*
@@ -69,6 +69,10 @@ Recent decisions affecting current work:
 - [03-01]: Used SDK built-in mux.webhooks.unwrap() for webhook verification instead of hand-rolling HMAC-SHA256
 - [03-01]: Created Supabase admin client (service role) for webhook handler -- cookies-based server client cannot work in webhook context
 - [03-01]: Mux constructor auto-reads all env vars (MUX_TOKEN_ID, MUX_TOKEN_SECRET, MUX_SIGNING_KEY, MUX_PRIVATE_KEY, MUX_WEBHOOK_SECRET)
+- [03-02]: MuxPlayer onContextMenu not in props -- right-click prevention moved to wrapping div container
+- [03-02]: Used MuxPlayerCSSProperties type (not React.CSSProperties cast) for type-safe --media-object-fit custom property
+- [03-02]: signPlaybackToken calls use Promise.all for parallel token generation (playback + thumbnail)
+- [03-02]: Episode data fetched via Supabase join: episodes -> seasons!inner -> series!inner for slug matching
 
 ### Pending Todos
 
@@ -83,5 +87,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-14
-Stopped at: Completed 03-01-PLAN.md (Mux Infrastructure)
-Resume file: .planning/phases/03-video-player/03-01-SUMMARY.md
+Stopped at: Completed 03-02-PLAN.md (Video Player & Layout)
+Resume file: .planning/phases/03-video-player/03-02-SUMMARY.md
