@@ -28,6 +28,12 @@ export type PurchaseStatus = "completed" | "refunded";
 
 export type PayoutStatus = "completed" | "failed";
 
+export type ApplicationStatus = "pending" | "approved" | "rejected";
+
+export type ReleaseStrategy = "all_at_once" | "drip";
+
+export type PostType = "discussion" | "poll" | "announcement";
+
 // ============================================================================
 // Database Row Types
 // ============================================================================
@@ -57,6 +63,9 @@ export interface Season {
 	description: string | null;
 	price_cents: number | null;
 	price_tier_id: string | null;
+	release_strategy: ReleaseStrategy;
+	drip_interval_days: number | null;
+	sort_order: number;
 	status: ContentStatus;
 	created_at: string;
 	updated_at: string;
@@ -73,6 +82,9 @@ export interface Episode {
 	mux_playback_id: string | null;
 	thumbnail_url: string | null;
 	subtitle_url: string | null;
+	sort_order: number;
+	content_warnings: string | null;
+	release_date: string | null;
 	status: ContentStatus;
 	created_at: string;
 	updated_at: string;
@@ -85,6 +97,8 @@ export interface Profile {
 	avatar_url: string | null;
 	role: UserRole;
 	bio: string | null;
+	social_links: Record<string, string>;
+	follower_count: number;
 	stripe_account_id: string | null;
 	stripe_onboarding_complete: boolean;
 	created_at: string;
@@ -128,6 +142,50 @@ export interface PayoutRecord {
 	created_at: string;
 }
 
+export interface CreatorApplication {
+	id: string;
+	user_id: string;
+	display_name: string;
+	bio: string;
+	portfolio_url: string | null;
+	portfolio_description: string;
+	sample_video_urls: string[];
+	social_links: Record<string, string>;
+	status: ApplicationStatus;
+	reviewer_notes: string | null;
+	reviewed_at: string | null;
+	reviewed_by: string | null;
+	created_at: string;
+	updated_at: string;
+}
+
+export interface CommunityPost {
+	id: string;
+	series_id: string;
+	author_id: string;
+	content: string;
+	post_type: PostType;
+	poll_options: Array<{ text: string; votes: number }> | null;
+	is_pinned: boolean;
+	created_at: string;
+	updated_at: string;
+}
+
+export interface PollVote {
+	id: string;
+	post_id: string;
+	user_id: string;
+	option_index: number;
+	created_at: string;
+}
+
+export interface Follower {
+	id: string;
+	follower_id: string;
+	creator_id: string;
+	created_at: string;
+}
+
 // ============================================================================
 // Insert Types (omit auto-generated fields)
 // ============================================================================
@@ -161,6 +219,26 @@ export type PayoutRecordInsert = Omit<PayoutRecord, "id" | "created_at"> & {
 	id?: string;
 };
 
+export type CreatorApplicationInsert = Omit<
+	CreatorApplication,
+	"id" | "created_at" | "updated_at" | "status" | "reviewer_notes" | "reviewed_at" | "reviewed_by"
+> & {
+	id?: string;
+	status?: ApplicationStatus;
+};
+
+export type CommunityPostInsert = Omit<CommunityPost, "id" | "created_at" | "updated_at"> & {
+	id?: string;
+};
+
+export type PollVoteInsert = Omit<PollVote, "id" | "created_at"> & {
+	id?: string;
+};
+
+export type FollowerInsert = Omit<Follower, "id" | "created_at"> & {
+	id?: string;
+};
+
 // ============================================================================
 // Update Types (all fields optional except id)
 // ============================================================================
@@ -171,3 +249,8 @@ export type EpisodeUpdate = Partial<Omit<Episode, "id" | "created_at" | "updated
 export type ProfileUpdate = Partial<Omit<Profile, "id" | "created_at" | "updated_at">>;
 export type PurchaseUpdate = Partial<Omit<Purchase, "id" | "created_at">>;
 export type PayoutRecordUpdate = Partial<Omit<PayoutRecord, "id" | "created_at">>;
+export type CreatorApplicationUpdate = Partial<
+	Omit<CreatorApplication, "id" | "created_at" | "updated_at" | "user_id">
+>;
+export type CommunityPostUpdate = Partial<Omit<CommunityPost, "id" | "created_at" | "updated_at">>;
+export type FollowerUpdate = Partial<Omit<Follower, "id" | "created_at">>;
