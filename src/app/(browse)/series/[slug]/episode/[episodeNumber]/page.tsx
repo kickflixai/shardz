@@ -1,5 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { checkEpisodeAccess } from "@/lib/access";
+import { VideoPlayerShell } from "@/components/player/video-player-shell";
+import { PlayerLayout } from "@/components/player/player-layout";
 import Link from "next/link";
 
 interface EpisodePageProps {
@@ -39,7 +41,8 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
 					Sign Up to Continue Watching
 				</h1>
 				<p className="mt-4 text-muted-foreground">
-					Episodes 1-3 are free. Create an account to unlock more episodes.
+					Episodes 1-3 are free. Create an account to unlock more
+					episodes.
 				</p>
 				<div className="mt-8 flex justify-center gap-4">
 					<Link
@@ -75,10 +78,48 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
 		);
 	}
 
-	// Access granted (free or purchased)
+	// Access granted -- fetch episode data for player
+	// Query the episode by matching slug -> series -> seasons -> episodes
+	const { data: episode } = await supabase
+		.from("episodes")
+		.select(
+			`
+			id,
+			episode_number,
+			title,
+			season_id,
+			seasons!inner (
+				id,
+				series_id,
+				series!inner (
+					slug
+				)
+			)
+		`,
+		)
+		.eq("episode_number", episodeNumber)
+		.eq("seasons.series.slug", slug)
+		.single();
+
+	// Determine next episode URL (same season, next episode number)
+	let nextEpisodeUrl: string | undefined;
+	if (episode) {
+		const { data: nextEpisode } = await supabase
+			.from("episodes")
+			.select("episode_number")
+			.eq("season_id", episode.season_id)
+			.eq("episode_number", episodeNumber + 1)
+			.single();
+
+		if (nextEpisode) {
+			nextEpisodeUrl = `/series/${slug}/episode/${episodeNumber + 1}`;
+		}
+	}
+
 	return (
-		<div className="mx-auto max-w-4xl px-4 py-8">
-			<div className="mb-4">
+		<div className="bg-cinema-black">
+			{/* Navigation: back to series */}
+			<div className="mx-auto max-w-4xl px-4 pt-4 pb-2">
 				<Link
 					href={`/series/${slug}`}
 					className="text-sm text-muted-foreground transition-colors hover:text-primary"
@@ -86,18 +127,35 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
 					&larr; Back to series
 				</Link>
 			</div>
-			<h1 className="text-2xl font-bold text-foreground">
-				Episode {episodeNumber}
-			</h1>
-			<p className="mt-2 text-sm text-muted-foreground">Series: {slug}</p>
-			<div className="mt-8 flex aspect-video items-center justify-center rounded-lg border border-border bg-cinema-surface">
-				<p className="text-muted-foreground">Video player coming in Phase 3</p>
-			</div>
-			{access.reason === "free" && (
-				<p className="mt-4 text-sm text-muted-foreground">
-					Free episode ({episodeNumber} of 3 free)
+
+			{/* Player: hero element */}
+			<PlayerLayout>
+				{episode ? (
+					<VideoPlayerShell
+						episodeId={episode.id}
+						nextEpisodeUrl={nextEpisodeUrl}
+					/>
+				) : (
+					<div className="flex h-full w-full items-center justify-center bg-cinema-black text-cinema-muted">
+						<p>Episode not found</p>
+					</div>
+				)}
+			</PlayerLayout>
+
+			{/* Episode info below player */}
+			<div className="mx-auto max-w-4xl px-4 py-6">
+				<h1 className="text-xl font-bold text-foreground">
+					{episode ? episode.title : `Episode ${episodeNumber}`}
+				</h1>
+				<p className="mt-1 text-sm text-muted-foreground">
+					Series: {slug}
 				</p>
-			)}
+				{access.reason === "free" && (
+					<p className="mt-3 text-sm text-muted-foreground">
+						Free episode ({episodeNumber} of 3 free)
+					</p>
+				)}
+			</div>
 		</div>
 	);
 }
