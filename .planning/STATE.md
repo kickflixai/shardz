@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-14)
 
 **Core value:** Creators can monetize short-form video content with minimal friction -- upload a series, set a price, and earn revenue from a platform purpose-built for microshorts.
-**Current focus:** Phase 5 - Payments + Monetization
+**Current focus:** Phase 6 - Creator Dashboard
 
 ## Current Position
 
-Phase: 5 of 9 (Payments + Monetization)
-Plan: 3 of 3 in current phase (COMPLETE)
-Status: Phase Complete
-Last activity: 2026-02-14 -- Completed 05-03-PLAN.md (Stripe Connect Creator Payouts)
+Phase: 6 of 9 (Creator Dashboard)
+Plan: 1 of 6 in current phase
+Status: In Progress
+Last activity: 2026-02-14 -- Completed 06-01-PLAN.md (Database Foundation + Creator Application)
 
-Progress: [▓▓▓▓▓▓░░░░] 56%
+Progress: [▓▓▓▓▓▓░░░░] 59%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 15
+- Total plans completed: 16
 - Average duration: 4min
-- Total execution time: 0.97 hours
+- Total execution time: 1.04 hours
 
 **By Phase:**
 
@@ -32,9 +32,10 @@ Progress: [▓▓▓▓▓▓░░░░] 56%
 | 03-video-player | 3 | 9min | 3min |
 | 04-content-browsing-sharing | 3 | 10min | 3min |
 | 05-payments-monetization | 3 | 15min | 5min |
+| 06-creator-dashboard | 1 | 4min | 4min |
 
 **Recent Trend:**
-- Last 5 plans: 4min, 3min, 4min, 5min, 6min
+- Last 5 plans: 3min, 4min, 5min, 6min, 4min
 - Trend: stable
 
 *Updated after each plan completion*
@@ -100,6 +101,10 @@ Recent decisions affecting current work:
 - [05-03]: Dual-path onboarding verification: return URL route as primary, account.updated webhook as reliable backup
 - [05-03]: Failed individual transfers recorded with payout_record status='failed' without stopping the batch
 - [05-03]: Payouts dashboard shows completed payouts only (per user constraint: no pending/in-transit pipeline visibility)
+- [06-01]: Social links parsed as comma-separated URLs or JSON; stored as JSONB keyed by hostname
+- [06-01]: Rejected applicants can reapply (old application deleted, new one inserted to maintain UNIQUE constraint)
+- [06-01]: Follower count denormalized via database trigger (increment/decrement) to avoid COUNT queries on profile pages
+- [06-01]: Textarea component added to shadcn UI set (was missing, needed for multi-line form fields)
 
 ### Pending Todos
 
@@ -114,5 +119,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-14
-Stopped at: Completed 05-03-PLAN.md (Stripe Connect Creator Payouts) -- Phase 5 complete
-Resume file: .planning/phases/05-payments-monetization/05-03-SUMMARY.md
+Stopped at: Completed 06-01-PLAN.md (Database Foundation + Creator Application)
+Resume file: .planning/phases/06-creator-dashboard/06-01-SUMMARY.md
