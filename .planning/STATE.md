@@ -12,16 +12,16 @@ See: .planning/PROJECT.md (updated 2026-02-14)
 Phase: 6 of 9 (Creator Dashboard)
 Plan: 6 of 6 in current phase
 Status: Phase Complete
-Last activity: 2026-02-14 -- Completed 06-06-PLAN.md (Creator Public Profile and Settings)
+Last activity: 2026-02-14 -- Completed 06-05-PLAN.md (Community and Trailer Upload)
 
 Progress: [▓▓▓▓▓▓▓░░░] 74%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 20
+- Total plans completed: 21
 - Average duration: 4min
-- Total execution time: 1.25 hours
+- Total execution time: 1.35 hours
 
 **By Phase:**
 
@@ -32,10 +32,10 @@ Progress: [▓▓▓▓▓▓▓░░░] 74%
 | 03-video-player | 3 | 9min | 3min |
 | 04-content-browsing-sharing | 3 | 10min | 3min |
 | 05-payments-monetization | 3 | 15min | 5min |
-| 06-creator-dashboard | 5 | 17min | 3min |
+| 06-creator-dashboard | 6 | 23min | 4min |
 
 **Recent Trend:**
-- Last 5 plans: 6min, 4min, 2min, 3min, 3min
+- Last 5 plans: 4min, 2min, 3min, 3min, 6min
 - Trend: stable
 
 *Updated after each plan completion*
@@ -117,6 +117,11 @@ Recent decisions affecting current work:
 - [06-06]: FollowButton uses React 19 useOptimistic for instant toggle without server roundtrip wait
 - [06-06]: Social platform icons as inline SVGs for brand-accurate logos (not generic lucide-react icons)
 - [06-06]: Profile settings uses individual URL fields per platform (not free-text) for better validation
+- [06-05]: Supabase Realtime subscription on community_posts filtered by series_id for live feed updates
+- [06-05]: One-vote-per-user enforced both application-level (check before insert) and DB-level (UNIQUE constraint)
+- [06-05]: Trailers use playback_policies: ["public"] for shareable promotional content (no signed tokens)
+- [06-05]: trailer_ passthrough prefix distinguishes trailer from episode uploads in Mux webhook handler
+- [06-05]: Trailer playback ID stored as mux:{playbackId} format in series.trailer_url column
 
 ### Pending Todos
 
@@ -131,5 +136,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-14
-Stopped at: Completed 06-02-PLAN.md (Content Upload Pipeline) -- backfill
-Resume file: .planning/phases/06-creator-dashboard/06-02-SUMMARY.md
+Stopped at: Completed 06-05-PLAN.md (Community and Trailer Upload)
+Resume file: .planning/phases/06-creator-dashboard/06-05-SUMMARY.md
