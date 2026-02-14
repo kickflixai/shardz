@@ -12,16 +12,16 @@ See: .planning/PROJECT.md (updated 2026-02-14)
 Phase: 6 of 9 (Creator Dashboard)
 Plan: 6 of 6 in current phase
 Status: Phase Complete
-Last activity: 2026-02-14 -- Completed 06-05-PLAN.md (Community and Trailer Upload)
+Last activity: 2026-02-14 -- Completed 06-03-PLAN.md (Series/Season/Episode Management) -- backfill
 
 Progress: [▓▓▓▓▓▓▓░░░] 74%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 21
+- Total plans completed: 22
 - Average duration: 4min
-- Total execution time: 1.35 hours
+- Total execution time: 1.45 hours
 
 **By Phase:**
 
@@ -35,7 +35,7 @@ Progress: [▓▓▓▓▓▓▓░░░] 74%
 | 06-creator-dashboard | 6 | 23min | 4min |
 
 **Recent Trend:**
-- Last 5 plans: 4min, 2min, 3min, 3min, 6min
+- Last 5 plans: 2min, 3min, 3min, 6min, 6min
 - Trend: stable
 
 *Updated after each plan completion*
@@ -122,6 +122,11 @@ Recent decisions affecting current work:
 - [06-05]: Trailers use playback_policies: ["public"] for shareable promotional content (no signed tokens)
 - [06-05]: trailer_ passthrough prefix distinguishes trailer from episode uploads in Mux webhook handler
 - [06-05]: Trailer playback ID stored as mux:{playbackId} format in series.trailer_url column
+- [06-03]: Slug generation uses random 4-char hex suffix with single retry on collision for uniqueness
+- [06-03]: Delete form actions wrapped in inline "use server" functions for void return type compatibility
+- [06-03]: Episode reorder uses move-up/move-down buttons (no DnD library) with useTransition
+- [06-03]: Mux asset cleanup on episode delete; non-critical failure silently caught
+- [06-03]: Season price_cents synced from price_tiers table at create/update time
 
 ### Pending Todos
 
@@ -136,5 +141,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-14
-Stopped at: Completed 06-05-PLAN.md (Community and Trailer Upload)
-Resume file: .planning/phases/06-creator-dashboard/06-05-SUMMARY.md
+Stopped at: Completed 06-03-PLAN.md (Series/Season/Episode Management) -- backfill
+Resume file: .planning/phases/06-creator-dashboard/06-03-SUMMARY.md
