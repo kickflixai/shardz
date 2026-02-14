@@ -13,7 +13,7 @@ MicroShort is a freemium microshort video platform where creators monetize seria
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation + App Shell** - Project scaffolding, data model, branding, PWA setup (completed 2026-02-14)
-- [ ] **Phase 2: Authentication + Access** - User accounts, zero-friction free viewing, session management
+- [x] **Phase 2: Authentication + Access** - User accounts, zero-friction free viewing, session management (completed 2026-02-14)
 - [ ] **Phase 3: Video Player** - Vertical-first player with theater mode, auto-continue, subtitles
 - [ ] **Phase 4: Content Browsing + Sharing** - Genre discovery, series pages, smart share links, SEO
 - [ ] **Phase 5: Payments + Monetization** - Per-season unlock via Stripe, paywall, creator payouts
