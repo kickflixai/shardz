@@ -101,18 +101,20 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
 		.eq("seasons.series.slug", slug)
 		.single();
 
-	// Determine next episode URL (same season, next episode number)
+	// Determine next episode URL and title (same season, next episode number)
 	let nextEpisodeUrl: string | undefined;
+	let nextEpisodeTitle: string | undefined;
 	if (episode) {
 		const { data: nextEpisode } = await supabase
 			.from("episodes")
-			.select("episode_number")
+			.select("episode_number, title")
 			.eq("season_id", episode.season_id)
 			.eq("episode_number", episodeNumber + 1)
 			.single();
 
 		if (nextEpisode) {
 			nextEpisodeUrl = `/series/${slug}/episode/${episodeNumber + 1}`;
+			nextEpisodeTitle = nextEpisode.title;
 		}
 	}
 
@@ -134,6 +136,7 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
 					<VideoPlayerShell
 						episodeId={episode.id}
 						nextEpisodeUrl={nextEpisodeUrl}
+						nextEpisodeTitle={nextEpisodeTitle}
 					/>
 				) : (
 					<div className="flex h-full w-full items-center justify-center bg-cinema-black text-cinema-muted">

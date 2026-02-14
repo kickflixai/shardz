@@ -5,6 +5,7 @@ import { VideoPlayer } from "./video-player";
 interface VideoPlayerShellProps {
 	episodeId: string;
 	nextEpisodeUrl?: string;
+	nextEpisodeTitle?: string;
 }
 
 /**
@@ -15,6 +16,7 @@ interface VideoPlayerShellProps {
 export async function VideoPlayerShell({
 	episodeId,
 	nextEpisodeUrl,
+	nextEpisodeTitle,
 }: VideoPlayerShellProps) {
 	const supabase = await createClient();
 
@@ -52,6 +54,7 @@ export async function VideoPlayerShell({
 			title={episode.title}
 			episodeId={episodeId}
 			nextEpisodeUrl={nextEpisodeUrl}
+			nextEpisodeTitle={nextEpisodeTitle}
 		/>
 	);
 }
