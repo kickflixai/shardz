@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-14)
 ## Current Position
 
 Phase: 6 of 9 (Creator Dashboard)
-Plan: 1 of 6 in current phase
+Plan: 4 of 6 in current phase
 Status: In Progress
-Last activity: 2026-02-14 -- Completed 06-01-PLAN.md (Database Foundation + Creator Application)
+Last activity: 2026-02-14 -- Completed 06-04-PLAN.md (Creator Analytics Dashboard)
 
-Progress: [▓▓▓▓▓▓░░░░] 59%
+Progress: [▓▓▓▓▓▓▓░░░] 70%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 16
+- Total plans completed: 17
 - Average duration: 4min
-- Total execution time: 1.04 hours
+- Total execution time: 1.07 hours
 
 **By Phase:**
 
@@ -32,10 +32,10 @@ Progress: [▓▓▓▓▓▓░░░░] 59%
 | 03-video-player | 3 | 9min | 3min |
 | 04-content-browsing-sharing | 3 | 10min | 3min |
 | 05-payments-monetization | 3 | 15min | 5min |
-| 06-creator-dashboard | 1 | 4min | 4min |
+| 06-creator-dashboard | 2 | 6min | 3min |
 
 **Recent Trend:**
-- Last 5 plans: 3min, 4min, 5min, 6min, 4min
+- Last 5 plans: 4min, 5min, 6min, 4min, 2min
 - Trend: stable
 
 *Updated after each plan completion*
@@ -105,6 +105,10 @@ Recent decisions affecting current work:
 - [06-01]: Rejected applicants can reapply (old application deleted, new one inserted to maintain UNIQUE constraint)
 - [06-01]: Follower count denormalized via database trigger (increment/decrement) to avoid COUNT queries on profile pages
 - [06-01]: Textarea component added to shadcn UI set (was missing, needed for multi-line form fields)
+- [06-04]: Analytics computed from existing tables (series.view_count, purchases) -- no separate analytics tables
+- [06-04]: Per-series breakdown maps purchases through seasons to parent series for aggregation
+- [06-04]: Dashboard home is role-aware: viewer gets apply CTA, creator/admin gets overview stats
+- [06-04]: Both analytics queries wrapped in React.cache for request-level deduplication
 
 ### Pending Todos
 
@@ -119,5 +123,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-14
-Stopped at: Completed 06-01-PLAN.md (Database Foundation + Creator Application)
-Resume file: .planning/phases/06-creator-dashboard/06-01-SUMMARY.md
+Stopped at: Completed 06-04-PLAN.md (Creator Analytics Dashboard)
+Resume file: .planning/phases/06-creator-dashboard/06-04-SUMMARY.md
