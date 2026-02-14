@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-14)
 ## Current Position
 
 Phase: 5 of 9 (Payments + Monetization)
-Plan: 2 of 3 in current phase
-Status: Executing
-Last activity: 2026-02-14 -- Completed 05-02-PLAN.md (Paywall UI and Purchase Integration)
+Plan: 3 of 3 in current phase (COMPLETE)
+Status: Phase Complete
+Last activity: 2026-02-14 -- Completed 05-03-PLAN.md (Stripe Connect Creator Payouts)
 
-Progress: [▓▓▓▓▓▓░░░░] 52%
+Progress: [▓▓▓▓▓▓░░░░] 56%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 14
+- Total plans completed: 15
 - Average duration: 4min
-- Total execution time: 0.87 hours
+- Total execution time: 0.97 hours
 
 **By Phase:**
 
@@ -31,10 +31,10 @@ Progress: [▓▓▓▓▓▓░░░░] 52%
 | 02-authentication-access | 3 | 8min | 3min |
 | 03-video-player | 3 | 9min | 3min |
 | 04-content-browsing-sharing | 3 | 10min | 3min |
-| 05-payments-monetization | 2 | 9min | 5min |
+| 05-payments-monetization | 3 | 15min | 5min |
 
 **Recent Trend:**
-- Last 5 plans: 3min, 4min, 3min, 4min, 5min
+- Last 5 plans: 4min, 3min, 4min, 5min, 6min
 - Trend: stable
 
 *Updated after each plan completion*
@@ -96,6 +96,10 @@ Recent decisions affecting current work:
 - [05-02]: Backup fulfillment on checkout success page handles webhook race condition with same idempotency guards
 - [05-02]: Episode page restructured with early metadata fetch for episodes beyond free limit to support paywall rendering
 - [05-02]: Bundle offer section on series page only shows when 2+ unpurchased seasons exist
+- [05-03]: Batch transfers use source_transaction linking to original charges for automatic fund availability handling
+- [05-03]: Dual-path onboarding verification: return URL route as primary, account.updated webhook as reliable backup
+- [05-03]: Failed individual transfers recorded with payout_record status='failed' without stopping the batch
+- [05-03]: Payouts dashboard shows completed payouts only (per user constraint: no pending/in-transit pipeline visibility)
 
 ### Pending Todos
 
@@ -104,11 +108,11 @@ None yet.
 ### Blockers/Concerns
 
 - [RESOLVED]: Serwist Turbopack (@serwist/turbopack v9.5.6) works with Turbopack -- confirmed in 01-01 execution
-- [Research]: Stripe Connect cross-border payout restrictions need research before Phase 5
+- [RESOLVED]: Stripe Connect Express accounts configured for US with transfers capability -- cross-border handled by Stripe
 - [Research]: Meta Conversions API requires domain verification -- start approval process early
 
 ## Session Continuity
 
 Last session: 2026-02-14
-Stopped at: Completed 05-02-PLAN.md (Paywall UI and Purchase Integration)
-Resume file: .planning/phases/05-payments-monetization/05-02-SUMMARY.md
+Stopped at: Completed 05-03-PLAN.md (Stripe Connect Creator Payouts) -- Phase 5 complete
+Resume file: .planning/phases/05-payments-monetization/05-03-SUMMARY.md
