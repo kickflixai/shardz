@@ -1,7 +1,7 @@
 # Requirements: MicroShort
 
 **Defined:** 2026-02-14
-**Core Value:** Creators can monetize short-form video content with minimal friction — upload a series, set a price, and earn revenue from a platform purpose-built for microshorts.
+**Core Value:** Creators can monetize short-form video content with minimal friction -- upload a series, set a price, and earn revenue from a platform purpose-built for microshorts.
 
 ## v1 Requirements
 
@@ -174,13 +174,77 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| (Updated during roadmap creation) | | |
+| PLAY-01 | Phase 3 | Pending |
+| PLAY-02 | Phase 3 | Pending |
+| PLAY-03 | Phase 3 | Pending |
+| PLAY-04 | Phase 3 | Pending |
+| PLAY-05 | Phase 9 | Pending |
+| PLAY-06 | Phase 9 | Pending |
+| PLAY-07 | Phase 9 | Pending |
+| PLAY-08 | Phase 9 | Pending |
+| CONT-01 | Phase 4 | Pending |
+| CONT-02 | Phase 4 | Pending |
+| CONT-03 | Phase 4 | Pending |
+| CONT-04 | Phase 1 | Pending |
+| CONT-05 | Phase 1 | Pending |
+| ACCS-01 | Phase 2 | Pending |
+| ACCS-02 | Phase 2 | Pending |
+| ACCS-03 | Phase 2 | Pending |
+| ACCS-04 | Phase 2 | Pending |
+| ACCS-05 | Phase 2 | Pending |
+| ACCS-06 | Phase 2 | Pending |
+| PAY-01 | Phase 5 | Pending |
+| PAY-02 | Phase 5 | Pending |
+| PAY-03 | Phase 5 | Pending |
+| PAY-04 | Phase 5 | Pending |
+| PAY-05 | Phase 5 | Pending |
+| SHAR-01 | Phase 4 | Pending |
+| SHAR-02 | Phase 4 | Pending |
+| SHAR-03 | Phase 4 | Pending |
+| SHAR-04 | Phase 4 | Pending |
+| SOCL-01 | Phase 9 | Pending |
+| SOCL-02 | Phase 9 | Pending |
+| SOCL-03 | Phase 9 | Pending |
+| SOCL-04 | Phase 9 | Pending |
+| SOCL-05 | Phase 9 | Pending |
+| SOCL-06 | Phase 6 | Pending |
+| CREA-01 | Phase 6 | Pending |
+| CREA-02 | Phase 6 | Pending |
+| CREA-03 | Phase 6 | Pending |
+| CREA-04 | Phase 6 | Pending |
+| CREA-05 | Phase 6 | Pending |
+| CREA-06 | Phase 6 | Pending |
+| CREA-07 | Phase 6 | Pending |
+| CREA-08 | Phase 6 | Pending |
+| CREA-09 | Phase 6 | Pending |
+| CREA-10 | Phase 6 | Pending |
+| ADMN-01 | Phase 7 | Pending |
+| ADMN-02 | Phase 7 | Pending |
+| ADMN-03 | Phase 7 | Pending |
+| ADMN-04 | Phase 7 | Pending |
+| ADMN-05 | Phase 7 | Pending |
+| PTCH-01 | Phase 8 | Pending |
+| PTCH-02 | Phase 8 | Pending |
+| PTCH-03 | Phase 8 | Pending |
+| PTCH-04 | Phase 8 | Pending |
+| PTCH-05 | Phase 8 | Pending |
+| PTCH-06 | Phase 8 | Pending |
+| PTCH-07 | Phase 8 | Pending |
+| PTCH-08 | Phase 8 | Pending |
+| SHOW-01 | Phase 8 | Pending |
+| SHOW-02 | Phase 8 | Pending |
+| SHOW-03 | Phase 8 | Pending |
+| PLAT-01 | Phase 1 | Pending |
+| PLAT-02 | Phase 1 | Pending |
+| PLAT-03 | Phase 2 | Pending |
+| PLAT-04 | Phase 3 | Pending |
+| PLAT-05 | Phase 1 | Pending |
 
 **Coverage:**
-- v1 requirements: 50 total
-- Mapped to phases: 0
-- Unmapped: 50
+- v1 requirements: 70 total
+- Mapped to phases: 70
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-02-14*
-*Last updated: 2026-02-14 after initial definition*
+*Last updated: 2026-02-14 after roadmap creation*

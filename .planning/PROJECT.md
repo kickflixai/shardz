@@ -149,7 +149,7 @@ V1 serves dual purpose: functional platform AND pitch tool. Needs to look like a
 
 ## Constraints
 
-- **Platform**: Web-first (PWA), mobile-first responsive design — no native apps in v1
+- **Platform**: Web-first (PWA) — viewer experience is mobile-first, creator dashboard is desktop-first; both work on either form factor but optimized for their primary use case
 - **Payments**: Stripe for consumer payments and creator payouts (Stripe Connect)
 - **Mock Content**: fal.ai API (Nano Banana Pro) for thumbnail generation; royalty-free videos for placeholders
 - **Content Format**: Vertical-first (9:16) with graceful horizontal handling
