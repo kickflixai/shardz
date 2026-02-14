@@ -67,12 +67,12 @@ Plans:
   3. When an episode ends, the next episode in the season auto-plays without user interaction
   4. User can toggle subtitles on/off while watching
   5. User cannot right-click to save the video or see a download button on the player
-**Plans**: TBD
+**Plans**: 3 plans (3 waves)
 
 Plans:
-- [ ] 03-01: Mux integration (upload pipeline, asset management, playback tokens)
-- [ ] 03-02: Vertical-first video player component with theater mode, controls, and iOS PWA workarounds
-- [ ] 03-03: Auto-continue logic, subtitle rendering, and content protection
+- [ ] 03-01-PLAN.md — Mux SDK client, JWT token signing, webhook handler for asset lifecycle events (Wave 1)
+- [ ] 03-02-PLAN.md — Video player component with vertical-first mobile + theater-mode desktop layout, iOS PWA fix (Wave 2)
+- [ ] 03-03-PLAN.md — Auto-continue countdown, subtitle defaults, content protection hardening (Wave 3)
 
 ### Phase 4: Content Browsing + Sharing
 **Goal**: Users can discover series by genre, view detailed series pages, and share content with rich social previews
