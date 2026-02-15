@@ -132,6 +132,26 @@
 	--color-cinema-muted: oklch(0.65 0 0);
 }
 
+/* Comment slide-up animation for video player overlay */
+@keyframes comment-slide-up {
+	0% {
+		opacity: 0;
+		transform: translateY(100%);
+	}
+	10% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	85% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	100% {
+		opacity: 0;
+		transform: translateY(-20%);
+	}
+}
+
 @layer base {
 	* {
 		@apply border-border outline-ring/50;
