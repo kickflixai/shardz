@@ -34,7 +34,7 @@ Progress: [▓▓▓▓▓▓▓▓▓░] 92%
 | 05-payments-monetization | 3 | 15min | 5min |
 | 06-creator-dashboard | 6 | 23min | 4min |
 | 07-admin-panel | 4 | 21min | 5min |
-| 08-mock-data-pitch-assets | 5 | 23min | 5min |
+| 08-mock-data-pitch-assets | 6 | 31min | 5min |
 
 **Recent Trend:**
 - Last 5 plans: 4min, 8min, 5min, 4min, 8min
@@ -268,7 +268,7 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-None yet.
+- Enhance Remotion browse-demo composition to use real series titles and thumbnail images from seed data after `pnpm seed:thumbnails` is run
 
 ### Blockers/Concerns
 
