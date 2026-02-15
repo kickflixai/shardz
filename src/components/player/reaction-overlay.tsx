@@ -6,6 +6,9 @@ interface Bubble {
 	id: string;
 	emoji: string;
 	left: number;
+	swayOffset: number;
+	scale: number;
+	duration: number;
 }
 
 interface ReactionEntry {
@@ -19,12 +22,13 @@ interface ReactionOverlayProps {
 	addBubble: (emoji: string) => void;
 	accumulatedReactions: Record<number, ReactionEntry[]>;
 	currentTime: number;
+	isPlaying?: boolean;
 }
 
 /**
- * Floating emoji bubbles layer with pool cap.
+ * Floating emoji bubbles in a right-side column.
  * Renders live broadcast bubbles and replays accumulated reactions at their
- * original timestamps during playback.
+ * original timestamps during playback. Pauses animations when video is paused.
  */
 export function ReactionOverlay({
 	bubbles,
@@ -32,6 +36,7 @@ export function ReactionOverlay({
 	addBubble,
 	accumulatedReactions,
 	currentTime,
+	isPlaying = true,
 }: ReactionOverlayProps) {
 	// Track which seconds have already been replayed to avoid duplicates
 	const processedSeconds = useRef<Set<number>>(new Set());
@@ -41,7 +46,6 @@ export function ReactionOverlay({
 	useEffect(() => {
 		const ts = Math.floor(currentTime);
 		if (ts < prevTime.current - 1) {
-			// Seek detected: clear processed seconds so reactions replay
 			processedSeconds.current.clear();
 		}
 		prevTime.current = ts;
@@ -50,6 +54,7 @@ export function ReactionOverlay({
 	// Replay accumulated reactions at their original timestamps
 	const replayReactions = useCallback(
 		(ts: number) => {
+			if (!isPlaying) return;
 			if (processedSeconds.current.has(ts)) return;
 			processedSeconds.current.add(ts);
 
@@ -58,24 +63,25 @@ export function ReactionOverlay({
 
 			let delay = 0;
 			for (const entry of entries) {
-				// Spawn bubbles based on count, staggered by 100ms each
-				const spawnCount = Math.min(entry.count, 10); // cap per-emoji to avoid flooding
+				// Cap per-emoji to avoid flooding — show max 3 per emoji type
+				const spawnCount = Math.min(entry.count, 3);
 				for (let i = 0; i < spawnCount; i++) {
 					const emoji = entry.emoji;
 					setTimeout(() => {
 						addBubble(emoji);
 					}, delay);
-					delay += 100;
+					delay += 200;
 				}
 			}
 		},
-		[accumulatedReactions, addBubble],
+		[accumulatedReactions, addBubble, isPlaying],
 	);
 
 	useEffect(() => {
+		if (!isPlaying) return;
 		const ts = Math.floor(currentTime);
 		replayReactions(ts);
-	}, [currentTime, replayReactions]);
+	}, [currentTime, replayReactions, isPlaying]);
 
 	return (
 		<div className="absolute inset-0 overflow-hidden pointer-events-none z-30">
@@ -83,7 +89,13 @@ export function ReactionOverlay({
 				<span
 					key={b.id}
 					className="reaction-bubble"
-					style={{ left: `${b.left}%` }}
+					style={{
+						left: `${b.left}%`,
+						"--sway-offset": `${b.swayOffset}px`,
+						"--bubble-scale": b.scale,
+						"--bubble-duration": `${b.duration}s`,
+						animationPlayState: isPlaying ? "running" : "paused",
+					} as React.CSSProperties}
 					onAnimationEnd={() => removeBubble(b.id)}
 				>
 					{b.emoji}

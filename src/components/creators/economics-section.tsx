@@ -84,7 +84,7 @@ export function EconomicsSection() {
 									</span>
 								</p>
 								<p>
-									On MicroShort, 1,000 unlocks at $4.99 earns
+									On Shardz, 1,000 unlocks at $4.99 earns
 									you{" "}
 									<span className="font-bold text-brand-yellow">
 										$3,992

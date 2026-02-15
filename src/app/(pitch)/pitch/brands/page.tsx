@@ -20,9 +20,9 @@ import { CTASection } from "@/components/pitch/cta-section";
 import { AdDashboardLazy } from "@/components/showcase/ad-dashboard-lazy";
 
 export const metadata: Metadata = {
-	title: "MicroShort for Brands | Genre-Targeted Short-Form Advertising",
+	title: "Shardz for Brands | Genre-Targeted Short-Form Advertising",
 	description:
-		"Reach paying, engaged audiences through genre-targeted advertising on MicroShort. Sponsored series, pre-roll spots, and branded content partnerships.",
+		"Reach paying, engaged audiences through genre-targeted advertising on Shardz. Sponsored series, pre-roll spots, and branded content partnerships.",
 };
 
 /* -------------------------------------------------------------------------- */
@@ -81,7 +81,7 @@ const differentiators = [
 		icon: Eye,
 		title: "Premium Attention",
 		description:
-			"Viewers on MicroShort are paying customers, not passive scrollers. 6x higher brand recall, 4.7x longer watch sessions, 11x higher click-through than free social platforms.",
+			"Viewers on Shardz are paying customers, not passive scrollers. 6x higher brand recall, 4.7x longer watch sessions, 11x higher click-through than free social platforms.",
 	},
 	{
 		icon: ShieldCheck,
@@ -202,15 +202,15 @@ export default function BrandPitchPage() {
 				variant="brand"
 				badge="For Brands"
 				headline="Reach Audiences by What They Love to Watch"
-				subheadline="MicroShort's genre-targeted marketplace puts your brand in front of engaged viewers who chose to pay for content they care about. Premium attention, not passive scrolling."
+				subheadline="Shardz's genre-targeted marketplace puts your brand in front of engaged viewers who chose to pay for content they care about. Premium attention, not passive scrolling."
 				backgroundImage="/pitch/hero-brand.jpg"
 			/>
 
-			{/* 2. Why MicroShort for Brands */}
+			{/* 2. Why Shardz for Brands */}
 			<section className="bg-cinema-black px-6 py-24 md:py-32">
 				<div className="mx-auto max-w-6xl">
 					<h2 className="mb-4 text-center text-sm font-bold uppercase tracking-[0.2em] text-teal-400">
-						Why MicroShort
+						Why Shardz
 					</h2>
 					<p className="mx-auto mb-16 max-w-2xl text-center text-3xl font-bold text-white md:text-4xl">
 						Advertising That Audiences Actually Choose
@@ -420,7 +420,7 @@ export default function BrandPitchPage() {
 				primaryCTA={{ label: "Explore the Platform", href: "/browse" }}
 				secondaryCTA={{
 					label: "Partner With Us",
-					href: "mailto:brands@microshort.com",
+					href: "mailto:brands@shardz.tv",
 				}}
 			/>
 		</main>
@@ -441,7 +441,7 @@ function AdProductVisual({
 		// Sponsored Series mock with real thumbnail
 		return (
 			<div className="overflow-hidden rounded-xl border border-white/10 bg-cinema-dark">
-				<div className="relative aspect-video">
+				<div className="relative aspect-[3/4]">
 					<Image
 						src={visual.thumbnail}
 						alt={visual.series}

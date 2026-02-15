@@ -44,7 +44,7 @@ export async function generateMetadata({
 		process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 	const seriesUrl = `${siteUrl}/series/${slug}`;
 	const description =
-		series.description || `Watch ${series.title} on MicroShort`;
+		series.description || `Watch ${series.title} on Shardz`;
 
 	return {
 		title: series.title,
@@ -53,7 +53,7 @@ export async function generateMetadata({
 			title: series.title,
 			description,
 			url: seriesUrl,
-			siteName: "MicroShort",
+			siteName: "Shardz",
 			type: "video.tv_show",
 			locale: "en_US",
 			images: series.thumbnail_url

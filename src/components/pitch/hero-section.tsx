@@ -100,14 +100,14 @@ export function HeroSection({
 
 			<div className="relative z-10 mx-auto max-w-4xl text-center animate-in fade-in duration-1000">
 				{badge && (
-					<div className="mb-6 inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-cinema-muted">
+					<div className="mb-6 inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-white/80">
 						{badge}
 					</div>
 				)}
 				<h1 className="text-balance text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
 					{headline}
 				</h1>
-				<p className="mx-auto mt-6 max-w-2xl text-lg text-cinema-muted sm:text-xl md:text-2xl">
+				<p className="mx-auto mt-6 max-w-2xl text-lg text-white/70 sm:text-xl md:text-2xl">
 					{subheadline}
 				</p>
 				{ctaLabel && ctaHref && (

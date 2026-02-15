@@ -28,7 +28,7 @@ export default function LoginPage() {
 		<Card>
 			<CardHeader>
 				<CardTitle>Sign In</CardTitle>
-				<CardDescription>Sign in to your MicroShort account</CardDescription>
+				<CardDescription>Sign in to your Shardz account</CardDescription>
 			</CardHeader>
 			<CardContent>
 				<form action={formAction} className="flex flex-col gap-4">

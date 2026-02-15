@@ -1,5 +1,5 @@
 /**
- * Mock series definitions for seeding MicroShort.
+ * Mock series definitions for seeding Shardz.
  *
  * 30 series across all 11 genre categories with varied pricing,
  * 1-3 seasons per series, and 8+ episodes per season.

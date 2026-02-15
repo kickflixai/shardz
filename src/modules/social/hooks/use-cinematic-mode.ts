@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useEffect } from "react";
 
-const STORAGE_KEY = "microshort:cinematic-mode";
+const STORAGE_KEY = "shardz:cinematic-mode";
 
 export function useCinematicMode() {
 	const [enabled, setEnabled] = useState(false);

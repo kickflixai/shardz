@@ -56,6 +56,7 @@ export function VideoPlayer({
 	const playerRef = useRef<MuxPlayerRefAttributes>(null);
 	const [showAutoContinue, setShowAutoContinue] = useState(false);
 	const [currentTime, setCurrentTime] = useState(0);
+	const [isPlaying, setIsPlaying] = useState(false);
 
 	useIOSPWAVideoFix(playerRef);
 
@@ -112,7 +113,7 @@ export function VideoPlayer({
 				metadata={{
 					video_id: episodeId,
 					video_title: title,
-					player_name: "MicroShort Player",
+					player_name: "Shardz Player",
 				}}
 				primaryColor="#facc15"
 				secondaryColor="rgba(0,0,0,0.7)"
@@ -128,6 +129,8 @@ export function VideoPlayer({
 				autoPlay={autoPlay ? ("any" as const) : undefined}
 				onEnded={handleEnded}
 				onTimeUpdate={handleTimeUpdate}
+				onPlay={() => setIsPlaying(true)}
+				onPause={() => setIsPlaying(false)}
 			/>
 
 			{/* Social overlays — layered bottom to top by z-index */}
@@ -146,6 +149,7 @@ export function VideoPlayer({
 					addBubble={addBubble}
 					accumulatedReactions={accumulatedReactions}
 					currentTime={currentTime}
+					isPlaying={isPlaying}
 				/>
 			)}
 

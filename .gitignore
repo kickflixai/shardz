@@ -43,3 +43,6 @@ next-env.d.ts
 
 # seed video assets (too large for git)
 scripts/seed/assets/videos/
+
+# public video files (too large for git, served locally or via CDN)
+public/videos/

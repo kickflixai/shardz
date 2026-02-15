@@ -23,19 +23,19 @@ export async function generateMetadata({
 
 	const displayName = profile.display_name || profile.username || "Creator";
 	const description =
-		profile.bio || `Watch ${displayName}'s series on MicroShort`;
+		profile.bio || `Watch ${displayName}'s series on Shardz`;
 	const siteUrl =
 		process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 	const profileUrl = `${siteUrl}/creator/${username}`;
 
 	return {
-		title: `${displayName} on MicroShort`,
+		title: `${displayName} on Shardz`,
 		description,
 		openGraph: {
-			title: `${displayName} on MicroShort`,
+			title: `${displayName} on Shardz`,
 			description,
 			url: profileUrl,
-			siteName: "MicroShort",
+			siteName: "Shardz",
 			type: "profile",
 			locale: "en_US",
 			images: profile.avatar_url
@@ -51,7 +51,7 @@ export async function generateMetadata({
 		},
 		twitter: {
 			card: "summary",
-			title: `${displayName} on MicroShort`,
+			title: `${displayName} on Shardz`,
 			description,
 		},
 		alternates: {

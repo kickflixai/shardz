@@ -80,7 +80,7 @@ export function WaitlistForm() {
 						href="/dashboard/apply"
 						className="font-semibold text-brand-yellow underline underline-offset-4 hover:text-brand-yellow-light"
 					>
-						Apply to create on MicroShort
+						Apply to create on Shardz
 					</a>
 				</p>
 			</div>

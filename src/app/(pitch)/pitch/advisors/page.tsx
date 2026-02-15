@@ -11,13 +11,15 @@ import {
 	ExternalLink,
 } from "lucide-react";
 import { HeroSection } from "@/components/pitch/hero-section";
+import { FeatureSection } from "@/components/pitch/feature-section";
 import { CTASection } from "@/components/pitch/cta-section";
+import { StudioCallout } from "@/components/pitch/studio-callout";
 
 export const metadata: Metadata = {
 	title:
-		"MicroShort Advisory Board | Shape the Future of Short-Form Entertainment",
+		"Shardz Advisory Board | Shape the Future of Short-Form Entertainment",
 	description:
-		"Join MicroShort's advisory board. We're seeking entertainment, technology, and business leaders to help build the definitive short-form video marketplace.",
+		"Join Shardz's advisory board. We're seeking entertainment, technology, and business leaders to help build the definitive short-form video marketplace.",
 };
 
 /* -------------------------------------------------------------------------- */
@@ -98,6 +100,43 @@ const advisoryBenefits = [
 ];
 
 /* -------------------------------------------------------------------------- */
+/*  Advisor Features (Remotion demos)                                          */
+/* -------------------------------------------------------------------------- */
+
+const advisorFeatures = [
+	{
+		title: "Cinematic Player",
+		description:
+			"Vertical-first on mobile, theater mode on desktop. Signed playback with DRM-ready infrastructure.",
+		composition: "player" as const,
+	},
+	{
+		title: "Genre Discovery",
+		description:
+			"Browse by genre across 11 categories. A curated catalog that surfaces quality, not algorithm-driven scroll.",
+		composition: "browse" as const,
+	},
+	{
+		title: "The Social Layer",
+		description:
+			"Watch parties and community engagement built into every episode. The platform creates shared experiences.",
+		composition: "social" as const,
+	},
+	{
+		title: "AI Creation Suite",
+		description:
+			"Integrated AI tools lower the barrier to premium content. The next wave of creators won't need Hollywood budgets.",
+		composition: "ai-tools" as const,
+	},
+	{
+		title: "Creator Dashboard",
+		description:
+			"Full-funnel analytics from first view to revenue. Creators see exactly how their audience discovers, watches, and pays.",
+		composition: "dashboard" as const,
+	},
+];
+
+/* -------------------------------------------------------------------------- */
 /*  Platform Thumbnails                                                        */
 /* -------------------------------------------------------------------------- */
 
@@ -122,8 +161,7 @@ export default function AdvisorPitchPage() {
 				variant="advisor"
 				badge="Advisory Board"
 				headline="Help Shape the Future of Short-Form Entertainment"
-				subheadline="MicroShort is building the marketplace that turns short-form video into a viable creative business. We're looking for advisors who see the transformation coming."
-				backgroundImage="/pitch/hero-advisor.jpg"
+				subheadline="Shardz is building the marketplace that turns short-form video into a viable creative business. We're looking for advisors who see the transformation coming."
 			/>
 
 			{/* 2. The Opportunity */}
@@ -205,7 +243,7 @@ export default function AdvisorPitchPage() {
 							<div className="absolute left-0 top-0 h-full w-1 rounded-full bg-gradient-to-b from-amber-400/40 via-amber-400/20 to-transparent" />
 							<div className="pl-8">
 								<p className="text-lg leading-relaxed text-cinema-muted md:text-xl">
-									MicroShort becomes the definitive platform where short-form
+									Shardz becomes the definitive platform where short-form
 									series are discovered, purchased, and celebrated. A
 									marketplace built for creators who want to be paid for their
 									craft, and viewers who want to support the content they love.
@@ -276,6 +314,9 @@ export default function AdvisorPitchPage() {
 				</div>
 			</section>
 
+			{/* 3.5. Platform Features with Remotion demos */}
+			<FeatureSection variant="advisor" features={advisorFeatures} />
+
 			{/* 4. What We Offer */}
 			<section className="bg-cinema-black px-6 py-24 md:py-32">
 				<div className="mx-auto max-w-6xl">
@@ -316,7 +357,7 @@ export default function AdvisorPitchPage() {
 						Not a Pitch Deck. A Working Product.
 					</p>
 					<p className="mx-auto mb-10 max-w-xl text-lg leading-relaxed text-cinema-muted">
-						MicroShort is a functional marketplace with genre discovery, video
+						Shardz is a functional marketplace with genre discovery, video
 						playback, payments, and a creator dashboard. Ready for its first
 						wave of content and creators.
 					</p>
@@ -328,7 +369,7 @@ export default function AdvisorPitchPage() {
 								key={t.title}
 								className="group overflow-hidden rounded-xl border border-white/5 transition-colors hover:border-amber-500/20"
 							>
-								<div className="relative aspect-video">
+								<div className="relative aspect-[3/4]">
 									<Image
 										src={t.src}
 										alt={t.title}
@@ -372,14 +413,99 @@ export default function AdvisorPitchPage() {
 				</div>
 			</section>
 
-			{/* 6. CTA */}
+			{/* 6. Business Model Overview */}
+			<section className="bg-cinema-black px-6 py-24 md:py-32">
+				<div className="mx-auto max-w-4xl">
+					<h2 className="mb-4 text-center text-sm font-bold uppercase tracking-[0.2em] text-amber-400">
+						The Business Model
+					</h2>
+					<p className="mx-auto mb-16 max-w-2xl text-center text-3xl font-bold text-white md:text-4xl">
+						Simple Economics, Real Revenue
+					</p>
+
+					<div className="mx-auto mb-12 max-w-2xl">
+						<div className="overflow-hidden rounded-2xl border border-white/5">
+							<div className="flex items-center justify-between bg-brand-yellow/10 px-8 py-6">
+								<div>
+									<div className="text-5xl font-extrabold text-brand-yellow">80%</div>
+									<div className="mt-1 text-lg font-bold text-white">Creators keep</div>
+								</div>
+								<div className="text-right text-sm text-cinema-muted">Direct per-season sales</div>
+							</div>
+							<div className="flex items-center justify-between border-t border-white/5 bg-white/5 px-8 py-4">
+								<div>
+									<div className="text-2xl font-bold text-cinema-muted">20%</div>
+									<div className="mt-0.5 text-sm text-cinema-muted">Platform</div>
+								</div>
+								<div className="text-right text-sm text-cinema-muted">Hosting, payments, discovery</div>
+							</div>
+						</div>
+					</div>
+
+					<div className="grid gap-4 sm:grid-cols-3">
+						{[
+							{ value: "$3,992", label: "1K fans × $4.99", sub: "Early traction" },
+							{ value: "$39,920", label: "10K fans × $4.99", sub: "Growth phase" },
+							{ value: "$399,200", label: "100K fans × $4.99", sub: "At scale" },
+						].map((ex) => (
+							<div key={ex.label} className="rounded-xl border border-amber-500/10 bg-amber-500/[0.03] p-6 text-center">
+								<div className="text-2xl font-extrabold text-amber-400">{ex.value}</div>
+								<div className="mt-1 text-sm text-cinema-muted">{ex.label}</div>
+								<div className="mt-0.5 text-xs text-cinema-muted/60">{ex.sub}</div>
+							</div>
+						))}
+					</div>
+				</div>
+			</section>
+
+			{/* 7. Market Timing */}
+			<section className="bg-gradient-to-b from-cinema-black via-[rgba(218,165,32,0.02)] to-cinema-black px-6 py-24 md:py-32">
+				<div className="mx-auto max-w-4xl">
+					<h2 className="mb-4 text-center text-sm font-bold uppercase tracking-[0.2em] text-amber-400">
+						Why Now
+					</h2>
+					<p className="mx-auto mb-16 max-w-2xl text-center text-3xl font-bold text-white md:text-4xl">
+						Three Forces Converging
+					</p>
+					<div className="grid gap-6 md:grid-cols-3">
+						{[
+							{
+								title: "AI Democratizes Creation",
+								description: "Production costs dropping from $50K+ to under $5K. A new generation of creators can produce cinema-quality content.",
+							},
+							{
+								title: "Short-Form Dominates",
+								description: "5.2B+ viewers consume short-form daily. The format is proven. The monetization layer is missing.",
+							},
+							{
+								title: "Creator Economy Gap",
+								description: "Creators earn $0.003/view on ad platforms. Direct sales at $4.99/season change everything.",
+							},
+						].map((item) => (
+							<div key={item.title} className="rounded-2xl border border-amber-500/10 bg-white/[0.03] p-8">
+								<h3 className="mb-3 text-lg font-bold text-white">{item.title}</h3>
+								<p className="text-sm leading-relaxed text-cinema-muted">{item.description}</p>
+							</div>
+						))}
+					</div>
+				</div>
+			</section>
+
+			{/* 8. Shardz Studio Callout */}
+			<section className="bg-cinema-black px-6 py-24 md:py-32">
+				<div className="mx-auto max-w-5xl">
+					<StudioCallout variant="investor" />
+				</div>
+			</section>
+
+			{/* 9. CTA */}
 			<CTASection
 				variant="advisor"
 				tagline="The best platforms are shaped by the people who see what's next."
 				primaryCTA={{ label: "Explore the Platform", href: "/browse" }}
 				secondaryCTA={{
 					label: "Join Our Advisory Board",
-					href: "mailto:advisors@microshort.com",
+					href: "mailto:advisors@shardz.tv",
 				}}
 			/>
 		</main>

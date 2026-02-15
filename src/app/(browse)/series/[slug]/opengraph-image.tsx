@@ -19,7 +19,7 @@ export default async function OGImage({
 		.eq("status", "published")
 		.single();
 
-	const title = series?.title || "MicroShort";
+	const title = series?.title || "Shardz";
 	const genre = series?.genre?.toUpperCase() || "";
 	const profiles = series?.profiles as
 		| { display_name: string | null }[]
@@ -28,7 +28,7 @@ export default async function OGImage({
 	const creatorName =
 		(Array.isArray(profiles)
 			? profiles[0]?.display_name
-			: profiles?.display_name) || "MicroShort Creator";
+			: profiles?.display_name) || "Shardz Creator";
 
 	return new ImageResponse(
 		(
@@ -84,7 +84,7 @@ export default async function OGImage({
 					}}
 				>
 					<div style={{ fontSize: 22, color: "#a3a3a3" }}>
-						microshort.tv
+						shardz.tv
 					</div>
 					<div
 						style={{

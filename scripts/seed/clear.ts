@@ -1,5 +1,5 @@
 /**
- * MicroShort Clear Script
+ * Shardz Clear Script
  *
  * Removes all mock data from the platform: Mux assets, Supabase Storage files,
  * database records, and auth users. Enables the "clear and replace with real content"
@@ -351,7 +351,7 @@ async function cleanupAuthUsers(profileIds: string[]): Promise<number> {
 
 async function main(): Promise<void> {
 	console.log("============================================");
-	console.log("  MicroShort Clear Script");
+	console.log("  Shardz Clear Script");
 	console.log("============================================");
 	console.log(`  Start: ${new Date().toISOString()}`);
 	console.log("============================================\n");

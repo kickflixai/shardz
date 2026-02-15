@@ -8,7 +8,10 @@ import { REACTION_EMOJIS } from "@/modules/social/constants";
 interface Bubble {
 	id: string;
 	emoji: string;
-	left: number; // percentage 10-90
+	left: number; // percentage — constrained to right column (75-95)
+	swayOffset: number; // horizontal sway in px
+	scale: number; // 0.8-1.2 for natural variation
+	duration: number; // seconds for float animation
 }
 
 interface ReactionEvent {
@@ -16,7 +19,7 @@ interface ReactionEvent {
 	timestamp: number;
 }
 
-const MAX_BUBBLES = 20;
+const MAX_BUBBLES = 12;
 
 export function useReactions(episodeId: string) {
 	const channelRef = useRef<RealtimeChannel | null>(null);
@@ -29,7 +32,14 @@ export function useReactions(episodeId: string) {
 				{
 					id: crypto.randomUUID(),
 					emoji,
-					left: Math.random() * 80 + 10,
+					// Right column: 75-92% with slight variation
+					left: 75 + Math.random() * 17,
+					// Gentle sway: -8 to +8 px
+					swayOffset: (Math.random() - 0.5) * 16,
+					// Natural size variation
+					scale: 0.85 + Math.random() * 0.3,
+					// Variable float duration: 2.5-3.5s
+					duration: 2.5 + Math.random() * 1,
 				},
 			];
 			return next.length > MAX_BUBBLES

@@ -4,6 +4,7 @@ import { HeroSection } from "@/components/pitch/hero-section";
 import { FeatureSection } from "@/components/pitch/feature-section";
 import { StatsSection } from "@/components/pitch/stats-section";
 import { CTASection } from "@/components/pitch/cta-section";
+import { StudioCallout } from "@/components/pitch/studio-callout";
 import { AttributionDashboardLazy } from "@/components/showcase/attribution-dashboard-lazy";
 import {
 	Play,
@@ -15,9 +16,9 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-	title: "MicroShort for Investors | The Missing Monetization Layer",
+	title: "Shardz for Investors | The Missing Monetization Layer",
 	description:
-		"Short-form video has no monetization layer. MicroShort is the marketplace where creators sell premium series directly to audiences.",
+		"Short-form video has no monetization layer. Shardz is the marketplace where creators sell premium series directly to audiences.",
 };
 
 const marketStats = [
@@ -87,6 +88,24 @@ const investorFeatures = [
 			"Full-funnel visibility from first view to revenue. Creators see exactly how their audience discovers, watches, and pays.",
 		composition: "dashboard" as const,
 	},
+	{
+		title: "Social Engagement Layer",
+		description:
+			"Real-time emoji reactions and timestamped comments create community around content. Viewers don't just watch -- they participate.",
+		composition: "social" as const,
+	},
+	{
+		title: "AI-Powered Creation",
+		description:
+			"AI filmmaking tools collapse production costs from $50K+ to under $5K. The supply side explosion is built into the platform.",
+		composition: "ai-tools" as const,
+	},
+	{
+		title: "Multi-Format Monetization",
+		description:
+			"Not just scripted series. BTS content, creator exclusives, tutorials, AI-made films -- every format has a price tag.",
+		composition: "formats" as const,
+	},
 ];
 
 const whyNow = [
@@ -116,7 +135,7 @@ const gapPlatforms = [
 	{ name: "YouTube", format: "Long-form", model: "Subscriptions + Ads", gap: true },
 	{ name: "Netflix", format: "Catalog", model: "Monthly subscription", gap: true },
 	{ name: "TikTok", format: "Infinite scroll", model: "Ad-funded", gap: true },
-	{ name: "MicroShort", format: "Premium series", model: "Per-series purchase", gap: false },
+	{ name: "Shardz", format: "Premium series", model: "Per-series purchase", gap: false },
 ];
 
 const funnelSteps = [
@@ -144,8 +163,7 @@ export default function InvestorPitchPage() {
 				variant="investor"
 				badge="For Investors"
 				headline="Short-Form Video Has No Monetization Layer"
-				subheadline="MicroShort is the marketplace that lets creators sell premium short-form series directly to audiences. No subscriptions. No ad-dependency. Just content worth paying for."
-				backgroundImage="/pitch/hero-investor.jpg"
+				subheadline="Shardz is the marketplace that lets creators sell premium short-form series directly to audiences. No subscriptions. No ad-dependency. Just content worth paying for."
 			/>
 
 			{/* 2. Market Opportunity */}
@@ -290,7 +308,7 @@ export default function InvestorPitchPage() {
 						Track Every Viewer from First Touch to Revenue
 					</p>
 					<p className="mx-auto mb-12 max-w-2xl text-center text-lg text-cinema-muted">
-						MicroShort gives creators and operators full visibility
+						Shardz gives creators and operators full visibility
 						into how content performs and where audiences come from.
 					</p>
 					<AttributionDashboardLazy />
@@ -341,7 +359,7 @@ export default function InvestorPitchPage() {
 						Not a Pitch Deck. A Working Product.
 					</p>
 					<p className="mx-auto mb-12 max-w-xl text-center text-lg text-cinema-muted">
-						MicroShort is a fully functional marketplace with genre discovery,
+						Shardz is a fully functional marketplace with genre discovery,
 						video playback, payments, and creator tools -- built and ready for launch.
 					</p>
 
@@ -393,7 +411,7 @@ export default function InvestorPitchPage() {
 								key={t.title}
 								className="group overflow-hidden rounded-xl border border-white/5 transition-colors hover:border-brand-yellow/20"
 							>
-								<div className="relative aspect-video">
+								<div className="relative aspect-[3/4]">
 									<Image
 										src={t.src}
 										alt={t.title}
@@ -410,13 +428,20 @@ export default function InvestorPitchPage() {
 				</div>
 			</section>
 
-			{/* 10. CTA */}
+			{/* 10. Competitive Moat: Shardz Studio */}
+			<section className="bg-cinema-black px-6 py-24 md:py-32">
+				<div className="mx-auto max-w-5xl">
+					<StudioCallout variant="investor" />
+				</div>
+			</section>
+
+			{/* 11. CTA */}
 			<CTASection
 				variant="investor"
 				primaryCTA={{ label: "Explore the Platform", href: "/browse" }}
 				secondaryCTA={{
 					label: "Get in Touch",
-					href: "mailto:invest@microshort.com",
+					href: "mailto:invest@shardz.tv",
 				}}
 				tagline="The missing marketplace for short-form video."
 			/>

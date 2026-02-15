@@ -5,7 +5,7 @@ import { FeatureGrid } from "@/components/creators/feature-grid";
 import { WaitlistForm } from "@/components/creators/waitlist-form";
 
 export const metadata: Metadata = {
-	title: "Create on MicroShort | Monetize Short-Form Series",
+	title: "Create on Shardz | Monetize Short-Form Series",
 	description:
 		"Upload short-form series, set your price, keep 80%. Join the platform built for creators.",
 };

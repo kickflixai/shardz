@@ -4,8 +4,6 @@ import { createClient } from "@/lib/supabase/server";
 import { REACTION_EMOJIS } from "@/modules/social/constants";
 import type { ReactionEmoji } from "@/modules/social/constants";
 
-export { REACTION_EMOJIS, type ReactionEmoji };
-
 export async function recordReaction(
 	episodeId: string,
 	timestampSeconds: number,

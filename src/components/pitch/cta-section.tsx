@@ -62,9 +62,9 @@ export function CTASection({
 			/>
 
 			<div className="relative z-10 mx-auto max-w-3xl text-center">
-				{/* MicroShort wordmark */}
+				{/* Shardz wordmark */}
 				<div className="mb-6 text-sm font-bold uppercase tracking-[0.2em] text-cinema-muted">
-					MicroShort
+					Shardz
 				</div>
 
 				{/* Closing tagline */}

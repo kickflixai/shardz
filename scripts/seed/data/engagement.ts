@@ -1,5 +1,5 @@
 /**
- * Engagement data generation functions for seeding MicroShort.
+ * Engagement data generation functions for seeding Shardz.
  *
  * Produces realistic view counts, purchase estimates, and follower counts
  * for an early-stage platform where the hero series drives the most traffic.
@@ -68,7 +68,7 @@ export interface EngagementData {
 export function generateViewCounts(
 	seriesData: Array<{ genre: string; isHeroSeries: boolean }>,
 ): SeriesEngagement[] {
-	const rng = seededRandom("microshort-views-v1");
+	const rng = seededRandom("shardz-views-v1");
 
 	const popularGenres = new Set(["thriller", "action", "sci-fi", "horror"]);
 
@@ -106,7 +106,7 @@ export function generatePurchaseCounts(
 	seriesData: Array<{ isHeroSeries: boolean; seasons: Array<{ priceCents: number }> }>,
 	seriesViews: SeriesEngagement[],
 ): SeasonPurchases[] {
-	const rng = seededRandom("microshort-purchases-v1");
+	const rng = seededRandom("shardz-purchases-v1");
 	const purchases: SeasonPurchases[] = [];
 
 	for (let si = 0; si < seriesData.length; si++) {
@@ -161,7 +161,7 @@ export function generateFollowerCounts(
 	seriesData: Array<{ creatorIndex: number }>,
 	seriesViews: SeriesEngagement[],
 ): CreatorFollowers[] {
-	const rng = seededRandom("microshort-followers-v1");
+	const rng = seededRandom("shardz-followers-v1");
 
 	// Aggregate views per creator
 	const viewsByCreator = new Map<number, number>();

@@ -74,14 +74,14 @@ export async function generateMetadata({
 		process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 
 	return {
-		title: `${displayName} - MicroShort`,
-		description: profile.bio || `${displayName}'s activity on MicroShort`,
+		title: `${displayName} - Shardz`,
+		description: profile.bio || `${displayName}'s activity on Shardz`,
 		openGraph: {
-			title: `${displayName} - MicroShort`,
+			title: `${displayName} - Shardz`,
 			description:
-				profile.bio || `${displayName}'s activity on MicroShort`,
+				profile.bio || `${displayName}'s activity on Shardz`,
 			url: `${siteUrl}/user/${username}`,
-			siteName: "MicroShort",
+			siteName: "Shardz",
 			type: "profile",
 			...(profile.avatar_url
 				? {

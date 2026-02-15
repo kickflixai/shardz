@@ -2,9 +2,9 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
 	return {
-		name: "MicroShort",
-		short_name: "MicroShort",
-		description: "Premium microshort video series",
+		name: "Shardz",
+		short_name: "Shardz",
+		description: "Premium short-form video series",
 		start_url: "/",
 		display: "standalone",
 		orientation: "portrait",

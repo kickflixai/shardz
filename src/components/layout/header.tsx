@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import type { User } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/client";
 import { LogoutButton } from "@/components/auth/logout-button";
+import { useDemoRole } from "@/components/providers/demo-role-provider";
 import { MobileNav } from "@/components/layout/mobile-nav";
 
 type UserRole = "viewer" | "creator" | "admin";
@@ -12,7 +14,15 @@ type UserRole = "viewer" | "creator" | "admin";
 export function Header() {
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 	const [user, setUser] = useState<User | null>(null);
-	const [role, setRole] = useState<UserRole>("viewer");
+	const [actualRole, setActualRole] = useState<UserRole>("viewer");
+	const { demoRole } = useDemoRole();
+
+	// Effective role: demo override if it's a downgrade, otherwise actual
+	const roleHierarchy: Record<UserRole, number> = { viewer: 0, creator: 1, admin: 2 };
+	const role: UserRole =
+		demoRole && roleHierarchy[demoRole] < roleHierarchy[actualRole]
+			? demoRole
+			: actualRole;
 
 	useEffect(() => {
 		const supabase = createClient();
@@ -33,7 +43,7 @@ export function Header() {
 	// Fetch user role when user changes
 	useEffect(() => {
 		if (!user) {
-			setRole("viewer");
+			setActualRole("viewer");
 			return;
 		}
 
@@ -45,7 +55,7 @@ export function Header() {
 			.single()
 			.then(({ data }) => {
 				if (data?.role) {
-					setRole(data.role as UserRole);
+					setActualRole(data.role as UserRole);
 				}
 			});
 	}, [user]);
@@ -54,8 +64,9 @@ export function Header() {
 		<>
 			<header className="fixed top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
 				<div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4">
-					<Link href="/" className="text-xl font-bold text-primary">
-						MicroShort
+					<Link href="/" className="flex items-center gap-2">
+						<Image src="/logo.png" alt="Shardz" width={28} height={28} />
+						<span className="text-xl font-bold text-primary">Shardz</span>
 					</Link>
 
 					<nav className="hidden items-center gap-6 md:flex">
@@ -101,12 +112,20 @@ export function Header() {
 									</Link>
 								)}
 								{role === "admin" && (
-									<Link
-										href="/admin"
-										className="text-sm text-muted-foreground transition-colors hover:text-primary"
-									>
-										Admin
-									</Link>
+									<>
+										<Link
+											href="/admin"
+											className="text-sm text-muted-foreground transition-colors hover:text-primary"
+										>
+											Admin
+										</Link>
+										<Link
+											href="/pitch"
+											className="text-sm text-muted-foreground transition-colors hover:text-primary"
+										>
+											Pitch
+										</Link>
+									</>
 								)}
 								<LogoutButton />
 							</>

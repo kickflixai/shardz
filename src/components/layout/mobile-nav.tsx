@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import type { User } from "@supabase/supabase-js";
 import { LogoutButton } from "@/components/auth/logout-button";
 
@@ -19,7 +20,10 @@ export function MobileNav({ open, onClose, user, role }: MobileNavProps) {
 	return (
 		<div className="fixed inset-0 z-50 bg-background/98 backdrop-blur md:hidden">
 			<div className="flex h-14 items-center justify-between px-4">
-				<span className="text-xl font-bold text-primary">MicroShort</span>
+				<span className="flex items-center gap-2">
+					<Image src="/logo.png" alt="Shardz" width={28} height={28} />
+					<span className="text-xl font-bold text-primary">Shardz</span>
+				</span>
 				<button
 					type="button"
 					className="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground hover:text-foreground"
@@ -88,13 +92,22 @@ export function MobileNav({ open, onClose, user, role }: MobileNavProps) {
 							</Link>
 						)}
 						{role === "admin" && (
-							<Link
-								href="/admin"
-								className="text-lg text-foreground transition-colors hover:text-primary"
-								onClick={onClose}
-							>
-								Admin
-							</Link>
+							<>
+								<Link
+									href="/admin"
+									className="text-lg text-foreground transition-colors hover:text-primary"
+									onClick={onClose}
+								>
+									Admin
+								</Link>
+								<Link
+									href="/pitch"
+									className="text-lg text-foreground transition-colors hover:text-primary"
+									onClick={onClose}
+								>
+									Pitch
+								</Link>
+							</>
 						)}
 						<div onClick={onClose}>
 							<LogoutButton />

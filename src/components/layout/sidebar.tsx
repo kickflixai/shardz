@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 interface SidebarProps {
@@ -81,8 +82,9 @@ export function Sidebar({ variant }: SidebarProps) {
 	return (
 		<aside className="fixed left-0 top-0 z-40 hidden h-screen w-64 border-r border-border bg-card lg:block">
 			<div className="flex h-14 items-center border-b border-border px-4">
-				<Link href="/" className="text-lg font-bold text-primary">
-					MicroShort
+				<Link href="/" className="flex items-center gap-2">
+					<Image src="/logo.png" alt="Shardz" width={24} height={24} />
+					<span className="text-lg font-bold text-primary">Shardz</span>
 				</Link>
 			</div>
 			<div className="px-4 py-4">

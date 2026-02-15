@@ -3,6 +3,7 @@ import { checkEpisodeAccess, FREE_EPISODE_LIMIT } from "@/lib/access";
 import { hasUserPurchasedSeason } from "@/modules/purchases/queries/get-user-purchases";
 import { VideoPlayerShell } from "@/components/player/video-player-shell";
 import { PlayerLayout } from "@/components/player/player-layout";
+import { EpisodeSidebar } from "@/components/player/episode-sidebar";
 import { SeasonPaywall } from "@/components/paywall/season-paywall";
 import { getEpisodeComments } from "@/modules/social/queries/get-episode-comments";
 import { getEpisodeReactions } from "@/modules/social/queries/get-episode-reactions";
@@ -27,8 +28,6 @@ function mapToRecord<T>(map: Map<number, T[]>): Record<number, T[]> {
 
 /**
  * Convert comment query shape (CommentWithAuthor) to client shape (CommentWithProfile).
- * The query has { author: { display_name, avatar_url } } while the hook expects
- * { display_name, avatar_url, user_id } at the top level.
  */
 function convertCommentsToProfile(
 	commentMap: Map<number, Array<{ id: string; user_id: string; content: string; timestamp_seconds: number; author: { display_name: string | null; avatar_url: string | null } }>>,
@@ -45,6 +44,26 @@ function convertCommentsToProfile(
 		}));
 	}
 	return record;
+}
+
+/**
+ * Fetch all episodes in the same season for the sidebar episode list.
+ */
+async function getSeasonEpisodes(
+	supabase: Awaited<ReturnType<typeof createClient>>,
+	seasonId: string,
+) {
+	const { data } = await supabase
+		.from("episodes")
+		.select("episode_number, title, duration_seconds")
+		.eq("season_id", seasonId)
+		.eq("status", "published")
+		.order("episode_number");
+
+	return (data ?? []).map((ep) => ({
+		...ep,
+		is_free: ep.episode_number <= FREE_EPISODE_LIMIT,
+	}));
 }
 
 export default async function EpisodePage({ params }: EpisodePageProps) {
@@ -104,7 +123,9 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
 			.eq("episode_number", episodeNumber)
 			.eq("seasons.series.slug", slug)
 			.eq("seasons.episodes.status", "published")
-			.single();
+			.order("season_number", { referencedTable: "seasons", ascending: true })
+			.limit(1)
+			.maybeSingle();
 
 		if (!episodeData) {
 			return (
@@ -146,9 +167,6 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
 
 		const access = checkEpisodeAccess(episodeNumber, user, hasPurchased);
 
-		// For both auth_required and payment_required, show the paywall.
-		// "Value before account" pattern: unauthenticated users see the paywall,
-		// and the UnlockButton inside handles login redirect when clicked.
 		if (!access.allowed) {
 			const priceCents = season.price_cents ?? 499;
 			const totalEpisodes = season.episodes?.length ?? 0;
@@ -180,8 +198,8 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
 			);
 		}
 
-		// Access granted -- load social data and render player
-		const [nextEpisodeResult, commentBuckets, reactionBuckets] =
+		// Access granted -- load social data + episode list in parallel
+		const [nextEpisodeResult, commentBuckets, reactionBuckets, seasonEpisodes] =
 			await Promise.all([
 				supabase
 					.from("episodes")
@@ -191,6 +209,7 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
 					.single(),
 				getEpisodeComments(episodeData.id),
 				getEpisodeReactions(episodeData.id),
+				getSeasonEpisodes(supabase, episodeData.season_id),
 			]);
 
 		let nextEpisodeUrl: string | undefined;
@@ -205,7 +224,7 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
 
 		return (
 			<div className="bg-cinema-black">
-				<div className="mx-auto max-w-4xl px-4 pt-4 pb-2">
+				<div className="mx-auto max-w-5xl px-4 pt-4 pb-2">
 					<Link
 						href={`/series/${slug}`}
 						className="text-sm text-muted-foreground transition-colors hover:text-primary"
@@ -214,7 +233,16 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
 					</Link>
 				</div>
 
-				<PlayerLayout>
+				<PlayerLayout
+					sidebar={
+						<EpisodeSidebar
+							episodes={seasonEpisodes}
+							seriesSlug={slug}
+							seriesTitle={season.series.title}
+							currentEpisodeNumber={episodeNumber}
+						/>
+					}
+				>
 					<VideoPlayerShell
 						episodeId={episodeData.id}
 						nextEpisodeUrl={nextEpisodeUrl}
@@ -225,7 +253,7 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
 					/>
 				</PlayerLayout>
 
-				<div className="mx-auto max-w-4xl px-4 py-6">
+				<div className="mx-auto max-w-5xl px-4 py-6">
 					<h1 className="text-xl font-bold text-foreground">
 						{episodeData.title}
 					</h1>
@@ -245,7 +273,6 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
 	// Free episodes (1-3): simple access check, no purchase lookup needed
 	const access = checkEpisodeAccess(episodeNumber, user, false);
 
-	// This should always be allowed for episodes 1-3, but guard anyway
 	if (!access.allowed) {
 		return (
 			<div className="mx-auto max-w-2xl px-4 py-16 text-center">
@@ -280,7 +307,9 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
 		)
 		.eq("episode_number", episodeNumber)
 		.eq("seasons.series.slug", slug)
-		.single();
+		.order("season_number", { referencedTable: "seasons", ascending: true })
+		.limit(1)
+		.maybeSingle();
 
 	if (!episode) {
 		return (
@@ -310,8 +339,14 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
 		);
 	}
 
-	// Load next episode and social data in parallel
-	const [nextEpisodeResult, commentBuckets, reactionBuckets] =
+	const seriesTitle = (
+		episode.seasons as unknown as {
+			series: { slug: string; title: string };
+		}
+	).series.title;
+
+	// Load next episode, social data, and episode list in parallel
+	const [nextEpisodeResult, commentBuckets, reactionBuckets, seasonEpisodes] =
 		await Promise.all([
 			supabase
 				.from("episodes")
@@ -321,6 +356,7 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
 				.single(),
 			getEpisodeComments(episode.id),
 			getEpisodeReactions(episode.id),
+			getSeasonEpisodes(supabase, episode.season_id),
 		]);
 
 	let nextEpisodeUrl: string | undefined;
@@ -333,15 +369,9 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
 	const comments = convertCommentsToProfile(commentBuckets);
 	const accumulatedReactions = mapToRecord(reactionBuckets);
 
-	const seriesTitle = (
-		episode.seasons as unknown as {
-			series: { slug: string; title: string };
-		}
-	).series.title;
-
 	return (
 		<div className="bg-cinema-black">
-			<div className="mx-auto max-w-4xl px-4 pt-4 pb-2">
+			<div className="mx-auto max-w-5xl px-4 pt-4 pb-2">
 				<Link
 					href={`/series/${slug}`}
 					className="text-sm text-muted-foreground transition-colors hover:text-primary"
@@ -350,7 +380,16 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
 				</Link>
 			</div>
 
-			<PlayerLayout>
+			<PlayerLayout
+				sidebar={
+					<EpisodeSidebar
+						episodes={seasonEpisodes}
+						seriesSlug={slug}
+						seriesTitle={seriesTitle}
+						currentEpisodeNumber={episodeNumber}
+					/>
+				}
+			>
 				<VideoPlayerShell
 					episodeId={episode.id}
 					nextEpisodeUrl={nextEpisodeUrl}
@@ -361,7 +400,7 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
 				/>
 			</PlayerLayout>
 
-			<div className="mx-auto max-w-4xl px-4 py-6">
+			<div className="mx-auto max-w-5xl px-4 py-6">
 				<h1 className="text-xl font-bold text-foreground">
 					{episode.title}
 				</h1>

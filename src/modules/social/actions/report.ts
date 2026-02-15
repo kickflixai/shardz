@@ -43,5 +43,5 @@ export async function reportContent(formData: FormData): Promise<SocialFormState
 	// For series and episodes, we log but don't auto-flag
 	// (admin review required for content takedowns)
 
-	return { success: true, message: "Report submitted. Thank you for keeping MicroShort safe." };
+	return { success: true, message: "Report submitted. Thank you for keeping Shardz safe." };
 }

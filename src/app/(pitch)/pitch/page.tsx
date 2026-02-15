@@ -5,13 +5,15 @@ import {
 	Megaphone,
 	Lightbulb,
 	Film,
+	Monitor,
+	GraduationCap,
 	ArrowRight,
 } from "lucide-react";
 
 export const metadata: Metadata = {
-	title: "MicroShort - The Missing Monetization Layer for Short-Form Video",
+	title: "Shardz - The Missing Monetization Layer for Short-Form Video",
 	description:
-		"MicroShort is the premium marketplace for short-form video series. Explore our pitch for investors, brands, advisors, and creators.",
+		"Shardz is the premium marketplace for short-form video series. Explore our pitch for investors, brands, advisors, and creators.",
 };
 
 const stakeholderPages = [
@@ -43,6 +45,20 @@ const stakeholderPages = [
 		icon: Film,
 		accentClass: "group-hover:text-brand-yellow group-hover:border-brand-yellow/30",
 	},
+	{
+		title: "Shardz Studio",
+		description: "Free AI filmmaking training for every creator",
+		href: "/pitch/studio",
+		icon: GraduationCap,
+		accentClass: "group-hover:text-brand-yellow group-hover:border-brand-yellow/30",
+	},
+	{
+		title: "Platform Overview",
+		description: "The complete marketplace — features, economics, and technology",
+		href: "/pitch/platform",
+		icon: Monitor,
+		accentClass: "group-hover:text-brand-yellow group-hover:border-brand-yellow/30",
+	},
 ];
 
 export default function PitchHubPage() {
@@ -52,8 +68,8 @@ export default function PitchHubPage() {
 			<div className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-cinema-muted">
 				Pitch
 			</div>
-			<h1 className="text-center text-5xl font-extrabold tracking-tight text-white sm:text-6xl md:text-7xl">
-				Micro<span className="text-brand-yellow">Short</span>
+			<h1 className="text-center text-5xl font-extrabold tracking-tight text-brand-yellow sm:text-6xl md:text-7xl">
+				Shardz
 			</h1>
 			<p className="mx-auto mt-6 max-w-xl text-center text-lg text-cinema-muted md:text-xl">
 				The missing monetization layer for short-form video. A premium

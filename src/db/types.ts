@@ -1,4 +1,4 @@
-// MicroShort Database Type Definitions
+// Shardz Database Type Definitions
 // Hand-written types matching the Supabase content hierarchy schema.
 // These will be used throughout the application until auto-generation
 // from Supabase is configured in a later phase.

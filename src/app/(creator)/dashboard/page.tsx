@@ -3,6 +3,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { getCreatorOverview } from "@/modules/creator/queries/get-creator-analytics";
 import { formatPrice } from "@/lib/stripe/prices";
+import { getEffectiveRole } from "@/lib/demo-role";
 
 function formatViewCount(count: number): string {
 	if (count >= 1_000_000) {
@@ -62,8 +63,11 @@ export default async function CreatorDashboardPage() {
 		redirect("/login");
 	}
 
+	// Apply demo role override (only allows downgrade)
+	const effectiveRole = await getEffectiveRole(profile.role as "viewer" | "creator" | "admin");
+
 	// Viewer: show apply CTA
-	if (profile.role === "viewer") {
+	if (effectiveRole === "viewer") {
 		return (
 			<div className="py-4">
 				<h1 className="text-3xl font-bold text-foreground">
@@ -74,7 +78,7 @@ export default async function CreatorDashboardPage() {
 						Become a Creator
 					</h2>
 					<p className="mt-2 text-muted-foreground">
-						Apply to become a creator and start sharing your microshort films
+						Apply to become a creator and start sharing your short-form films
 						with the world.
 					</p>
 					<Link

@@ -1,5 +1,5 @@
 /**
- * Mock creator persona definitions for seeding MicroShort.
+ * Mock creator persona definitions for seeding Shardz.
  *
  * Each creator has a unique personality, background, and creative voice.
  * All data is pure TypeScript -- no database calls, no side effects.
@@ -20,13 +20,13 @@ export interface MockCreator {
 /**
  * 12 creator personas covering diverse creative backgrounds.
  *
- * All emails use @mock.microshort.dev for deterministic idempotency.
+ * All emails use @mock.shardz.dev for deterministic idempotency.
  * All usernames prefixed with mock_ for clear identification and easy cleanup.
  * Same password for all mock creators (dev-only).
  */
 export const MOCK_CREATORS: MockCreator[] = [
 	{
-		email: "nova-chen@mock.microshort.dev",
+		email: "nova-chen@mock.shardz.dev",
 		password: "MockCreator123!",
 		username: "mock_novachen",
 		displayName: "Nova Chen",
@@ -38,7 +38,7 @@ export const MOCK_CREATORS: MockCreator[] = [
 		},
 	},
 	{
-		email: "marcus-reed@mock.microshort.dev",
+		email: "marcus-reed@mock.shardz.dev",
 		password: "MockCreator123!",
 		username: "mock_marcusreed",
 		displayName: "Marcus Reed",
@@ -50,7 +50,7 @@ export const MOCK_CREATORS: MockCreator[] = [
 		},
 	},
 	{
-		email: "aya-nakamura@mock.microshort.dev",
+		email: "aya-nakamura@mock.shardz.dev",
 		password: "MockCreator123!",
 		username: "mock_ayanakamura",
 		displayName: "Aya Nakamura",
@@ -62,7 +62,7 @@ export const MOCK_CREATORS: MockCreator[] = [
 		},
 	},
 	{
-		email: "diego-morales@mock.microshort.dev",
+		email: "diego-morales@mock.shardz.dev",
 		password: "MockCreator123!",
 		username: "mock_diegomorales",
 		displayName: "Diego Morales",
@@ -74,7 +74,7 @@ export const MOCK_CREATORS: MockCreator[] = [
 		},
 	},
 	{
-		email: "sarah-okonkwo@mock.microshort.dev",
+		email: "sarah-okonkwo@mock.shardz.dev",
 		password: "MockCreator123!",
 		username: "mock_sarahokonkwo",
 		displayName: "Sarah Okonkwo",
@@ -86,7 +86,7 @@ export const MOCK_CREATORS: MockCreator[] = [
 		},
 	},
 	{
-		email: "jake-thornton@mock.microshort.dev",
+		email: "jake-thornton@mock.shardz.dev",
 		password: "MockCreator123!",
 		username: "mock_jakethornton",
 		displayName: "Jake Thornton",
@@ -98,7 +98,7 @@ export const MOCK_CREATORS: MockCreator[] = [
 		},
 	},
 	{
-		email: "luna-park@mock.microshort.dev",
+		email: "luna-park@mock.shardz.dev",
 		password: "MockCreator123!",
 		username: "mock_lunapark",
 		displayName: "Luna Park",
@@ -110,7 +110,7 @@ export const MOCK_CREATORS: MockCreator[] = [
 		},
 	},
 	{
-		email: "omar-hassan@mock.microshort.dev",
+		email: "omar-hassan@mock.shardz.dev",
 		password: "MockCreator123!",
 		username: "mock_omarhassan",
 		displayName: "Omar Hassan",
@@ -122,7 +122,7 @@ export const MOCK_CREATORS: MockCreator[] = [
 		},
 	},
 	{
-		email: "ivy-zhang@mock.microshort.dev",
+		email: "ivy-zhang@mock.shardz.dev",
 		password: "MockCreator123!",
 		username: "mock_ivyzhang",
 		displayName: "Ivy Zhang",
@@ -134,7 +134,7 @@ export const MOCK_CREATORS: MockCreator[] = [
 		},
 	},
 	{
-		email: "carlos-vega@mock.microshort.dev",
+		email: "carlos-vega@mock.shardz.dev",
 		password: "MockCreator123!",
 		username: "mock_carlosvega",
 		displayName: "Carlos Vega",
@@ -146,7 +146,7 @@ export const MOCK_CREATORS: MockCreator[] = [
 		},
 	},
 	{
-		email: "elena-volkov@mock.microshort.dev",
+		email: "elena-volkov@mock.shardz.dev",
 		password: "MockCreator123!",
 		username: "mock_elenavolkov",
 		displayName: "Elena Volkov",
@@ -158,7 +158,7 @@ export const MOCK_CREATORS: MockCreator[] = [
 		},
 	},
 	{
-		email: "ty-washington@mock.microshort.dev",
+		email: "ty-washington@mock.shardz.dev",
 		password: "MockCreator123!",
 		username: "mock_tywashington",
 		displayName: "Ty Washington",

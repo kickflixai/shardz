@@ -143,8 +143,18 @@ export default async function HomePage() {
 			{/* Hero section */}
 			<section className="relative overflow-hidden border-b border-border bg-gradient-to-b from-background to-muted/30 px-4 py-20 text-center sm:py-28">
 				<div className="mx-auto max-w-3xl">
+					<div className="mx-auto mb-6 flex justify-center">
+						<Image
+							src="/logo.png"
+							alt="Shardz"
+							width={64}
+							height={64}
+							className="drop-shadow-[0_0_20px_rgba(224,184,0,0.3)]"
+							priority
+						/>
+					</div>
 					<h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-						Discover MicroShorts
+						Discover Shardz
 					</h1>
 					<p className="mx-auto mt-4 max-w-lg text-lg text-muted-foreground">
 						Short-form series. Big stories. Watch free, unlock more.

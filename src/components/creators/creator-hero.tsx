@@ -14,7 +14,7 @@ export function CreatorHero() {
 				</h1>
 
 				<p className="mx-auto mt-6 max-w-2xl text-lg text-cinema-muted sm:text-xl md:text-2xl">
-					MicroShort is the first platform purpose-built for short-form
+					Shardz is the first platform purpose-built for short-form
 					series. Upload your content, set your price, and reach
 					audiences who pay for what they love.
 				</p>

@@ -104,7 +104,7 @@ export function FeatureGrid() {
 					</div>
 					<p className="mx-auto mt-6 max-w-lg text-cinema-muted">
 						Whether you&apos;re an AI filmmaker pushing boundaries or
-						an indie studio with stories to tell &mdash; MicroShort
+						an indie studio with stories to tell &mdash; Shardz
 						is your platform.
 					</p>
 				</div>

@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { Eye } from "lucide-react";
+import Link from "next/link";
+import { Eye, Play } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { getGenreLabel } from "@/config/genres";
 import { ShareButton } from "@/components/share/share-button";
@@ -86,114 +87,141 @@ export function SeriesDetail({
 		bundlePriceCents = calculateBundlePrice(prices, discountPercent);
 	}
 
+	// Find first published episode URL
+	const firstEpisodeUrl = (() => {
+		for (const season of series.seasons) {
+			for (const ep of season.episodes) {
+				if (ep.status === "published") {
+					return `/series/${series.slug}/episode/${ep.episode_number}`;
+				}
+			}
+		}
+		return null;
+	})();
+
 	return (
 		<div className="space-y-8">
-			{/* Hero / Thumbnail */}
-			<div className="relative aspect-video w-full overflow-hidden rounded-xl bg-cinema-surface">
-				{series.thumbnail_url ? (
-					<Image
-						src={series.thumbnail_url}
-						alt={series.title}
-						fill
-						className="object-cover"
-						priority
-						sizes="(max-width: 768px) 100vw, (max-width: 1280px) 80vw, 1200px"
-					/>
-				) : (
-					<div className="flex h-full items-center justify-center">
-						<p className="text-lg text-muted-foreground">
-							{series.title}
-						</p>
-					</div>
-				)}
-			</div>
+			{/* Hero: Poster + Info side-by-side on desktop, stacked on mobile */}
+			<div className="flex flex-col gap-6 md:flex-row md:gap-8">
+				{/* Poster with play button overlay */}
+				<div className="relative mx-auto w-full max-w-xs shrink-0 md:mx-0 md:w-72 lg:w-80">
+					<div className="relative aspect-[2/3] w-full overflow-hidden rounded-xl bg-cinema-surface">
+						{series.thumbnail_url ? (
+							<Image
+								src={series.thumbnail_url}
+								alt={series.title}
+								fill
+								className="object-cover"
+								priority
+								sizes="(max-width: 768px) 320px, 320px"
+							/>
+						) : (
+							<div className="flex h-full items-center justify-center">
+								<p className="text-lg text-muted-foreground">
+									{series.title}
+								</p>
+							</div>
+						)}
 
-			{/* Title, Genre, Views */}
-			<div className="space-y-3">
-				<h1 className="text-3xl font-bold text-foreground">
-					{series.title}
-				</h1>
-				<div className="flex flex-wrap items-center gap-3">
-					<Badge variant="secondary">
-						{getGenreLabel(series.genre)}
-					</Badge>
-					{series.view_count > 0 && (
-						<span className="flex items-center gap-1 text-sm text-muted-foreground">
-							<Eye className="h-4 w-4" />
-							{formatViewCount(series.view_count)} views
-						</span>
+						{/* Play button overlay */}
+						{firstEpisodeUrl && (
+							<Link
+								href={firstEpisodeUrl}
+								className="absolute inset-0 flex items-center justify-center"
+							>
+								<div className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-cinema-black/50 bg-[#E0B800] shadow-lg shadow-[#E0B800]/30 transition-transform hover:scale-110">
+									<Play className="h-7 w-7 fill-cinema-black text-cinema-black ml-0.5" />
+								</div>
+							</Link>
+						)}
+					</div>
+				</div>
+
+				{/* Info column */}
+				<div className="flex flex-1 flex-col gap-4">
+					{/* Title, Genre, Views */}
+					<div className="space-y-3">
+						<h1 className="text-3xl font-bold text-foreground">
+							{series.title}
+						</h1>
+						<div className="flex flex-wrap items-center gap-3">
+							<Badge variant="secondary">
+								{getGenreLabel(series.genre)}
+							</Badge>
+							{series.view_count > 0 && (
+								<span className="flex items-center gap-1 text-sm text-muted-foreground">
+									<Eye className="h-4 w-4" />
+									{formatViewCount(series.view_count)} views
+								</span>
+							)}
+						</div>
+					</div>
+
+					{/* Description */}
+					{series.description && (
+						<p className="text-base leading-relaxed text-muted-foreground">
+							{series.description}
+						</p>
+					)}
+
+					{/* Share & Favorite */}
+					<div className="flex items-center gap-2">
+						<ShareButton
+							title={series.title}
+							text={
+								series.description
+									? series.description.slice(0, 120)
+									: `Watch ${series.title} on Shardz`
+							}
+							url={seriesUrl}
+						/>
+						<FavoriteButton
+							seriesId={series.id}
+							initialFavorited={isFavorited}
+							isAuthenticated={isAuthenticated}
+						/>
+					</div>
+
+					{/* Creator Info */}
+					<CreatorInfo
+						displayName={creatorName}
+						username={series.profiles.username}
+						avatarUrl={series.profiles.avatar_url}
+						bio={series.profiles.bio}
+					/>
+
+					{/* Bundle Offer */}
+					{showBundle && (
+						<div className="rounded-xl border border-brand-yellow/20 bg-brand-yellow/5 p-6">
+							<h3 className="text-lg font-bold text-foreground">
+								Unlock All Seasons
+							</h3>
+							<p className="mt-1 text-sm text-muted-foreground">
+								Get access to all {unpurchasedSeasons.length} remaining
+								seasons at {discountPercent}% off
+							</p>
+							<div className="mt-4 flex items-center gap-3">
+								<span className="text-sm text-muted-foreground line-through">
+									{formatPrice(originalTotalCents)}
+								</span>
+								<span className="text-2xl font-bold text-brand-yellow">
+									{formatPrice(bundlePriceCents)}
+								</span>
+							</div>
+							<div className="mt-4">
+								<UnlockButton
+									seasonId=""
+									seriesSlug={series.slug}
+									priceCents={bundlePriceCents}
+									purchaseType="bundle"
+								/>
+							</div>
+						</div>
 					)}
 				</div>
 			</div>
 
-			{/* Description */}
-			{series.description && (
-				<p className="text-base leading-relaxed text-muted-foreground">
-					{series.description}
-				</p>
-			)}
-
-			{/* Share & Favorite */}
-			<div className="flex items-center gap-2">
-				<ShareButton
-					title={series.title}
-					text={
-						series.description
-							? series.description.slice(0, 120)
-							: `Watch ${series.title} on MicroShort`
-					}
-					url={seriesUrl}
-				/>
-				<FavoriteButton
-					seriesId={series.id}
-					initialFavorited={isFavorited}
-					isAuthenticated={isAuthenticated}
-				/>
-			</div>
-
-			{/* Bundle Offer */}
-			{showBundle && (
-				<div className="rounded-xl border border-brand-yellow/20 bg-brand-yellow/5 p-6">
-					<h3 className="text-lg font-bold text-foreground">
-						Unlock All Seasons
-					</h3>
-					<p className="mt-1 text-sm text-muted-foreground">
-						Get access to all {unpurchasedSeasons.length} remaining
-						seasons at {discountPercent}% off
-					</p>
-					<div className="mt-4 flex items-center gap-3">
-						<span className="text-sm text-muted-foreground line-through">
-							{formatPrice(originalTotalCents)}
-						</span>
-						<span className="text-2xl font-bold text-brand-yellow">
-							{formatPrice(bundlePriceCents)}
-						</span>
-					</div>
-					<div className="mt-4">
-						<UnlockButton
-							seasonId=""
-							seriesSlug={series.slug}
-							priceCents={bundlePriceCents}
-							purchaseType="bundle"
-						/>
-					</div>
-				</div>
-			)}
-
-			{/* Creator Info */}
-			<div className="space-y-2">
-				<h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-					Creator
-				</h2>
-				<CreatorInfo
-					displayName={creatorName}
-					username={series.profiles.username}
-					avatarUrl={series.profiles.avatar_url}
-					bio={series.profiles.bio}
-				/>
-			</div>
-
-			{/* Seasons / Episodes */}
+			{/* Seasons / Episodes — full width */}
 			<div className="space-y-2">
 				<h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
 					Seasons & Episodes

@@ -42,7 +42,7 @@ export function generateSeriesJsonLd({
 		genre: series.genre,
 		creator: {
 			"@type": "Person",
-			name: creator.display_name || creator.username || "MicroShort Creator",
+			name: creator.display_name || creator.username || "Shardz Creator",
 		},
 		containsSeason: seasons.map((season) => ({
 			"@type": "TVSeason",

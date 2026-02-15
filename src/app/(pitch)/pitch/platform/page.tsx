@@ -4,6 +4,7 @@ import { HeroSection } from "@/components/pitch/hero-section";
 import { FeatureSection } from "@/components/pitch/feature-section";
 import { StatsSection } from "@/components/pitch/stats-section";
 import { CTASection } from "@/components/pitch/cta-section";
+import { StudioCallout } from "@/components/pitch/studio-callout";
 import {
 	Upload,
 	FolderOpen,
@@ -28,9 +29,9 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-	title: "MicroShort | The Definitive Short-Form Video Marketplace",
+	title: "Shardz | The Definitive Short-Form Video Marketplace",
 	description:
-		"MicroShort is where premium short-form series are discovered, purchased, and celebrated. A complete marketplace built for creators, viewers, and brands.",
+		"Shardz is where premium short-form series are discovered, purchased, and celebrated. A complete marketplace built for creators, viewers, and brands.",
 };
 
 /* -------------------------------------------------------------------------- */
@@ -48,7 +49,7 @@ const marketStats = [
 		value: "$500B+",
 		label: "Creator economy market size",
 		description:
-			"The creator economy is exploding, yet most creators earn pennies. MicroShort captures the monetization gap.",
+			"The creator economy is exploding, yet most creators earn pennies. Shardz captures the monetization gap.",
 	},
 	{
 		value: "82%",
@@ -143,6 +144,24 @@ const platformFeatures = [
 			"Full-funnel visibility from first view to revenue. Creators see exactly how their audience discovers, watches, and pays. Data-driven growth, not guesswork.",
 		composition: "dashboard" as const,
 	},
+	{
+		title: "Social Engagement Layer",
+		description:
+			"Real-time emoji reactions and timestamped comments. Viewers participate, not just watch. Every reaction is a data point that helps creators understand their audience.",
+		composition: "social" as const,
+	},
+	{
+		title: "AI Creation Suite & Shardz Studio",
+		description:
+			"Integrated AI tools plus free training for every creator. The next wave of filmmakers won't need Hollywood budgets — they'll need Shardz.",
+		composition: "ai-tools" as const,
+	},
+	{
+		title: "Multi-Format Monetization",
+		description:
+			"Scripted series, BTS, tutorials, music videos, AI cinema — every format earns. One platform, every content type, real revenue.",
+		composition: "formats" as const,
+	},
 ];
 
 const revenueExamples = [
@@ -169,7 +188,7 @@ const platformComparison = [
 		highlight: false,
 	},
 	{
-		platform: "MicroShort",
+		platform: "Shardz",
 		model: "Per-series purchase",
 		perView: "$0.99-9.99",
 		creatorCut: "80%",
@@ -262,11 +281,11 @@ const platformThumbnails = [
 	{ src: "/thumbnails/mock-ashborn.png", title: "Ashborn" },
 ];
 
-const launchMetrics = [
+const launchMetrics: Array<{ value: string; label: string; small?: boolean }> = [
 	{ value: "20+", label: "Series at Launch" },
 	{ value: "11", label: "Genre Categories" },
 	{ value: "160+", label: "Episodes" },
-	{ value: "$0.99-$9.99", label: "Pricing Range" },
+	{ value: "$0.99–$9.99", label: "Pricing Range", small: true },
 	{ value: "80%", label: "Creator Revenue Share" },
 	{ value: "3", label: "Free Episodes per Season" },
 ];
@@ -285,7 +304,7 @@ export default function PlatformOverviewPage() {
 				variant="investor"
 				badge="Platform Overview"
 				headline="The Definitive Short-Form Video Marketplace"
-				subheadline="MicroShort is where premium short-form series are discovered, purchased, and celebrated. A complete marketplace built for creators, viewers, and brands."
+				subheadline="Shardz is where premium short-form series are discovered, purchased, and celebrated. A complete marketplace built for creators, viewers, and brands."
 				backgroundImage="/pitch/hero-platform.jpg"
 			/>
 
@@ -348,7 +367,7 @@ export default function PlatformOverviewPage() {
 							<div className="mb-6 inline-flex items-center gap-2 rounded-full bg-brand-yellow/10 px-4 py-1.5">
 								<Check className="h-4 w-4 text-brand-yellow" />
 								<span className="text-sm font-bold text-brand-yellow">
-									The MicroShort Way
+									The Shardz Way
 								</span>
 							</div>
 							<div className="space-y-5">
@@ -370,7 +389,7 @@ export default function PlatformOverviewPage() {
 								</div>
 								<div className="border-t border-brand-yellow/10 pt-5">
 									<p className="text-base leading-relaxed text-cinema-muted">
-										MicroShort gives creators direct monetization with no ad
+										Shardz gives creators direct monetization with no ad
 										dependency and no subscription dilution. Viewers browse by
 										genre, watch 3 free episodes, and unlock full seasons with
 										a single tap. Quality rises to the top.
@@ -575,7 +594,7 @@ export default function PlatformOverviewPage() {
 					{/* Platform Comparison */}
 					<div>
 						<h3 className="mb-8 text-center text-xl font-bold text-white">
-							How MicroShort Compares
+							How Shardz Compares
 						</h3>
 						<div className="mx-auto max-w-4xl overflow-hidden rounded-2xl border border-white/5">
 							{/* Table Header */}
@@ -733,7 +752,7 @@ export default function PlatformOverviewPage() {
 						Not a Pitch Deck. A Working Product.
 					</p>
 					<p className="mx-auto mb-12 max-w-xl text-lg text-cinema-muted">
-						MicroShort is a fully functional marketplace with genre discovery,
+						Shardz is a fully functional marketplace with genre discovery,
 						cinematic playback, payments, and creator tools -- live today.
 					</p>
 
@@ -743,7 +762,7 @@ export default function PlatformOverviewPage() {
 								key={t.title}
 								className="group overflow-hidden rounded-xl border border-white/5 transition-colors hover:border-brand-yellow/20"
 							>
-								<div className="relative aspect-video">
+								<div className="relative aspect-[3/4]">
 									<Image
 										src={t.src}
 										alt={t.title}
@@ -780,7 +799,7 @@ export default function PlatformOverviewPage() {
 								key={metric.label}
 								className="rounded-2xl border border-white/5 bg-white/5 p-6 text-center backdrop-blur-sm"
 							>
-								<div className="text-3xl font-extrabold text-brand-yellow md:text-4xl">
+								<div className={`font-extrabold text-brand-yellow ${metric.small ? "text-xl md:text-2xl" : "text-3xl md:text-4xl"}`}>
 									{metric.value}
 								</div>
 								<div className="mt-2 text-xs font-semibold text-cinema-muted">
@@ -793,14 +812,23 @@ export default function PlatformOverviewPage() {
 			</section>
 
 			{/* ---------------------------------------------------------------- */}
-			{/*  11. CTA                                                           */}
+			{/*  11. Creator Education                                              */}
+			{/* ---------------------------------------------------------------- */}
+			<section className="bg-cinema-black px-6 py-24 md:py-32">
+				<div className="mx-auto max-w-5xl">
+					<StudioCallout variant="compact" />
+				</div>
+			</section>
+
+			{/* ---------------------------------------------------------------- */}
+			{/*  12. CTA                                                           */}
 			{/* ---------------------------------------------------------------- */}
 			<CTASection
 				variant="investor"
 				primaryCTA={{ label: "Explore the Platform", href: "/browse" }}
 				secondaryCTA={{
 					label: "Get in Touch",
-					href: "mailto:hello@microshort.com",
+					href: "mailto:hello@shardz.tv",
 				}}
 				tagline="Experience the Future of Short-Form."
 			/>

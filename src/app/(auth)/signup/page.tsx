@@ -29,7 +29,7 @@ export default function SignupPage() {
 			<CardHeader>
 				<CardTitle>Create Account</CardTitle>
 				<CardDescription>
-					Join MicroShort as a viewer or creator
+					Join Shardz as a viewer or creator
 				</CardDescription>
 			</CardHeader>
 			<CardContent>

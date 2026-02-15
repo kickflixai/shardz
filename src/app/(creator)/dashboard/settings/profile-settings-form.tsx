@@ -79,7 +79,7 @@ export function ProfileSettingsForm({
 			<Field>
 				<FieldLabel htmlFor="username">Username</FieldLabel>
 				<FieldDescription>
-					Your profile URL: microshort.com/creator/
+					Your profile URL: shardz.com/creator/
 					{values.username || "your-username"}
 				</FieldDescription>
 				<Input

@@ -1,5 +1,5 @@
 /**
- * MicroShort Seed Script
+ * Shardz Seed Script
  *
  * Populates the platform with mock data: auth users, profiles, series/seasons/episodes,
  * thumbnails, Mux video assets, engagement metrics, and featured flags.
@@ -734,7 +734,7 @@ async function seedFeatured(seriesMappings: SeriesMapping[]): Promise<void> {
 
 async function main(): Promise<void> {
 	console.log("============================================");
-	console.log("  MicroShort Seed Script");
+	console.log("  Shardz Seed Script");
 	console.log("============================================");
 	console.log(`  Series: ${MOCK_SERIES.length}`);
 	console.log(`  Creators: ${MOCK_CREATORS.length}`);
