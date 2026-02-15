@@ -96,7 +96,7 @@ export const getAdminSeries = cache(async (search?: string) => {
 	let query = adminDb
 		.from("series")
 		.select(
-			"id, title, slug, genre, status, is_featured, view_count, thumbnail_url, created_at, profiles!creator_id(display_name, username), seasons(count)",
+			"id, title, slug, genre, status, is_featured, view_count, thumbnail_url, created_at, profiles!inner(display_name, username), seasons(count)",
 		)
 		.order("created_at", { ascending: false })
 		.limit(50);

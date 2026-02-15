@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-type Variant = "investor" | "brand" | "advisor" | "creator";
+type Variant = "investor" | "brand" | "advisor" | "creator" | "platform";
 
 interface Stat {
 	label: string;
@@ -18,6 +18,7 @@ const variantAccent: Record<Variant, string> = {
 	brand: "text-teal-400",
 	advisor: "text-amber-400",
 	creator: "text-brand-yellow",
+	platform: "text-brand-yellow",
 };
 
 export function StatsSection({ stats, variant }: StatsSectionProps) {

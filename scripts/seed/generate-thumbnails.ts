@@ -29,26 +29,38 @@ const __dirname = dirname(__filename);
 const ASSETS_DIR = resolve(__dirname, "assets/thumbnails");
 
 /**
- * Build a cinematic thumbnail prompt from series data.
+ * Build a cinematic movie poster prompt from series data.
+ * Generates posters with the series title as prominent text.
  */
 function buildPrompt(series: (typeof MOCK_SERIES)[number]): string {
 	const genreStyles: Record<string, string> = {
-		"sci-fi": "futuristic, neon lighting, space, high-tech, cinematic sci-fi",
-		drama: "dramatic lighting, emotional, moody atmosphere, cinematic drama",
-		comedy: "bright colors, playful, lighthearted, warm lighting, comedic energy",
-		thriller: "dark shadows, suspenseful, tense atmosphere, noir lighting",
-		horror: "eerie, dark, unsettling, fog, sinister lighting, horror atmosphere",
-		romance: "warm golden light, soft focus, intimate, romantic atmosphere",
-		action: "explosive, dynamic, high contrast, intense, cinematic action",
-		documentary: "realistic, raw, natural lighting, journalistic, documentary style",
-		"behind-the-scenes": "film set, cameras, production equipment, behind the scenes of filmmaking",
-		music: "concert lighting, vibrant, musical energy, stage atmosphere",
-		sports: "athletic, dynamic motion, competitive energy, sports photography",
+		"sci-fi":
+			"futuristic neon cyberpunk palette, deep space blues and electric cyan, lens flares, volumetric fog",
+		drama:
+			"moody golden hour lighting, dramatic chiaroscuro, warm amber and deep shadows",
+		comedy:
+			"vibrant saturated colors, playful warm lighting, bright inviting palette",
+		thriller:
+			"noir shadows, deep blacks and cold steel blues, rain-slicked surfaces, tension",
+		horror:
+			"eerie desaturated tones, sinister red accents, fog, darkness, dread atmosphere",
+		romance:
+			"warm golden bokeh, soft rose and amber tones, intimate dreamy atmosphere",
+		action:
+			"explosive orange and teal, high contrast, sparks, motion blur, adrenaline energy",
+		documentary:
+			"raw photojournalistic feel, natural lighting, gritty textures, authentic",
+		"behind-the-scenes":
+			"film set atmosphere, camera rigs, production lights, creative energy",
+		music:
+			"concert stage lighting, vibrant neon, musical energy, atmospheric haze",
+		sports:
+			"athletic power, dynamic frozen motion, stadium lights, competitive intensity",
 	};
 
 	const style = genreStyles[series.genre] || "cinematic, dramatic lighting";
 
-	return `Cinematic thumbnail artwork, ${style}. ${series.title}: ${series.description}. Ultra high quality, 4K, professional artwork, edge-to-edge composition filling the entire frame, no black bars, no letterboxing, no borders, no text, no words, no letters.`;
+	return `Professional movie poster artwork for a short-form series called "${series.title}". The title "${series.title}" should be displayed prominently in bold cinematic typography as the focal text element of the poster. ${style}. ${series.description}. Designed as a premium streaming series poster, ultra high quality, 4K, edge-to-edge composition filling the entire frame, professional movie poster layout with the series title as large readable text.`;
 }
 
 /**

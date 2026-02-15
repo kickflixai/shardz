@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { RemotionFeatureLazy } from "./remotion-feature-lazy";
 import type { CompositionName } from "./remotion-feature";
 
-type Variant = "investor" | "brand" | "advisor" | "creator";
+type Variant = "investor" | "brand" | "advisor" | "creator" | "platform";
 
 interface Feature {
 	title: string;
@@ -20,6 +20,7 @@ const variantAccent: Record<Variant, string> = {
 	brand: "text-teal-400",
 	advisor: "text-amber-400",
 	creator: "text-brand-yellow",
+	platform: "text-brand-yellow",
 };
 
 export function FeatureSection({ variant, features }: FeatureSectionProps) {

@@ -1,5 +1,7 @@
 import {
 	AbsoluteFill,
+	Img,
+	staticFile,
 	useCurrentFrame,
 	interpolate,
 	spring,
@@ -11,44 +13,44 @@ const CINEMA_BLACK = "#141414";
 const SURFACE_DARK = "#1a1a2e";
 const SURFACE_LIGHT = "#2a2a3e";
 
-const GENRES = ["All", "Sci-Fi", "Drama", "Comedy", "Thriller", "Horror"];
+const GENRES = ["All", "Sci-Fi", "Action", "Fantasy", "Thriller", "Horror"];
 
 const SERIES_CARDS = [
 	{
-		title: "SIGNAL LOST",
+		title: "ORBITAL BREACH",
 		genre: "Sci-Fi",
-		gradient: "linear-gradient(135deg, #0f3460 0%, #16213e 100%)",
-		episodes: 12,
+		thumbnail: "mock-orbital-breach.png",
+		episodes: 16,
 	},
 	{
-		title: "Midnight Diner",
-		genre: "Drama",
-		gradient: "linear-gradient(135deg, #3a1c71 0%, #d76d77 100%)",
-		episodes: 10,
-	},
-	{
-		title: "Fast Talk",
-		genre: "Comedy",
-		gradient: "linear-gradient(135deg, #134e5e 0%, #71b280 100%)",
+		title: "Chrome Pursuit",
+		genre: "Action",
+		thumbnail: "mock-chrome-pursuit.png",
 		episodes: 8,
 	},
 	{
-		title: "The Hollow",
-		genre: "Thriller",
-		gradient: "linear-gradient(135deg, #1f1c2c 0%, #928dab 100%)",
-		episodes: 10,
+		title: "The Last Summoner",
+		genre: "Fantasy",
+		thumbnail: "mock-the-last-summoner.png",
+		episodes: 16,
 	},
 	{
-		title: "Neon Streets",
+		title: "TITAN FALL",
 		genre: "Action",
-		gradient: "linear-gradient(135deg, #e53935 0%, #e35d5b 50%, #1a1a2e 100%)",
-		episodes: 9,
+		thumbnail: "mock-titan-fall.png",
+		episodes: 8,
 	},
 	{
-		title: "Last Light",
+		title: "Sandstorm Kings",
 		genre: "Sci-Fi",
-		gradient: "linear-gradient(135deg, #0d1b2a 0%, #1b2838 50%, #3a506b 100%)",
-		episodes: 11,
+		thumbnail: "mock-sandstorm-kings.png",
+		episodes: 16,
+	},
+	{
+		title: "Ashborn",
+		genre: "Action",
+		thumbnail: "mock-ashborn.png",
+		episodes: 8,
 	},
 ];
 
@@ -127,12 +129,12 @@ export const BrowseDemo: React.FC = () => {
 				</div>
 			</div>
 
-			{/* Series grid */}
+			{/* Series grid — portrait poster layout */}
 			<div
 				style={{
 					display: "grid",
 					gridTemplateColumns: "1fr 1fr 1fr",
-					gap: 20,
+					gap: 16,
 					flex: 1,
 				}}
 			>
@@ -167,14 +169,24 @@ export const BrowseDemo: React.FC = () => {
 								flexDirection: "column",
 							}}
 						>
-							{/* Thumbnail placeholder */}
+							{/* Thumbnail — portrait 3:4 aspect */}
 							<div
 								style={{
-									height: 160,
-									background: card.gradient,
+									aspectRatio: "3 / 4",
 									position: "relative",
+									overflow: "hidden",
 								}}
 							>
+								<Img
+									src={staticFile(`thumbnails/${card.thumbnail}`)}
+									style={{
+										position: "absolute",
+										inset: 0,
+										width: "100%",
+										height: "100%",
+										objectFit: "cover",
+									}}
+								/>
 								{/* Episode count badge */}
 								<div
 									style={{
@@ -193,18 +205,18 @@ export const BrowseDemo: React.FC = () => {
 							</div>
 
 							{/* Card info */}
-							<div style={{ padding: "12px 14px" }}>
+							<div style={{ padding: "10px 12px" }}>
 								<div
 									style={{
-										fontSize: 14,
+										fontSize: 13,
 										fontWeight: 700,
 										color: "#fff",
-										marginBottom: 4,
+										marginBottom: 3,
 									}}
 								>
 									{card.title}
 								</div>
-								<div style={{ fontSize: 11, color: "#888" }}>{card.genre}</div>
+								<div style={{ fontSize: 10, color: "#888" }}>{card.genre}</div>
 							</div>
 						</div>
 					);

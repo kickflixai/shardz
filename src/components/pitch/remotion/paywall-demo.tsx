@@ -1,5 +1,7 @@
 import {
 	AbsoluteFill,
+	Img,
+	staticFile,
 	useCurrentFrame,
 	interpolate,
 	spring,
@@ -82,67 +84,48 @@ export const PaywallDemo: React.FC = () => {
 		>
 			<div
 				style={{
-					width: 600,
+					width: 320,
 					opacity: lockedOpacity,
 					position: "relative",
 				}}
 			>
-				{/* Episode card background */}
+				{/* Episode card background — portrait phone layout */}
 				<div
 					style={{
-						borderRadius: 16,
+						borderRadius: 20,
 						overflow: "hidden",
 						backgroundColor: SURFACE_DARK,
 						border: `1px solid ${SURFACE_LIGHT}`,
 					}}
 				>
-					{/* Blurred content area */}
+					{/* Blurred content area — portrait aspect */}
 					<div
 						style={{
-							height: 280,
-							background: `linear-gradient(135deg, #0f3460 0%, #16213e 50%, #1a1a2e 100%)`,
+							aspectRatio: "3 / 4",
 							filter: isLocked ? `blur(${Math.max(blurAmount, 8)}px)` : `blur(${blurAmount}px)`,
 							display: "flex",
 							alignItems: "center",
 							justifyContent: "center",
 							position: "relative",
+							overflow: "hidden",
 						}}
 					>
-						{/* Fake content lines */}
-						<div style={{ padding: 40, width: "100%" }}>
-							<div
-								style={{
-									height: 20,
-									width: "60%",
-									backgroundColor: "rgba(255,255,255,0.15)",
-									borderRadius: 4,
-									marginBottom: 12,
-								}}
-							/>
-							<div
-								style={{
-									height: 14,
-									width: "80%",
-									backgroundColor: "rgba(255,255,255,0.1)",
-									borderRadius: 4,
-									marginBottom: 8,
-								}}
-							/>
-							<div
-								style={{
-									height: 14,
-									width: "70%",
-									backgroundColor: "rgba(255,255,255,0.1)",
-									borderRadius: 4,
-								}}
-							/>
-						</div>
+						<Img
+							src={staticFile("thumbnails/mock-orbital-breach.png")}
+							style={{
+								position: "absolute",
+								inset: 0,
+								width: "100%",
+								height: "100%",
+								objectFit: "cover",
+							}}
+						/>
 					</div>
 
 					{/* Episode info bar */}
 					<div
 						style={{
-							padding: "16px 24px",
+							padding: "14px 20px",
 							display: "flex",
 							justifyContent: "space-between",
 							alignItems: "center",
@@ -151,30 +134,30 @@ export const PaywallDemo: React.FC = () => {
 						<div>
 							<div
 								style={{
-									fontSize: 18,
+									fontSize: 15,
 									fontWeight: 700,
 									color: "#fff",
 								}}
 							>
-								Episode 4: "Deep Signal"
+								Episode 4: &ldquo;Cascade&rdquo;
 							</div>
-							<div style={{ fontSize: 13, color: "#888", marginTop: 2 }}>
-								SIGNAL LOST &middot; Season 1
+							<div style={{ fontSize: 12, color: "#888", marginTop: 2 }}>
+								ORBITAL BREACH &middot; Season 1
 							</div>
 						</div>
 
 						{/* Lock / Unlock indicator */}
 						<div
 							style={{
-								fontSize: 12,
+								fontSize: 11,
 								fontWeight: 600,
 								color: isLocked ? "#888" : "#4ade80",
 								display: "flex",
 								alignItems: "center",
-								gap: 6,
+								gap: 5,
 							}}
 						>
-							<span style={{ fontSize: 16 }}>
+							<span style={{ fontSize: 14 }}>
 								{isLocked ? "\u{1F512}" : "\u{1F513}"}
 							</span>
 							{isLocked ? "Locked" : "Unlocked"}
@@ -190,7 +173,7 @@ export const PaywallDemo: React.FC = () => {
 							top: 0,
 							left: 0,
 							right: 0,
-							height: 280,
+							bottom: 60,
 							display: "flex",
 							alignItems: "center",
 							justifyContent: "center",
@@ -225,7 +208,7 @@ export const PaywallDemo: React.FC = () => {
 							top: 0,
 							left: 0,
 							right: 0,
-							height: 280,
+							bottom: 60,
 							display: "flex",
 							alignItems: "center",
 							justifyContent: "center",

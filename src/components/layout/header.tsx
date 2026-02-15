@@ -7,9 +7,12 @@ import { createClient } from "@/lib/supabase/client";
 import { LogoutButton } from "@/components/auth/logout-button";
 import { MobileNav } from "@/components/layout/mobile-nav";
 
+type UserRole = "viewer" | "creator" | "admin";
+
 export function Header() {
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 	const [user, setUser] = useState<User | null>(null);
+	const [role, setRole] = useState<UserRole>("viewer");
 
 	useEffect(() => {
 		const supabase = createClient();
@@ -26,6 +29,26 @@ export function Header() {
 			subscription.unsubscribe();
 		};
 	}, []);
+
+	// Fetch user role when user changes
+	useEffect(() => {
+		if (!user) {
+			setRole("viewer");
+			return;
+		}
+
+		const supabase = createClient();
+		supabase
+			.from("profiles")
+			.select("role")
+			.eq("id", user.id)
+			.single()
+			.then(({ data }) => {
+				if (data?.role) {
+					setRole(data.role as UserRole);
+				}
+			});
+	}, [user]);
 
 	return (
 		<>
@@ -49,7 +72,44 @@ export function Header() {
 							Browse
 						</Link>
 						{user ? (
-							<LogoutButton />
+							<>
+								<Link
+									href="/profile"
+									className="flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-primary"
+								>
+									<svg
+										className="h-4 w-4"
+										fill="none"
+										viewBox="0 0 24 24"
+										strokeWidth="1.5"
+										stroke="currentColor"
+									>
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+										/>
+									</svg>
+									Profile
+								</Link>
+								{(role === "creator" || role === "admin") && (
+									<Link
+										href="/dashboard"
+										className="text-sm text-muted-foreground transition-colors hover:text-primary"
+									>
+										Dashboard
+									</Link>
+								)}
+								{role === "admin" && (
+									<Link
+										href="/admin"
+										className="text-sm text-muted-foreground transition-colors hover:text-primary"
+									>
+										Admin
+									</Link>
+								)}
+								<LogoutButton />
+							</>
 						) : (
 							<Link
 								href="/login"
@@ -87,6 +147,7 @@ export function Header() {
 				open={mobileMenuOpen}
 				onClose={() => setMobileMenuOpen(false)}
 				user={user}
+				role={role}
 			/>
 		</>
 	);

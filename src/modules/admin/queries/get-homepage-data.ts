@@ -82,7 +82,7 @@ export const getAllSeriesForCuration = cache(async () => {
 	const { data, error } = await adminDb
 		.from("series")
 		.select(
-			"id, title, slug, genre, status, is_featured, featured_sort_order, thumbnail_url, view_count, profiles!creator_id(display_name)",
+			"id, title, slug, genre, status, is_featured, featured_sort_order, thumbnail_url, view_count, profiles!inner(display_name)",
 		)
 		.eq("status", "published")
 		.order("is_featured", { ascending: false })
@@ -107,14 +107,14 @@ export async function getFeaturedSeries() {
 	const { data, error } = await supabase
 		.from("series")
 		.select(
-			"id, title, slug, genre, thumbnail_url, description, view_count, profiles!creator_id(display_name, username, avatar_url)",
+			"id, title, slug, genre, thumbnail_url, description, view_count, profiles!inner(display_name, username, avatar_url)",
 		)
 		.eq("status", "published")
 		.eq("is_featured", true)
 		.order("featured_sort_order", { ascending: true });
 
 	if (error) {
-		console.error("getFeaturedSeries error:", error);
+		console.error("getFeaturedSeries error:", error.message, error.details, error.hint, error.code);
 		return [];
 	}
 
@@ -131,7 +131,7 @@ export async function getEditorialPicks(section?: string) {
 	let query = supabase
 		.from("editorial_picks")
 		.select(
-			"id, section, sort_order, series!inner(id, title, slug, genre, thumbnail_url, description, view_count, profiles!creator_id(display_name, username, avatar_url))",
+			"id, section, sort_order, series!inner(id, title, slug, genre, thumbnail_url, description, view_count, profiles!inner(display_name, username, avatar_url))",
 		)
 		.order("sort_order", { ascending: true });
 
@@ -142,7 +142,7 @@ export async function getEditorialPicks(section?: string) {
 	const { data, error } = await query;
 
 	if (error) {
-		console.error("getEditorialPicks error:", error);
+		console.error("getEditorialPicks error:", error.message, error.details, error.hint, error.code);
 		return [];
 	}
 
@@ -159,7 +159,7 @@ export const getEditorialPicksAdmin = cache(async () => {
 	const { data, error } = await adminDb
 		.from("editorial_picks")
 		.select(
-			"id, section, sort_order, series_id, series!inner(id, title, slug, thumbnail_url, profiles!creator_id(display_name))",
+			"id, section, sort_order, series_id, series!inner(id, title, slug, thumbnail_url, profiles!inner(display_name))",
 		)
 		.order("section", { ascending: true })
 		.order("sort_order", { ascending: true });

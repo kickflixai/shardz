@@ -7,7 +7,7 @@ import type { Genre } from "@/db/types";
 export function GenreFilter() {
 	const [genre, setGenre] = useQueryState(
 		"genre",
-		parseAsString.withOptions({ history: "push" }),
+		parseAsString.withOptions({ history: "push", shallow: false }),
 	);
 
 	const activeGenre = genre ?? "all";

@@ -48,7 +48,7 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
 	const { data: series } = await adminDb
 		.from("series")
 		.select(
-			"*, profiles!creator_id(display_name, username), seasons(id, season_number, title, status, price_cents, episodes(id, title, status, sort_order))",
+			"*, profiles!inner(display_name, username), seasons(id, season_number, title, status, price_cents, episodes(id, title, status, sort_order))",
 		)
 		.eq("id", id)
 		.single();

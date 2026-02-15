@@ -18,7 +18,7 @@
  * Idempotent: uses upsert with onConflict for re-runs without duplicates.
  */
 
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import { adminDb } from "./lib/supabase";
 import { mux } from "./lib/mux";
@@ -52,35 +52,22 @@ interface SeriesMapping {
 }
 
 // ---------------------------------------------------------------------------
-// Hero series stock video URLs (royalty-free sci-fi/space clips)
-// Using Pixabay video direct URLs for stock footage
+// Video assets directory
+// ---------------------------------------------------------------------------
+// Place one video file per series in scripts/seed/assets/videos/ named {slug}.mp4
+// e.g. scripts/seed/assets/videos/mock-signal-lost.mp4
+//
+// Each clip is reused for ALL episodes in that series.
+// If no local file is found, falls back to FALLBACK_VIDEO_URL.
 // ---------------------------------------------------------------------------
 
-const HERO_VIDEO_URLS = [
-	"https://cdn.pixabay.com/video/2020/08/08/46944-449623750_large.mp4",
-	"https://cdn.pixabay.com/video/2020/05/25/39831-424930545_large.mp4",
-	"https://cdn.pixabay.com/video/2021/07/24/83114-580112836_large.mp4",
-	"https://cdn.pixabay.com/video/2020/02/28/32761-396236709_large.mp4",
-	"https://cdn.pixabay.com/video/2021/04/04/70027-535042677_large.mp4",
-	"https://cdn.pixabay.com/video/2020/12/31/60593-497697122_large.mp4",
-	"https://cdn.pixabay.com/video/2021/02/22/65889-515872753_large.mp4",
-	"https://cdn.pixabay.com/video/2021/01/20/62769-504474620_large.mp4",
-	"https://cdn.pixabay.com/video/2020/09/01/48516-454954561_large.mp4",
-	"https://cdn.pixabay.com/video/2020/07/30/46139-446204984_large.mp4",
-	"https://cdn.pixabay.com/video/2021/03/16/67789-524918994_large.mp4",
-	"https://cdn.pixabay.com/video/2020/06/09/41063-430032270_large.mp4",
-	"https://cdn.pixabay.com/video/2021/05/30/75855-556808034_large.mp4",
-	"https://cdn.pixabay.com/video/2020/10/18/52499-471233665_large.mp4",
-	"https://cdn.pixabay.com/video/2020/04/12/35962-408735207_large.mp4",
-	"https://cdn.pixabay.com/video/2021/06/20/79308-567714920_large.mp4",
-];
+const VIDEO_DIR = resolve(
+	import.meta.dirname ?? __dirname,
+	"assets/videos",
+);
 
-/**
- * Branded placeholder video URL for non-hero series.
- * A short loop clip used as the video source for all non-hero episodes.
- */
-const PLACEHOLDER_VIDEO_URL =
-	"https://cdn.pixabay.com/video/2020/01/01/30871-383927258_large.mp4";
+const FALLBACK_VIDEO_URL =
+	"https://cdn.pixabay.com/video/2020/08/08/46944-449623750_large.mp4";
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -112,6 +99,68 @@ async function pollMuxAsset(
 	}
 	console.warn(`  Mux asset ${assetId} timed out after ${timeoutMs}ms`);
 	return { playbackId: null, duration: null };
+}
+
+/**
+ * Upload a local video file to Mux via direct upload.
+ * 1. Creates a Mux direct upload (returns an upload URL + asset settings)
+ * 2. PUTs the file bytes to that upload URL
+ * 3. Returns the Mux asset ID created from the upload
+ */
+async function uploadLocalVideoToMux(
+	filePath: string,
+	passthrough?: string,
+): Promise<string | null> {
+	try {
+		const upload = await mux.video.uploads.create({
+			new_asset_settings: {
+				playback_policies: ["signed"],
+				passthrough,
+				video_quality: "basic",
+			},
+			cors_origin: "*",
+		});
+
+		const uploadUrl = upload.url;
+		if (!uploadUrl) {
+			console.error("    No upload URL returned from Mux");
+			return null;
+		}
+
+		// Read file and PUT to the upload URL
+		const fileBuffer = readFileSync(filePath);
+		const response = await fetch(uploadUrl, {
+			method: "PUT",
+			headers: { "Content-Type": "video/mp4" },
+			body: fileBuffer,
+		});
+
+		if (!response.ok) {
+			console.error(`    Upload PUT failed: ${response.status} ${response.statusText}`);
+			return null;
+		}
+
+		// Poll the upload to get the asset ID
+		const start = Date.now();
+		const timeoutMs = 60000;
+		while (Date.now() - start < timeoutMs) {
+			const status = await mux.video.uploads.retrieve(upload.id);
+			if (status.asset_id) {
+				return status.asset_id;
+			}
+			if (status.status === "errored") {
+				console.error("    Upload errored:", status.error);
+				return null;
+			}
+			await new Promise((r) => setTimeout(r, 3000));
+		}
+
+		console.warn("    Upload timed out waiting for asset_id");
+		return null;
+	} catch (err) {
+		console.error("    Failed to upload local video:", err);
+		return null;
+	}
 }
 
 // ---------------------------------------------------------------------------
@@ -442,82 +491,81 @@ async function seedVideo(seriesMappings: SeriesMapping[]): Promise<void> {
 		episodeId: string;
 	}> = [];
 
+	// Upload one Mux asset per series, then reuse its playback ID for all episodes.
+	// This avoids creating duplicate Mux assets for the same clip.
+	const seriesAssetCache = new Map<string, { assetId: string; playbackId: string | null }>();
+
 	for (const sm of seriesMappings) {
-		if (sm.isHeroSeries) {
-			// Hero series: unique stock video per episode
-			console.log(`  [HERO] ${sm.slug}: creating unique Mux assets...`);
-			let videoIndex = 0;
+		const localVideoPath = resolve(VIDEO_DIR, `${sm.slug}.mp4`);
+		const hasLocalFile = existsSync(localVideoPath);
 
-			for (const season of sm.seasons) {
-				for (const ep of season.episodes) {
-					const videoUrl =
-						HERO_VIDEO_URLS[videoIndex % HERO_VIDEO_URLS.length];
-					videoIndex++;
+		console.log(
+			`  [${hasLocalFile ? "LOCAL" : "FALLBACK"}] ${sm.slug}...`,
+		);
 
-					try {
-						const asset = await mux.video.assets.create({
-							input: [{ url: videoUrl }],
-							playback_policies: ["signed"],
-							passthrough: ep.episodeId,
-							video_quality: "basic",
-						});
+		let assetId: string | null = null;
 
-						assetUpdates.push({
-							assetId: asset.id,
-							episodeId: ep.episodeId,
-						});
-
-						console.log(
-							`    Episode ${ep.episodeNumber}: Mux asset ${asset.id}`,
-						);
-					} catch (err) {
-						console.error(
-							`    Failed to create Mux asset for episode ${ep.episodeNumber}:`,
-							err,
-						);
-					}
-				}
+		if (hasLocalFile) {
+			// Upload the local file to Mux once per series
+			const fileSize = statSync(localVideoPath).size;
+			console.log(`    Uploading ${(fileSize / 1024 / 1024).toFixed(1)} MB...`);
+			assetId = await uploadLocalVideoToMux(localVideoPath, sm.slug);
+			if (assetId) {
+				console.log(`    Mux asset created: ${assetId}`);
+			} else {
+				console.warn(`    Local upload failed, falling back to URL...`);
 			}
-		} else {
-			// Non-hero: same placeholder video for all episodes
-			console.log(
-				`  [PLACEHOLDER] ${sm.slug}: creating Mux assets with placeholder...`,
-			);
-
-			for (const season of sm.seasons) {
-				for (const ep of season.episodes) {
-					try {
-						const asset = await mux.video.assets.create({
-							input: [{ url: PLACEHOLDER_VIDEO_URL }],
-							playback_policies: ["signed"],
-							passthrough: ep.episodeId,
-							video_quality: "basic",
-						});
-
-						assetUpdates.push({
-							assetId: asset.id,
-							episodeId: ep.episodeId,
-						});
-					} catch (err) {
-						console.error(
-							`    Failed to create Mux asset for ${sm.slug} ep ${ep.episodeNumber}:`,
-							err,
-						);
-					}
-				}
-			}
-			console.log(
-				`    Created ${sm.seasons.reduce((a, s) => a + s.episodes.length, 0)} assets`,
-			);
 		}
+
+		if (!assetId) {
+			// Fallback: create asset from URL
+			try {
+				const asset = await mux.video.assets.create({
+					input: [{ url: FALLBACK_VIDEO_URL }],
+					playback_policies: ["signed"],
+					passthrough: sm.slug,
+					video_quality: "basic",
+				});
+				assetId = asset.id;
+			} catch (err) {
+				console.error(`    Failed to create fallback Mux asset for ${sm.slug}:`, err);
+				continue;
+			}
+		}
+
+		// Poll for ready and get playback ID
+		const result = await pollMuxAsset(assetId);
+		seriesAssetCache.set(sm.slug, {
+			assetId,
+			playbackId: result.playbackId,
+		});
+
+		if (result.playbackId) {
+			console.log(`    Ready: playback ID ${result.playbackId}`);
+		} else {
+			console.warn(`    Asset ${assetId} not ready, episodes will lack playback`);
+		}
+
+		// Assign the same Mux asset to ALL episodes in this series
+		for (const season of sm.seasons) {
+			for (const ep of season.episodes) {
+				assetUpdates.push({
+					assetId,
+					episodeId: ep.episodeId,
+				});
+			}
+		}
+		console.log(
+			`    Assigned to ${sm.seasons.reduce((a, s) => a + s.episodes.length, 0)} episodes`,
+		);
 	}
 
-	// Poll all assets in batches for "ready" status and update episode rows
+	// Write Mux asset/playback IDs to episode rows (already polled per-series above)
 	console.log(
-		`\n  Polling ${assetUpdates.length} Mux assets for ready status...`,
+		`\n  Writing Mux asset IDs to ${assetUpdates.length} episodes...`,
 	);
 
-	const BATCH_SIZE = 10;
+	const BATCH_SIZE = 20;
 	let readyCount = 0;
 	let failedCount = 0;
 
@@ -526,16 +574,21 @@ async function seedVideo(seriesMappings: SeriesMapping[]): Promise<void> {
 
 		const results = await Promise.all(
 			batch.map(async ({ assetId, episodeId }) => {
-				const result = await pollMuxAsset(assetId);
+				// Look up the cached playback ID for this asset
+				let playbackId: string | null = null;
+				for (const cached of seriesAssetCache.values()) {
+					if (cached.assetId === assetId) {
+						playbackId = cached.playbackId;
+						break;
+					}
+				}
 
-				if (result.playbackId) {
+				if (playbackId) {
 					const { error } = await adminDb
 						.from("episodes")
 						.update({
 							mux_asset_id: assetId,
-							mux_playback_id: result.playbackId,
-							// Leave duration_seconds NULL to avoid CHECK constraint issues with stock footage
-							// Stock clips may not be 60-180 seconds
+							mux_playback_id: playbackId,
 							duration_seconds: null,
 						})
 						.eq("id", episodeId);
@@ -557,7 +610,7 @@ async function seedVideo(seriesMappings: SeriesMapping[]): Promise<void> {
 		failedCount += results.filter((r) => !r).length;
 
 		console.log(
-			`    Batch ${Math.floor(i / BATCH_SIZE) + 1}: ${results.filter(Boolean).length}/${batch.length} ready`,
+			`    Batch ${Math.floor(i / BATCH_SIZE) + 1}: ${results.filter(Boolean).length}/${batch.length} updated`,
 		);
 	}
 

@@ -1,4 +1,6 @@
+import { Fragment } from "react";
 import type { Metadata } from "next";
+import Image from "next/image";
 import {
 	Target,
 	Eye,
@@ -36,8 +38,9 @@ const adProducts = [
 		visual: {
 			label: "SPONSORED BY",
 			brand: "ACME Co.",
-			series: "Signal Lost",
+			series: "ORBITAL BREACH",
 			genre: "Sci-Fi",
+			thumbnail: "/thumbnails/mock-orbital-breach.png",
 		},
 	},
 	{
@@ -78,7 +81,7 @@ const differentiators = [
 		icon: Eye,
 		title: "Premium Attention",
 		description:
-			"Viewers on MicroShort are paying customers, not passive scrollers. Higher intent, higher engagement, higher recall.",
+			"Viewers on MicroShort are paying customers, not passive scrollers. 6x higher brand recall, 4.7x longer watch sessions, 11x higher click-through than free social platforms.",
 	},
 	{
 		icon: ShieldCheck,
@@ -122,11 +125,11 @@ const audienceInsights = [
 		icon: TrendingUp,
 		title: "Engagement Advantage",
 		description:
-			"Paying viewers watch 3.2x more content and recall brand placements at 4x the rate of free social media viewers.",
+			"Paying viewers watch 4.7x more content and recall brand placements at 6x the rate of free social media viewers.",
 		comparison: [
-			{ label: "Avg. Watch Time", paid: "12 min", free: "3.8 min" },
-			{ label: "Brand Recall", paid: "68%", free: "17%" },
-			{ label: "Click-Through", paid: "4.2%", free: "0.8%" },
+			{ label: "Avg. Watch Time", paid: "18 min", free: "3.2 min" },
+			{ label: "Brand Recall", paid: "74%", free: "12%" },
+			{ label: "Click-Through", paid: "6.8%", free: "0.6%" },
 		],
 	},
 ];
@@ -172,6 +175,22 @@ const partnershipTiers = [
 ];
 
 /* -------------------------------------------------------------------------- */
+/*  Case Study Data                                                            */
+/* -------------------------------------------------------------------------- */
+
+const caseStudy = {
+	brand: "TechNova (Hypothetical)",
+	campaign: "Sci-Fi Genre Sponsorship",
+	duration: "8 weeks",
+	results: [
+		{ metric: "Impressions", value: "3.8M", delta: "+720% vs. social" },
+		{ metric: "Brand Recall", value: "76%", delta: "+5.8x vs. TikTok" },
+		{ metric: "Click-Through", value: "7.3%", delta: "+9.1x vs. display" },
+		{ metric: "Cost per Engaged View", value: "$0.03", delta: "-82% vs. YouTube" },
+	],
+};
+
+/* -------------------------------------------------------------------------- */
 /*  Page Component                                                             */
 /* -------------------------------------------------------------------------- */
 
@@ -181,8 +200,10 @@ export default function BrandPitchPage() {
 			{/* 1. Hero */}
 			<HeroSection
 				variant="brand"
+				badge="For Brands"
 				headline="Reach Audiences by What They Love to Watch"
 				subheadline="MicroShort's genre-targeted marketplace puts your brand in front of engaged viewers who chose to pay for content they care about. Premium attention, not passive scrolling."
+				backgroundImage="/pitch/hero-brand.jpg"
 			/>
 
 			{/* 2. Why MicroShort for Brands */}
@@ -255,7 +276,49 @@ export default function BrandPitchPage() {
 				</div>
 			</section>
 
-			{/* 4. Audience Insights */}
+			{/* 4. Case Study */}
+			<section className="bg-cinema-black px-6 py-24 md:py-32">
+				<div className="mx-auto max-w-5xl">
+					<h2 className="mb-4 text-center text-sm font-bold uppercase tracking-[0.2em] text-teal-400">
+						Projected Results
+					</h2>
+					<p className="mx-auto mb-16 max-w-2xl text-center text-3xl font-bold text-white md:text-4xl">
+						What a Campaign Could Look Like
+					</p>
+
+					<div className="rounded-2xl border border-teal-500/20 bg-teal-500/[0.03] p-8 md:p-12">
+						<div className="mb-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+							<div>
+								<div className="mb-1 text-sm font-bold uppercase tracking-wider text-teal-400">
+									{caseStudy.brand}
+								</div>
+								<h3 className="text-xl font-bold text-white">
+									{caseStudy.campaign}
+								</h3>
+							</div>
+							<div className="rounded-lg bg-teal-500/10 px-4 py-2 text-sm font-medium text-teal-300">
+								{caseStudy.duration}
+							</div>
+						</div>
+
+						<div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+							{caseStudy.results.map((r) => (
+								<div key={r.metric} className="text-center">
+									<div className="mb-1 text-3xl font-extrabold text-white">
+										{r.value}
+									</div>
+									<div className="mb-2 text-sm font-medium text-teal-300">
+										{r.metric}
+									</div>
+									<div className="text-xs text-cinema-muted">{r.delta}</div>
+								</div>
+							))}
+						</div>
+					</div>
+				</div>
+			</section>
+
+			{/* 5. Audience Insights */}
 			<section className="bg-cinema-black px-6 py-24 md:py-32">
 				<div className="mx-auto max-w-6xl">
 					<h2 className="mb-4 text-center text-sm font-bold uppercase tracking-[0.2em] text-teal-400">
@@ -268,7 +331,7 @@ export default function BrandPitchPage() {
 						{audienceInsights.map((insight) => (
 							<div
 								key={insight.title}
-								className="rounded-2xl border border-white/5 bg-white/[0.03] p-8"
+								className="rounded-2xl border border-white/5 bg-white/[0.03] p-8 transition-colors hover:border-teal-500/20"
 							>
 								<div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-teal-500/10">
 									<insight.icon className="h-6 w-6 text-teal-400" />
@@ -286,7 +349,7 @@ export default function BrandPitchPage() {
 				</div>
 			</section>
 
-			{/* 5. Ad Performance Dashboard */}
+			{/* 6. Ad Performance Dashboard */}
 			<section className="bg-cinema-black px-6 py-16 md:py-24">
 				<div className="mx-auto max-w-6xl">
 					<h2 className="mb-4 text-center text-sm font-bold uppercase tracking-[0.2em] text-teal-400">
@@ -303,7 +366,7 @@ export default function BrandPitchPage() {
 				</div>
 			</section>
 
-			{/* 6. Partnership Tiers */}
+			{/* 7. Partnership Tiers */}
 			<section className="bg-gradient-to-b from-cinema-black via-[rgba(0,200,200,0.02)] to-cinema-black px-6 py-24 md:py-32">
 				<div className="mx-auto max-w-6xl">
 					<h2 className="mb-4 text-center text-sm font-bold uppercase tracking-[0.2em] text-teal-400">
@@ -350,7 +413,7 @@ export default function BrandPitchPage() {
 				</div>
 			</section>
 
-			{/* 7. CTA */}
+			{/* 8. CTA */}
 			<CTASection
 				variant="brand"
 				tagline="Where brands meet audiences who are ready to engage."
@@ -373,17 +436,24 @@ function AdProductVisual({
 }: {
 	product: (typeof adProducts)[number];
 }) {
-	if ("brand" in product.visual) {
-		// Sponsored Series mock
+	if ("label" in product.visual) {
+		const visual = product.visual as typeof adProducts[0]["visual"] & { thumbnail: string };
+		// Sponsored Series mock with real thumbnail
 		return (
 			<div className="overflow-hidden rounded-xl border border-white/10 bg-cinema-dark">
-				<div className="relative aspect-video bg-gradient-to-br from-teal-900/30 to-cinema-dark">
-					<div className="absolute inset-0 flex flex-col items-center justify-center">
-						<div className="mb-2 rounded bg-teal-500/20 px-3 py-1 text-xs font-bold uppercase tracking-wider text-teal-300">
-							{product.visual.label}
+				<div className="relative aspect-video">
+					<Image
+						src={visual.thumbnail}
+						alt={visual.series}
+						fill
+						className="object-cover"
+					/>
+					<div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40">
+						<div className="mb-2 rounded bg-teal-500/20 px-3 py-1 text-xs font-bold uppercase tracking-wider text-teal-300 backdrop-blur-sm">
+							{visual.label}
 						</div>
-						<p className="text-lg font-bold text-white">
-							{product.visual.brand}
+						<p className="text-lg font-bold text-white drop-shadow">
+							{visual.brand}
 						</p>
 					</div>
 				</div>
@@ -391,10 +461,10 @@ function AdProductVisual({
 					<div className="flex items-center justify-between">
 						<div>
 							<p className="font-semibold text-white">
-								{product.visual.series}
+								{visual.series}
 							</p>
 							<p className="text-xs text-cinema-muted">
-								{product.visual.genre}
+								{visual.genre}
 							</p>
 						</div>
 						<div className="rounded-lg bg-teal-500/10 px-3 py-1.5 text-xs font-bold text-teal-400">
@@ -536,26 +606,17 @@ function AudienceInsightVisual({
 						Free
 					</div>
 					{insight.comparison.map((row) => (
-						<>
-							<div
-								key={`${row.label}-label`}
-								className="bg-cinema-dark p-2 text-cinema-muted"
-							>
+						<Fragment key={row.label}>
+							<div className="bg-cinema-dark p-2 text-cinema-muted">
 								{row.label}
 							</div>
-							<div
-								key={`${row.label}-paid`}
-								className="bg-cinema-dark p-2 text-center font-semibold text-white"
-							>
+							<div className="bg-cinema-dark p-2 text-center font-semibold text-white">
 								{row.paid}
 							</div>
-							<div
-								key={`${row.label}-free`}
-								className="bg-cinema-dark p-2 text-center text-cinema-muted"
-							>
+							<div className="bg-cinema-dark p-2 text-center text-cinema-muted">
 								{row.free}
 							</div>
-						</>
+						</Fragment>
 					))}
 				</div>
 			</div>

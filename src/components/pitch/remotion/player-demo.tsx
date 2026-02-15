@@ -1,5 +1,7 @@
 import {
 	AbsoluteFill,
+	Img,
+	staticFile,
 	Sequence,
 	useCurrentFrame,
 	interpolate,
@@ -89,19 +91,30 @@ export const PlayerDemo: React.FC = () => {
 				<div
 					style={{
 						flex: 1,
-						background: `linear-gradient(135deg, ${SURFACE_DARK} 0%, #16213e 50%, ${SURFACE_DARK} 100%)`,
 						display: "flex",
 						alignItems: "center",
 						justifyContent: "center",
 						position: "relative",
+						overflow: "hidden",
 					}}
 				>
-					{/* Subtle gradient animation */}
+					{/* Thumbnail background */}
+					<Img
+						src={staticFile("thumbnails/mock-orbital-breach.png")}
+						style={{
+							position: "absolute",
+							inset: 0,
+							width: "100%",
+							height: "100%",
+							objectFit: "cover",
+						}}
+					/>
+					{/* Subtle gradient overlay */}
 					<div
 						style={{
 							position: "absolute",
 							inset: 0,
-							background: `radial-gradient(circle at ${30 + frame * 0.3}% ${40 + Math.sin(frame * 0.05) * 15}%, rgba(224,184,0,0.08) 0%, transparent 60%)`,
+							background: `radial-gradient(circle at ${30 + frame * 0.3}% ${40 + Math.sin(frame * 0.05) * 15}%, rgba(224,184,0,0.12) 0%, rgba(0,0,0,0.3) 60%)`,
 						}}
 					/>
 
@@ -148,7 +161,7 @@ export const PlayerDemo: React.FC = () => {
 							marginBottom: 4,
 						}}
 					>
-						SIGNAL LOST
+						ORBITAL BREACH
 					</div>
 
 					{/* Episode info */}
@@ -160,7 +173,7 @@ export const PlayerDemo: React.FC = () => {
 							marginBottom: 16,
 						}}
 					>
-						S1 E3 &middot; "The Last Frequency"
+						S1 E5 &middot; "Cascade"
 					</div>
 
 					{/* Progress bar */}
