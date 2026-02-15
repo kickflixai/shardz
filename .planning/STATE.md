@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-14)
 ## Current Position
 
 Phase: 9 of 9 (Social + Engagement)
-Plan: 1 of 4 in current phase
+Plan: 4 of 4 in current phase
 Status: Executing Phase 9
-Last activity: 2026-02-15 -- 09-01 social engagement data layer complete
+Last activity: 2026-02-15 -- 09-04 comments overlay, cinematic mode, player integration complete
 
 Progress: [▓▓▓▓▓▓▓▓▓░] 94%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 31
+- Total plans completed: 32
 - Average duration: 4min
-- Total execution time: 2.2 hours
+- Total execution time: 2.3 hours
 
 **By Phase:**
 
@@ -35,10 +35,10 @@ Progress: [▓▓▓▓▓▓▓▓▓░] 94%
 | 06-creator-dashboard | 6 | 23min | 4min |
 | 07-admin-panel | 4 | 21min | 5min |
 | 08-mock-data-pitch-assets | 6 | 31min | 5min |
-| 09-social-engagement | 1 | 5min | 5min |
+| 09-social-engagement | 2 | 9min | 5min |
 
 **Recent Trend:**
-- Last 5 plans: 8min, 5min, 4min, 8min, 5min
+- Last 5 plans: 5min, 4min, 8min, 5min, 4min
 - Trend: stable
 
 *Updated after each plan completion*
@@ -271,6 +271,10 @@ Recent decisions affecting current work:
 - [09-01]: recordWatchProgress and recordReaction are fire-and-forget (void return) for background tracking
 - [09-01]: Report action auto-flags comments but requires admin review for series/episode takedowns
 - [09-01]: REACTION_EMOJIS exported as const array from reactions.ts for reuse in picker UI
+- [09-04]: Integrated both comments (09-04) and reactions (09-03) in single VideoPlayer since both modify same files concurrently
+- [09-04]: Map-to-Record conversion at episode page level for JSON serialization across server/client boundary
+- [09-04]: CommentWithAuthor-to-CommentWithProfile shape adapter flattens nested author for simpler client hook
+- [09-04]: Comment input uses getCurrentTimestamp callback (not state) to capture exact playback time at moment of opening
 
 ### Pending Todos
 
@@ -285,5 +289,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-02-15
-Stopped at: Completed 09-01-PLAN.md (social engagement data layer) -- database, actions, queries, avatar upload
-Resume file: .planning/phases/09-social-engagement/09-01-SUMMARY.md
+Stopped at: Completed 09-04-PLAN.md (comments overlay, cinematic mode, player integration)
+Resume file: .planning/phases/09-social-engagement/09-04-SUMMARY.md
