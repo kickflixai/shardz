@@ -100,6 +100,7 @@ export interface Profile {
 	bio: string | null;
 	social_links: Record<string, string>;
 	follower_count: number;
+	watch_history_public: boolean;
 	stripe_account_id: string | null;
 	stripe_onboarding_complete: boolean;
 	created_at: string;
@@ -187,6 +188,41 @@ export interface Follower {
 	created_at: string;
 }
 
+export interface EpisodeComment {
+	id: string;
+	episode_id: string;
+	user_id: string;
+	content: string;
+	timestamp_seconds: number;
+	is_flagged: boolean;
+	created_at: string;
+}
+
+export interface EpisodeReaction {
+	id: string;
+	episode_id: string;
+	timestamp_seconds: number;
+	emoji: string;
+	count: number;
+	created_at: string;
+}
+
+export interface Favorite {
+	id: string;
+	user_id: string;
+	series_id: string;
+	created_at: string;
+}
+
+export interface WatchHistoryEntry {
+	id: string;
+	user_id: string;
+	episode_id: string;
+	progress_seconds: number;
+	completed: boolean;
+	last_watched_at: string;
+}
+
 // ============================================================================
 // Insert Types (omit auto-generated fields)
 // ============================================================================
@@ -240,6 +276,24 @@ export type FollowerInsert = Omit<Follower, "id" | "created_at"> & {
 	id?: string;
 };
 
+export type EpisodeCommentInsert = Omit<EpisodeComment, "id" | "created_at" | "is_flagged"> & {
+	id?: string;
+	is_flagged?: boolean;
+};
+
+export type EpisodeReactionInsert = Omit<EpisodeReaction, "id" | "created_at"> & {
+	id?: string;
+};
+
+export type FavoriteInsert = Omit<Favorite, "id" | "created_at"> & {
+	id?: string;
+};
+
+export type WatchHistoryEntryInsert = Omit<WatchHistoryEntry, "id" | "last_watched_at"> & {
+	id?: string;
+	last_watched_at?: string;
+};
+
 // ============================================================================
 // Update Types (all fields optional except id)
 // ============================================================================
@@ -255,3 +309,7 @@ export type CreatorApplicationUpdate = Partial<
 >;
 export type CommunityPostUpdate = Partial<Omit<CommunityPost, "id" | "created_at" | "updated_at">>;
 export type FollowerUpdate = Partial<Omit<Follower, "id" | "created_at">>;
+export type EpisodeCommentUpdate = Partial<Omit<EpisodeComment, "id" | "created_at">>;
+export type EpisodeReactionUpdate = Partial<Omit<EpisodeReaction, "id" | "created_at">>;
+export type FavoriteUpdate = Partial<Omit<Favorite, "id" | "created_at">>;
+export type WatchHistoryEntryUpdate = Partial<Omit<WatchHistoryEntry, "id">>;
