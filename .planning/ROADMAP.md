@@ -157,15 +157,15 @@ Plans:
   3. Each stakeholder pitch page (VCs, creator partners, brands, advisors) loads as a standalone page with compelling copy, platform benefits, and links to the live platform
   4. Creator landing page presents a multi-angle pitch targeting different creator types (studios, influencers, comedians, musicians, AI filmmakers)
   5. Attribution tracking and social media ad dashboards display realistic mock data demonstrating platform intelligence
-**Plans**: TBD
+**Plans**: 6 plans (2 waves)
 
 Plans:
-- [ ] 08-01: Mock data seeding system (series generation, fal.ai thumbnail generation, royalty-free video sourcing)
-- [ ] 08-02: Mock data population (15-25 series across genres) and clear/replace mechanism
-- [ ] 08-03: VC/investor pitch page and creator partner pitch page
-- [ ] 08-04: Brand/sponsor pitch page and advisor pitch page
-- [ ] 08-05: Creator landing page with multi-angle pitch sections
-- [ ] 08-06: Showcase UI -- attribution dashboard, social media ad dashboard, and content warnings display with mock data
+- [ ] 08-01-PLAN.md -- Seed script infrastructure, mock data definitions (creators, 20 series, engagement), fal.ai thumbnail generator (Wave 1)
+- [ ] 08-02-PLAN.md -- Seed execution orchestration (pnpm seed), clear script (pnpm seed:clear), Mux video ingestion (Wave 2)
+- [ ] 08-03-PLAN.md -- Remotion + Recharts deps, 4 animated compositions, shared pitch components, pitch hub at /pitch (Wave 1)
+- [ ] 08-04-PLAN.md -- VC/investor pitch page and creator partner pitch page (Wave 2)
+- [ ] 08-05-PLAN.md -- Brand/sponsor pitch page and advisor pitch page (Wave 2)
+- [ ] 08-06-PLAN.md -- Creator landing page (/creators) with waitlist, showcase dashboards (attribution + ad) (Wave 2)
 
 ### Phase 9: Social + Engagement
 **Goal**: Users have social identities on the platform and can interact with content through reactions, comments, favorites, and following creators
