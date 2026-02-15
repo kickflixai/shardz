@@ -49,6 +49,7 @@ export interface Series {
 	creator_id: string;
 	status: ContentStatus;
 	is_featured: boolean;
+	featured_sort_order: number | null;
 	view_count: number;
 	bundle_discount_percent: number | null;
 	created_at: string;
