@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { HeroSection } from "@/components/pitch/hero-section";
 import { CTASection } from "@/components/pitch/cta-section";
+import { AdDashboardLazy } from "@/components/showcase/ad-dashboard-lazy";
 
 export const metadata: Metadata = {
 	title: "MicroShort for Brands | Genre-Targeted Short-Form Advertising",
@@ -285,7 +286,24 @@ export default function BrandPitchPage() {
 				</div>
 			</section>
 
-			{/* 5. Partnership Tiers */}
+			{/* 5. Ad Performance Dashboard */}
+			<section className="bg-cinema-black px-6 py-16 md:py-24">
+				<div className="mx-auto max-w-6xl">
+					<h2 className="mb-4 text-center text-sm font-bold uppercase tracking-[0.2em] text-teal-400">
+						Campaign Intelligence
+					</h2>
+					<p className="mx-auto mb-4 max-w-2xl text-center text-3xl font-bold text-white md:text-4xl">
+						Unified Campaign Intelligence Across Platforms
+					</p>
+					<p className="mx-auto mb-12 max-w-2xl text-center text-lg text-cinema-muted">
+						See how your campaigns perform across Meta, TikTok,
+						YouTube, and X &mdash; all in one dashboard.
+					</p>
+					<AdDashboardLazy />
+				</div>
+			</section>
+
+			{/* 6. Partnership Tiers */}
 			<section className="bg-gradient-to-b from-cinema-black via-[rgba(0,200,200,0.02)] to-cinema-black px-6 py-24 md:py-32">
 				<div className="mx-auto max-w-6xl">
 					<h2 className="mb-4 text-center text-sm font-bold uppercase tracking-[0.2em] text-teal-400">
@@ -332,7 +350,7 @@ export default function BrandPitchPage() {
 				</div>
 			</section>
 
-			{/* 6. CTA */}
+			{/* 7. CTA */}
 			<CTASection
 				variant="brand"
 				tagline="Where brands meet audiences who are ready to engage."
@@ -418,6 +436,11 @@ function AdProductVisual({
 	}
 
 	// Branded Content Partnerships mock
+	const visual = product.visual as {
+		creator: string;
+		brand: string;
+		collab: string;
+	};
 	return (
 		<div className="overflow-hidden rounded-xl border border-white/10 bg-cinema-dark">
 			<div className="relative aspect-video bg-gradient-to-br from-teal-900/20 to-cinema-dark">
@@ -428,9 +451,7 @@ function AdProductVisual({
 								MC
 							</div>
 							<p className="mt-2 text-xs text-cinema-muted">
-								{"creator" in product.visual
-									? product.visual.creator
-									: ""}
+								{visual.creator}
 							</p>
 						</div>
 						<div className="text-2xl text-teal-400">+</div>
@@ -439,7 +460,7 @@ function AdProductVisual({
 								YB
 							</div>
 							<p className="mt-2 text-xs text-cinema-muted">
-								{"brand" in product.visual ? product.visual.brand : ""}
+								{visual.brand}
 							</p>
 						</div>
 					</div>
@@ -447,7 +468,7 @@ function AdProductVisual({
 			</div>
 			<div className="border-t border-white/5 p-4 text-center">
 				<p className="font-semibold text-white">
-					{"collab" in product.visual ? product.visual.collab : ""}
+					{visual.collab}
 				</p>
 				<p className="text-xs text-cinema-muted">
 					A collaboration between creator and brand

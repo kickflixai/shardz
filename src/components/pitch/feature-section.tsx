@@ -1,15 +1,6 @@
-import dynamic from "next/dynamic";
 import { cn } from "@/lib/utils";
+import { RemotionFeatureLazy } from "./remotion-feature-lazy";
 import type { CompositionName } from "./remotion-feature";
-
-// Dynamic import with ssr: false to prevent Remotion Player SSR issues
-const RemotionFeature = dynamic(
-	() =>
-		import("./remotion-feature").then((mod) => ({
-			default: mod.RemotionFeature,
-		})),
-	{ ssr: false },
-);
 
 type Variant = "investor" | "brand" | "advisor" | "creator";
 
@@ -65,7 +56,7 @@ export function FeatureSection({ variant, features }: FeatureSectionProps) {
 
 							{/* Animation side */}
 							<div className="w-full flex-1 overflow-hidden rounded-xl border border-cinema-border bg-cinema-dark">
-								<RemotionFeature composition={feature.composition} />
+								<RemotionFeatureLazy composition={feature.composition} />
 							</div>
 						</div>
 					);

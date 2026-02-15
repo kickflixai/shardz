@@ -3,6 +3,7 @@ import { HeroSection } from "@/components/pitch/hero-section";
 import { FeatureSection } from "@/components/pitch/feature-section";
 import { StatsSection } from "@/components/pitch/stats-section";
 import { CTASection } from "@/components/pitch/cta-section";
+import { AttributionDashboardLazy } from "@/components/showcase/attribution-dashboard-lazy";
 import {
 	Play,
 	Layers,
@@ -174,7 +175,24 @@ export default function InvestorPitchPage() {
 			{/* 4. Platform Features with Remotion demos */}
 			<FeatureSection variant="investor" features={investorFeatures} />
 
-			{/* 5. Why Now */}
+			{/* 5. Platform Intelligence */}
+			<section className="bg-cinema-black px-6 py-16 md:py-24">
+				<div className="mx-auto max-w-6xl">
+					<h2 className="mb-4 text-center text-sm font-bold uppercase tracking-[0.2em] text-cinema-muted">
+						Platform Intelligence
+					</h2>
+					<p className="mx-auto mb-4 max-w-2xl text-center text-3xl font-bold tracking-tight text-white sm:text-4xl">
+						Track Every Viewer from First Touch to Revenue
+					</p>
+					<p className="mx-auto mb-12 max-w-2xl text-center text-lg text-cinema-muted">
+						MicroShort gives creators and operators full visibility
+						into how content performs and where audiences come from.
+					</p>
+					<AttributionDashboardLazy />
+				</div>
+			</section>
+
+			{/* 6. Why Now */}
 			<section className="bg-cinema-black px-6 py-24 md:py-32">
 				<div className="mx-auto max-w-5xl">
 					<h2 className="mb-4 text-center text-sm font-bold uppercase tracking-[0.2em] text-cinema-muted">
@@ -208,7 +226,7 @@ export default function InvestorPitchPage() {
 				</div>
 			</section>
 
-			{/* 6. CTA */}
+			{/* 7. CTA */}
 			<CTASection
 				variant="investor"
 				primaryCTA={{ label: "Explore the Platform", href: "/browse" }}
