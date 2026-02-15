@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-14)
 ## Current Position
 
 Phase: 8 of 9 (Mock Data + Pitch Assets)
-Plan: 6 of 6 in current phase
-Status: In Progress
-Last activity: 2026-02-15 -- 08-05 brand and advisor pitch pages complete
+Plan: 6 of 6 in current phase (COMPLETE)
+Status: Phase 8 Complete
+Last activity: 2026-02-15 -- 08-06 creator landing page and showcase dashboards complete
 
-Progress: [▓▓▓▓▓▓▓▓▓░] 90%
+Progress: [▓▓▓▓▓▓▓▓▓░] 92%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 29
+- Total plans completed: 30
 - Average duration: 4min
-- Total execution time: 2.0 hours
+- Total execution time: 2.1 hours
 
 **By Phase:**
 
@@ -34,10 +34,10 @@ Progress: [▓▓▓▓▓▓▓▓▓░] 90%
 | 05-payments-monetization | 3 | 15min | 5min |
 | 06-creator-dashboard | 6 | 23min | 4min |
 | 07-admin-panel | 4 | 21min | 5min |
-| 08-mock-data-pitch-assets | 4 | 15min | 4min |
+| 08-mock-data-pitch-assets | 5 | 23min | 5min |
 
 **Recent Trend:**
-- Last 5 plans: 5min, 4min, 8min, 5min, 4min
+- Last 5 plans: 4min, 8min, 5min, 4min, 8min
 - Trend: stable
 
 *Updated after each plan completion*
@@ -150,7 +150,11 @@ Recent decisions affecting current work:
 - [08-01]: 12 creator personas with mock_ username prefix and @mock.microshort.dev emails for idempotency
 - [08-01]: 20 series across all 11 genres with SIGNAL LOST as sole sci-fi hero demo series
 - [08-01]: Seeded PRNG in engagement data generators for deterministic results across runs
-- [08-04]: Investor page market stats are industry-level data (4.5B viewers, Decisions are logged in PROJECT.md Key Decisions table.
+- [08-06]: Server action extracted to separate file (inline 'use server' not allowed in client components in Next.js 16)
+- [08-06]: Lazy client wrapper pattern for ssr:false dynamic imports (Next.js 16 prohibits ssr:false in server components)
+- [08-06]: Waitlist uses standard Supabase server client since RLS INSERT policy allows public inserts
+- [08-06]: Attribution dashboard uses stacked area chart for source funnel and bar chart for genre ROI
+- [08-06]: Ad dashboard shows cross-platform metrics (Meta, TikTok, YouTube, X) with content-as-creative analysis
 Recent decisions affecting current work:
 
 - [Roadmap]: Research recommends Next.js 16 + Supabase + Mux + Stripe stack (HIGH confidence)
@@ -275,5 +279,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-15
-Stopped at: Completed 08-05-PLAN.md (brand and advisor pitch pages)
-Resume file: .planning/phases/08-mock-data-pitch-assets/08-05-SUMMARY.md
+Stopped at: Completed 08-06-PLAN.md (creator landing page and showcase dashboards) -- Phase 8 complete
+Resume file: .planning/phases/08-mock-data-pitch-assets/08-06-SUMMARY.md
