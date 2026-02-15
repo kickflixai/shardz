@@ -101,6 +101,23 @@ export function SeriesDetail({
 
 	return (
 		<div className="space-y-8">
+			{/* Back navigation */}
+			<Link
+				href="/"
+				className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+			>
+				<svg
+					className="h-4 w-4"
+					fill="none"
+					viewBox="0 0 24 24"
+					strokeWidth="1.5"
+					stroke="currentColor"
+				>
+					<path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+				</svg>
+				Back to Browse
+			</Link>
+
 			{/* Hero: Poster + Info side-by-side on desktop, stacked on mobile */}
 			<div className="flex flex-col gap-6 md:flex-row md:gap-8">
 				{/* Poster with play button overlay */}
