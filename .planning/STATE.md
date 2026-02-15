@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-14)
 
 **Core value:** Creators can monetize short-form video content with minimal friction -- upload a series, set a price, and earn revenue from a platform purpose-built for microshorts.
-**Current focus:** Phase 7 - Admin Panel
+**Current focus:** Phase 8 - Mock Data + Pitch Assets
 
 ## Current Position
 
-Phase: 7 of 9 (Admin Panel)
-Plan: 4 of 4 in current phase (COMPLETE)
-Status: Phase Complete
-Last activity: 2026-02-15 -- 07-04 platform metrics dashboard complete
+Phase: 8 of 9 (Mock Data + Pitch Assets)
+Plan: 3 of 6 in current phase
+Status: In Progress
+Last activity: 2026-02-15 -- 08-03 shared pitch components and hub page complete
 
-Progress: [▓▓▓▓▓▓▓▓░░] 82%
+Progress: [▓▓▓▓▓▓▓▓░░] 85%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 26
+- Total plans completed: 27
 - Average duration: 4min
-- Total execution time: 1.8 hours
+- Total execution time: 1.9 hours
 
 **By Phase:**
 
@@ -34,9 +34,10 @@ Progress: [▓▓▓▓▓▓▓▓░░] 82%
 | 05-payments-monetization | 3 | 15min | 5min |
 | 06-creator-dashboard | 6 | 23min | 4min |
 | 07-admin-panel | 4 | 21min | 5min |
+| 08-mock-data-pitch-assets | 1 | 5min | 5min |
 
 **Recent Trend:**
-- Last 5 plans: 6min, 4min, 5min, 4min, 8min
+- Last 5 plans: 4min, 5min, 4min, 8min, 5min
 - Trend: stable
 
 *Updated after each plan completion*
@@ -141,6 +142,10 @@ Recent decisions affecting current work:
 - [07-04]: Platform metrics use 8 parallel Supabase queries with head:true count optimization for minimal latency
 - [07-04]: Revenue figures derived from completed purchases sum (amount_cents, platform_fee_cents, creator_share_cents)
 - [07-04]: Supabase untyped admin client FK joins require 'as unknown as' double cast for correct TS types
+- [08-03]: Used (pitch) route group instead of (public) to avoid Header/Footer on pitch pages
+- [08-03]: Remotion compositions use inline styles (not Tailwind) for iframe rendering compatibility
+- [08-03]: FeatureSection uses next/dynamic with ssr:false to prevent Remotion Player SSR issues
+- [08-03]: Excluded scripts/ from tsconfig to prevent seed script build errors in Next.js type checking
 
 ### Pending Todos
 
@@ -155,5 +160,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-15
-Stopped at: Completed 07-02-PLAN.md (entity management pages)
-Resume file: .planning/phases/07-admin-panel/07-02-SUMMARY.md
+Stopped at: Completed 08-03-PLAN.md (shared pitch components and hub page)
+Resume file: .planning/phases/08-mock-data-pitch-assets/08-03-SUMMARY.md
