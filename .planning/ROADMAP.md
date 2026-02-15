@@ -139,13 +139,13 @@ Plans:
   3. Admin can curate the homepage by selecting featured series and editorial picks
   4. Admin can view platform-level metrics (total users, revenue, active creators, content volume)
   5. Admin can flag or remove content if moderation issues arise
-**Plans**: TBD
+**Plans**: 4 plans (2 waves)
 
 Plans:
-- [ ] 07-01: Admin layout, role-gated access, and creator application review workflow
-- [ ] 07-02: Entity management (creators, content, users, revenue) with browse/search/edit
-- [ ] 07-03: Homepage curation tools, featured series selection, and editorial picks
-- [ ] 07-04: Platform metrics dashboard and content moderation tools
+- [ ] 07-01-PLAN.md -- Admin role guard, forbidden page, authInterrupts config, sidebar update, DB migration, creator application review workflow (Wave 1)
+- [ ] 07-02-PLAN.md -- Entity management pages: creators, content, users, revenue with browse/search/edit (Wave 2)
+- [ ] 07-03-PLAN.md -- Homepage curation tools, featured series toggle, editorial picks, public homepage update (Wave 2)
+- [ ] 07-04-PLAN.md -- Platform metrics dashboard with live stats, recent activity, quick links (Wave 2)
 
 ### Phase 8: Mock Data + Pitch Assets
 **Goal**: The platform looks like a thriving marketplace with populated content, and pitch pages convince investors, creators, brands, and advisors to engage
