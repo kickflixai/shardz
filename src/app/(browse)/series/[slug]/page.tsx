@@ -93,9 +93,20 @@ export default async function SeriesPage({ params }: SeriesPageProps) {
 	} = await supabase.auth.getUser();
 
 	const seasonIds = series.seasons.map((s: { id: string }) => s.id);
-	const purchasedSeasonIds = user
-		? await getUserSeasonPurchases(user.id, seasonIds)
-		: new Set<string>();
+	const [purchasedSeasonIds, isFavorited] = await Promise.all([
+		user
+			? getUserSeasonPurchases(user.id, seasonIds)
+			: Promise.resolve(new Set<string>()),
+		user
+			? supabase
+					.from("favorites")
+					.select("id")
+					.eq("user_id", user.id)
+					.eq("series_id", series.id)
+					.maybeSingle()
+					.then(({ data }) => !!data)
+			: Promise.resolve(false),
+	]);
 
 	const siteUrl =
 		process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
@@ -118,6 +129,8 @@ export default async function SeriesPage({ params }: SeriesPageProps) {
 			<SeriesDetail
 				series={series}
 				purchasedSeasonIds={purchasedSeasonIds}
+				isFavorited={isFavorited}
+				isAuthenticated={!!user}
 			/>
 		</div>
 	);

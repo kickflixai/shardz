@@ -3,6 +3,7 @@ import { Eye } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { getGenreLabel } from "@/config/genres";
 import { ShareButton } from "@/components/share/share-button";
+import { FavoriteButton } from "@/components/social/favorite-button";
 import { CreatorInfo } from "@/components/series/creator-info";
 import { SeasonTabs } from "@/components/series/season-tabs";
 import { UnlockButton } from "@/components/paywall/unlock-button";
@@ -12,6 +13,7 @@ import type { Genre } from "@/db/types";
 
 interface SeriesDetailProps {
 	series: {
+		id: string;
 		slug: string;
 		title: string;
 		description: string | null;
@@ -43,6 +45,8 @@ interface SeriesDetailProps {
 		}>;
 	};
 	purchasedSeasonIds?: Set<string>;
+	isFavorited?: boolean;
+	isAuthenticated?: boolean;
 }
 
 function formatViewCount(count: number): string {
@@ -58,6 +62,8 @@ function formatViewCount(count: number): string {
 export function SeriesDetail({
 	series,
 	purchasedSeasonIds = new Set(),
+	isFavorited = false,
+	isAuthenticated = false,
 }: SeriesDetailProps) {
 	const creatorName = series.profiles.display_name || "Creator";
 	const seriesUrl = generateShareUrl({ slug: series.slug });
@@ -127,16 +133,23 @@ export function SeriesDetail({
 				</p>
 			)}
 
-			{/* Share Button */}
-			<ShareButton
-				title={series.title}
-				text={
-					series.description
-						? series.description.slice(0, 120)
-						: `Watch ${series.title} on MicroShort`
-				}
-				url={seriesUrl}
-			/>
+			{/* Share & Favorite */}
+			<div className="flex items-center gap-2">
+				<ShareButton
+					title={series.title}
+					text={
+						series.description
+							? series.description.slice(0, 120)
+							: `Watch ${series.title} on MicroShort`
+					}
+					url={seriesUrl}
+				/>
+				<FavoriteButton
+					seriesId={series.id}
+					initialFavorited={isFavorited}
+					isAuthenticated={isAuthenticated}
+				/>
+			</div>
 
 			{/* Bundle Offer */}
 			{showBundle && (
