@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-14)
 
 **Core value:** Creators can monetize short-form video content with minimal friction -- upload a series, set a price, and earn revenue from a platform purpose-built for microshorts.
-**Current focus:** Phase 8 - Mock Data + Pitch Assets
+**Current focus:** Phase 9 - Social + Engagement
 
 ## Current Position
 
-Phase: 8 of 9 (Mock Data + Pitch Assets)
-Plan: 6 of 6 in current phase (COMPLETE)
-Status: Phase 8 Complete
-Last activity: 2026-02-15 -- 08-06 creator landing page and showcase dashboards complete
+Phase: 9 of 9 (Social + Engagement)
+Plan: 1 of 4 in current phase
+Status: Executing Phase 9
+Last activity: 2026-02-15 -- 09-01 social engagement data layer complete
 
-Progress: [▓▓▓▓▓▓▓▓▓░] 92%
+Progress: [▓▓▓▓▓▓▓▓▓░] 94%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 30
+- Total plans completed: 31
 - Average duration: 4min
-- Total execution time: 2.1 hours
+- Total execution time: 2.2 hours
 
 **By Phase:**
 
@@ -35,9 +35,10 @@ Progress: [▓▓▓▓▓▓▓▓▓░] 92%
 | 06-creator-dashboard | 6 | 23min | 4min |
 | 07-admin-panel | 4 | 21min | 5min |
 | 08-mock-data-pitch-assets | 6 | 31min | 5min |
+| 09-social-engagement | 1 | 5min | 5min |
 
 **Recent Trend:**
-- Last 5 plans: 4min, 8min, 5min, 4min, 8min
+- Last 5 plans: 8min, 5min, 4min, 8min, 5min
 - Trend: stable
 
 *Updated after each plan completion*
@@ -265,6 +266,11 @@ Recent decisions affecting current work:
 - [08-05]: Brand page uses inline AdProductVisual sub-components instead of Remotion compositions (avoids ssr:false in Server Component)
 - [08-05]: Advisor page uses flowing narrative with pull-quotes instead of bullet-point format for storytelling tone
 - [08-05]: Brand page does not import FeatureSection (avoids ssr:false dynamic import in server component context)
+- [09-01]: Pre-bucketed Map<number, T[]> queries for comments/reactions enable O(1) lookup during video playback
+- [09-01]: Spam detection rejects all-caps content > 10 chars and 3+ repeated characters in a row
+- [09-01]: recordWatchProgress and recordReaction are fire-and-forget (void return) for background tracking
+- [09-01]: Report action auto-flags comments but requires admin review for series/episode takedowns
+- [09-01]: REACTION_EMOJIS exported as const array from reactions.ts for reuse in picker UI
 
 ### Pending Todos
 
@@ -279,5 +285,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-02-15
-Stopped at: Completed 08-06-PLAN.md (creator landing page and showcase dashboards) -- Phase 8 complete
-Resume file: .planning/phases/08-mock-data-pitch-assets/08-06-SUMMARY.md
+Stopped at: Completed 09-01-PLAN.md (social engagement data layer) -- database, actions, queries, avatar upload
+Resume file: .planning/phases/09-social-engagement/09-01-SUMMARY.md
