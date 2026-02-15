@@ -20,23 +20,36 @@ export function DemoRoleSwitcher() {
 	useEffect(() => {
 		const supabase = createClient();
 
-		const fetchRole = (userId: string) => {
-			supabase
+		const fetchRole = async (userId: string) => {
+			const { data: profile, error } = await supabase
 				.from("profiles")
 				.select("role")
 				.eq("id", userId)
-				.single()
-				.then(({ data: profile }) => {
-					if (profile?.role) {
-						setActualRole(profile.role as UserRole);
-					}
-				});
+				.single();
+
+			if (error) {
+				console.warn("[DemoRoleSwitcher] profile fetch error:", error.message);
+				return;
+			}
+			if (profile?.role) {
+				setActualRole(profile.role as UserRole);
+			}
 		};
 
-		// Check current user
-		supabase.auth.getUser().then(({ data }) => {
-			if (data.user) fetchRole(data.user.id);
-		});
+		// Try getSession first (local, fast) then getUser (server-verified)
+		const init = async () => {
+			const { data: { session } } = await supabase.auth.getSession();
+			if (session?.user) {
+				fetchRole(session.user.id);
+			}
+			// Also verify with server
+			const { data: { user } } = await supabase.auth.getUser();
+			if (user) {
+				fetchRole(user.id);
+			}
+		};
+
+		init();
 
 		// Listen for auth changes (login/logout)
 		const {
