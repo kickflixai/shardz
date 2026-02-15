@@ -146,6 +146,10 @@ Recent decisions affecting current work:
 - [08-03]: Remotion compositions use inline styles (not Tailwind) for iframe rendering compatibility
 - [08-03]: FeatureSection uses next/dynamic with ssr:false to prevent Remotion Player SSR issues
 - [08-03]: Excluded scripts/ from tsconfig to prevent seed script build errors in Next.js type checking
+- [08-01]: Seed scripts use standalone Supabase/Mux clients (not importing from src/) to avoid Next.js coupling
+- [08-01]: 12 creator personas with mock_ username prefix and @mock.microshort.dev emails for idempotency
+- [08-01]: 20 series across all 11 genres with SIGNAL LOST as sole sci-fi hero demo series
+- [08-01]: Seeded PRNG in engagement data generators for deterministic results across runs
 
 ### Pending Todos
 
