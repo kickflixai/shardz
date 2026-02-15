@@ -152,6 +152,37 @@
 	}
 }
 
+/* Reaction bubble float-up animation */
+@keyframes float-up {
+	0% {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+	70% {
+		opacity: 1;
+		transform: translateY(-60vh) scale(1.1);
+	}
+	100% {
+		opacity: 0;
+		transform: translateY(-80vh) scale(0.8);
+	}
+}
+
+.reaction-bubble {
+	position: absolute;
+	bottom: 10%;
+	animation: float-up 3s ease-out forwards;
+	pointer-events: none;
+	font-size: 1.75rem;
+	z-index: 30;
+}
+
+@media (min-width: 768px) {
+	.reaction-bubble {
+		font-size: 2rem;
+	}
+}
+
 @layer base {
 	* {
 		@apply border-border outline-ring/50;
