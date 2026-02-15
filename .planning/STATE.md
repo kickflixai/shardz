@@ -10,9 +10,9 @@ See: .planning/PROJECT.md (updated 2026-02-14)
 ## Current Position
 
 Phase: 8 of 9 (Mock Data + Pitch Assets)
-Plan: 3 of 6 in current phase
+Plan: 4 of 6 in current phase
 Status: In Progress
-Last activity: 2026-02-15 -- 08-03 shared pitch components and hub page complete
+Last activity: 2026-02-15 -- 08-04 investor and creator pitch pages complete
 
 Progress: [▓▓▓▓▓▓▓▓░░] 85%
 
@@ -34,7 +34,7 @@ Progress: [▓▓▓▓▓▓▓▓░░] 85%
 | 05-payments-monetization | 3 | 15min | 5min |
 | 06-creator-dashboard | 6 | 23min | 4min |
 | 07-admin-panel | 4 | 21min | 5min |
-| 08-mock-data-pitch-assets | 1 | 5min | 5min |
+| 08-mock-data-pitch-assets | 2 | 8min | 4min |
 
 **Recent Trend:**
 - Last 5 plans: 4min, 5min, 4min, 8min, 5min
@@ -150,6 +150,8 @@ Recent decisions affecting current work:
 - [08-01]: 12 creator personas with mock_ username prefix and @mock.microshort.dev emails for idempotency
 - [08-01]: 20 series across all 11 genres with SIGNAL LOST as sole sci-fi hero demo series
 - [08-01]: Seeded PRNG in engagement data generators for deterministic results across runs
+- [08-04]: Investor page market stats are industry-level data (4.5B viewers, $250B economy) not fake MicroShort traction
+- [08-04]: Creator economics uses visual CPM comparison ($0.02 ad vs $4.99 MicroShort) with concrete math example
 
 ### Pending Todos
 
@@ -164,5 +166,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-15
-Stopped at: Completed 08-03-PLAN.md (shared pitch components and hub page)
-Resume file: .planning/phases/08-mock-data-pitch-assets/08-03-SUMMARY.md
+Stopped at: Completed 08-04-PLAN.md (investor and creator pitch pages)
+Resume file: .planning/phases/08-mock-data-pitch-assets/08-04-SUMMARY.md
