@@ -20,7 +20,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 6: Creator Dashboard** - Self-serve upload, series management, analytics, community spaces (completed 2026-02-14)
 - [x] **Phase 7: Admin Panel** - Creator approval, content management, homepage curation, platform metrics (completed 2026-02-15)
 - [x] **Phase 8: Mock Data + Pitch Assets** - Seed 15-25 series, pitch pages, showcase dashboards, creator landing page (completed 2026-02-15)
-- [ ] **Phase 9: Social + Engagement** - User profiles, reactions, comments overlay, favorites, follow creators
+- [x] **Phase 9: Social + Engagement** - User profiles, reactions, comments overlay, favorites, follow creators (completed 2026-02-15)
 
 ## Phase Details
 
@@ -180,10 +180,10 @@ Plans:
 **Plans**: 4 plans (2 waves)
 
 Plans:
-- [ ] 09-01-PLAN.md — Database migration (comments, reactions, favorites, watch_history tables), profanity filter, server actions, queries, avatar upload (Wave 1)
-- [ ] 09-02-PLAN.md — Profile route group (favorites, history, settings), public activity page, FavoriteButton, watch tracker (Wave 2)
-- [ ] 09-03-PLAN.md — Live emoji reactions (Supabase Realtime broadcast), accumulated timestamp-synced replay, reaction overlay + picker (Wave 2)
-- [ ] 09-04-PLAN.md — Scrolling comments overlay (timestamp-synced), pause-to-comment, cinematic mode toggle (Wave 2)
+- [x] 09-01-PLAN.md — Database migration (comments, reactions, favorites, watch_history tables), profanity filter, server actions, queries, avatar upload (Wave 1)
+- [x] 09-02-PLAN.md — Profile route group (favorites, history, settings), public activity page, FavoriteButton, watch tracker (Wave 2)
+- [x] 09-03-PLAN.md — Live emoji reactions (Supabase Realtime broadcast), accumulated timestamp-synced replay, reaction overlay + picker (Wave 2)
+- [x] 09-04-PLAN.md — Scrolling comments overlay (timestamp-synced), pause-to-comment, cinematic mode toggle (Wave 2)
 
 ## Progress
 
@@ -200,4 +200,4 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 5 > 6 > 7 > 8 > 9
 | 6. Creator Dashboard | 6/6 | ✓ Complete | 2026-02-14 |
 | 7. Admin Panel | 4/4 | ✓ Complete | 2026-02-15 |
 | 8. Mock Data + Pitch Assets | 6/6 | ✓ Complete | 2026-02-15 |
-| 9. Social + Engagement | 0/4 | Not started | - |
+| 9. Social + Engagement | 4/4 | ✓ Complete | 2026-02-15 |
