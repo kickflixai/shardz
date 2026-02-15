@@ -1,22 +1,37 @@
 import { createClient } from "@/lib/supabase/server";
 import { signPlaybackToken } from "@/lib/mux/tokens";
 import { VideoPlayer } from "./video-player";
+import type { CommentWithProfile } from "@/modules/social/hooks/use-comments";
+
+interface ReactionEntry {
+	emoji: string;
+	count: number;
+}
 
 interface VideoPlayerShellProps {
 	episodeId: string;
 	nextEpisodeUrl?: string;
 	nextEpisodeTitle?: string;
+	comments?: Record<number, CommentWithProfile[]>;
+	accumulatedReactions?: Record<number, ReactionEntry[]>;
+	isAuthenticated?: boolean;
 }
 
 /**
  * Server Component that fetches episode data from Supabase and generates
  * signed Mux playback tokens server-side. The signing key never reaches
  * the client -- only the time-limited JWT tokens are passed down.
+ *
+ * Also forwards pre-bucketed comments, reactions, and auth state to the
+ * client-side VideoPlayer for social engagement features.
  */
 export async function VideoPlayerShell({
 	episodeId,
 	nextEpisodeUrl,
 	nextEpisodeTitle,
+	comments,
+	accumulatedReactions,
+	isAuthenticated,
 }: VideoPlayerShellProps) {
 	const supabase = await createClient();
 
@@ -55,6 +70,9 @@ export async function VideoPlayerShell({
 			episodeId={episodeId}
 			nextEpisodeUrl={nextEpisodeUrl}
 			nextEpisodeTitle={nextEpisodeTitle}
+			comments={comments}
+			accumulatedReactions={accumulatedReactions}
+			isAuthenticated={isAuthenticated}
 		/>
 	);
 }

@@ -5,9 +5,24 @@ import type {
 	MuxPlayerRefAttributes,
 	MuxPlayerCSSProperties,
 } from "@mux/mux-player-react";
-import { useRef, useState } from "react";
+import { useRef, useState, useCallback } from "react";
 import { useIOSPWAVideoFix } from "./ios-pwa-fix";
 import { AutoContinue } from "./auto-continue";
+import { CommentOverlay } from "./comment-overlay";
+import { CommentInput } from "./comment-input";
+import { CinematicToggle } from "./cinematic-toggle";
+import { ReactionOverlay } from "./reaction-overlay";
+import { ReactionPicker } from "./reaction-picker";
+import { useComments } from "@/modules/social/hooks/use-comments";
+import type { CommentWithProfile } from "@/modules/social/hooks/use-comments";
+import { useCinematicMode } from "@/modules/social/hooks/use-cinematic-mode";
+import { useReactions } from "@/modules/social/hooks/use-reactions";
+import { recordReaction } from "@/modules/social/actions/reactions";
+
+interface ReactionEntry {
+	emoji: string;
+	count: number;
+}
 
 interface VideoPlayerProps {
 	playbackId: string;
@@ -19,6 +34,9 @@ interface VideoPlayerProps {
 	nextEpisodeTitle?: string;
 	autoPlay?: boolean;
 	onEnded?: () => void;
+	comments?: Record<number, CommentWithProfile[]>;
+	accumulatedReactions?: Record<number, ReactionEntry[]>;
+	isAuthenticated?: boolean;
 }
 
 export function VideoPlayer({
@@ -31,11 +49,20 @@ export function VideoPlayer({
 	nextEpisodeTitle,
 	autoPlay,
 	onEnded,
+	comments = {},
+	accumulatedReactions = {},
+	isAuthenticated = false,
 }: VideoPlayerProps) {
 	const playerRef = useRef<MuxPlayerRefAttributes>(null);
 	const [showAutoContinue, setShowAutoContinue] = useState(false);
+	const [currentTime, setCurrentTime] = useState(0);
 
 	useIOSPWAVideoFix(playerRef);
+
+	const { cinematicMode, toggleCinematicMode } = useCinematicMode();
+	const { visibleComments } = useComments(comments, currentTime);
+	const { bubbles, addBubble, removeBubble, sendReaction } =
+		useReactions(episodeId);
 
 	const handleEnded = () => {
 		if (nextEpisodeUrl) {
@@ -43,6 +70,33 @@ export function VideoPlayer({
 		}
 		onEnded?.();
 	};
+
+	const handleTimeUpdate = useCallback(() => {
+		const time = playerRef.current?.currentTime ?? 0;
+		setCurrentTime(Math.floor(time));
+	}, []);
+
+	const handlePause = useCallback(() => {
+		playerRef.current?.pause();
+	}, []);
+
+	const handleResume = useCallback(() => {
+		playerRef.current?.play();
+	}, []);
+
+	const getCurrentTimestamp = useCallback(() => {
+		return Math.floor(playerRef.current?.currentTime ?? 0);
+	}, []);
+
+	const handleReact = useCallback(
+		async (emoji: string) => {
+			const ts = Math.floor(playerRef.current?.currentTime ?? 0);
+			// Broadcast live reaction + record for accumulated playback
+			sendReaction(emoji, ts);
+			recordReaction(episodeId, ts, emoji);
+		},
+		[episodeId, sendReaction],
+	);
 
 	return (
 		<div
@@ -73,8 +127,50 @@ export function VideoPlayer({
 				}
 				autoPlay={autoPlay ? ("any" as const) : undefined}
 				onEnded={handleEnded}
+				onTimeUpdate={handleTimeUpdate}
 			/>
 
+			{/* Social overlays — layered bottom to top by z-index */}
+
+			{/* z-10: Comment overlay (bottom 25%) — hidden in cinematic mode */}
+			<CommentOverlay
+				comments={visibleComments}
+				visible={!cinematicMode}
+			/>
+
+			{/* z-20/30: Reaction overlay (floating bubbles) — hidden in cinematic mode */}
+			{!cinematicMode && (
+				<ReactionOverlay
+					bubbles={bubbles}
+					removeBubble={removeBubble}
+					addBubble={addBubble}
+					accumulatedReactions={accumulatedReactions}
+					currentTime={currentTime}
+				/>
+			)}
+
+			{/* z-30: Cinematic mode toggle (bottom-right, above controls) */}
+			<CinematicToggle
+				cinematicMode={cinematicMode}
+				onToggle={toggleCinematicMode}
+			/>
+
+			{/* z-40: Reaction picker (bottom-right, above cinematic toggle) — stays visible in cinematic mode */}
+			<ReactionPicker
+				onReact={handleReact}
+				disabled={!isAuthenticated}
+			/>
+
+			{/* z-30: Comment input button (bottom-left) */}
+			<CommentInput
+				episodeId={episodeId}
+				onPause={handlePause}
+				onResume={handleResume}
+				getCurrentTimestamp={getCurrentTimestamp}
+				isAuthenticated={isAuthenticated}
+			/>
+
+			{/* z-50: AutoContinue overlay (when shown) */}
 			{showAutoContinue && nextEpisodeUrl && (
 				<AutoContinue
 					nextEpisodeUrl={nextEpisodeUrl}
