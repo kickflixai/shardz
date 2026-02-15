@@ -210,7 +210,7 @@ export function PublicProfile({
 									href={`/series/${series.slug}`}
 									className="group block overflow-hidden rounded-xl border border-border bg-card transition-transform hover:scale-[1.02]"
 								>
-									<div className="relative aspect-video w-full overflow-hidden bg-muted">
+									<div className="relative aspect-[3/4] w-full overflow-hidden bg-muted">
 										{series.thumbnail_url ? (
 											<img
 												src={series.thumbnail_url}

@@ -14,6 +14,7 @@ import { fal } from "@fal-ai/client";
 import { mkdir, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { resolve, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 import { MOCK_SERIES } from "./data/series";
 
 // Configure fal.ai with API key from env
@@ -23,7 +24,9 @@ if (!falKey) {
 }
 fal.config({ credentials: falKey });
 
-const ASSETS_DIR = resolve(import.meta.dirname, "assets/thumbnails");
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const ASSETS_DIR = resolve(__dirname, "assets/thumbnails");
 
 /**
  * Build a cinematic thumbnail prompt from series data.
@@ -45,7 +48,7 @@ function buildPrompt(series: (typeof MOCK_SERIES)[number]): string {
 
 	const style = genreStyles[series.genre] || "cinematic, dramatic lighting";
 
-	return `Cinematic movie poster thumbnail, ${style}. ${series.title}: ${series.description}. Ultra high quality, 4K, professional movie poster style, no text, no words, no letters.`;
+	return `Cinematic thumbnail artwork, ${style}. ${series.title}: ${series.description}. Ultra high quality, 4K, professional artwork, edge-to-edge composition filling the entire frame, no black bars, no letterboxing, no borders, no text, no words, no letters.`;
 }
 
 /**
@@ -81,7 +84,7 @@ async function main() {
 			const result = await fal.subscribe("fal-ai/flux/dev", {
 				input: {
 					prompt,
-					image_size: "landscape_16_9",
+					image_size: "portrait_4_3",
 				},
 				pollInterval: 3000,
 			});

@@ -87,7 +87,7 @@ export function ThumbnailUpload({
 	return (
 		<div className="space-y-3">
 			{previewUrl && (
-				<div className="relative aspect-video w-48 overflow-hidden rounded-md border border-border">
+				<div className="relative aspect-[3/4] w-36 overflow-hidden rounded-md border border-border">
 					<Image
 						src={previewUrl}
 						alt="Thumbnail preview"

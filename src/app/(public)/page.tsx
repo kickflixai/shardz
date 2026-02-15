@@ -21,7 +21,7 @@ function FeaturedCard({ series }: { series: FeaturedSeriesItem }) {
 			href={`/series/${series.slug}`}
 			className="group block overflow-hidden rounded-xl border border-border bg-card transition-transform hover:scale-[1.02]"
 		>
-			<div className="relative aspect-video w-full overflow-hidden bg-muted">
+			<div className="relative aspect-[3/4] w-full overflow-hidden bg-muted">
 				{series.thumbnail_url ? (
 					<Image
 						src={series.thumbnail_url}
@@ -79,7 +79,7 @@ function PickCard({ pick }: { pick: EditorialPickItem }) {
 			href={`/series/${series.slug}`}
 			className="group block min-w-[260px] snap-start overflow-hidden rounded-xl border border-border bg-card transition-transform hover:scale-[1.02]"
 		>
-			<div className="relative aspect-video w-full overflow-hidden bg-muted">
+			<div className="relative aspect-[3/4] w-full overflow-hidden bg-muted">
 				{series.thumbnail_url ? (
 					<Image
 						src={series.thumbnail_url}

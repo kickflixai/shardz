@@ -88,7 +88,7 @@ export default async function SeriesListPage() {
 							href={`/dashboard/series/${s.id}`}
 							className="group overflow-hidden rounded-lg border border-border bg-card transition-colors hover:border-primary/50"
 						>
-							<div className="relative aspect-video bg-muted">
+							<div className="relative aspect-[3/4] bg-muted">
 								{s.thumbnail_url ? (
 									<Image
 										src={s.thumbnail_url}
