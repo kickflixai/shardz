@@ -5,16 +5,13 @@ import Image from "next/image";
 import type { User } from "@supabase/supabase-js";
 import { LogoutButton } from "@/components/auth/logout-button";
 
-type UserRole = "viewer" | "creator" | "admin";
-
 interface MobileNavProps {
 	open: boolean;
 	onClose: () => void;
 	user: User | null;
-	role: UserRole;
 }
 
-export function MobileNav({ open, onClose, user, role }: MobileNavProps) {
+export function MobileNav({ open, onClose, user }: MobileNavProps) {
 	if (!open) return null;
 
 	return (
@@ -54,82 +51,38 @@ export function MobileNav({ open, onClose, user, role }: MobileNavProps) {
 					Home
 				</Link>
 				<Link
-					href="/browse"
+					href="/#browse"
 					className="text-lg text-foreground transition-colors hover:text-primary"
 					onClick={onClose}
 				>
 					Browse
 				</Link>
+				<Link
+					href="/pitch"
+					className="text-lg text-foreground transition-colors hover:text-primary"
+					onClick={onClose}
+				>
+					Pitch
+				</Link>
+				<Link
+					href="/dashboard"
+					className="text-lg text-foreground transition-colors hover:text-primary"
+					onClick={onClose}
+				>
+					Dashboard
+				</Link>
 				{user ? (
-					<>
-						<Link
-							href="/profile"
-							className="flex items-center gap-2 text-lg text-foreground transition-colors hover:text-primary"
-							onClick={onClose}
-						>
-							<svg
-								className="h-5 w-5"
-								fill="none"
-								viewBox="0 0 24 24"
-								strokeWidth="1.5"
-								stroke="currentColor"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-								/>
-							</svg>
-							Profile
-						</Link>
-						{(role === "creator" || role === "admin") && (
-							<Link
-								href="/dashboard"
-								className="text-lg text-foreground transition-colors hover:text-primary"
-								onClick={onClose}
-							>
-								Dashboard
-							</Link>
-						)}
-						{role === "admin" && (
-							<>
-								<Link
-									href="/admin"
-									className="text-lg text-foreground transition-colors hover:text-primary"
-									onClick={onClose}
-								>
-									Admin
-								</Link>
-								<Link
-									href="/pitch"
-									className="text-lg text-foreground transition-colors hover:text-primary"
-									onClick={onClose}
-								>
-									Pitch
-								</Link>
-							</>
-						)}
-						<div onClick={onClose}>
-							<LogoutButton />
-						</div>
-					</>
+					<div onClick={onClose}>
+						<LogoutButton />
+					</div>
 				) : (
-					<>
-						<Link
-							href="/login"
-							className="rounded-md bg-primary px-6 py-2 text-lg font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-							onClick={onClose}
-						>
-							Sign In
-						</Link>
-						<Link
-							href="/signup"
-							className="text-lg text-muted-foreground transition-colors hover:text-primary"
-							onClick={onClose}
-						>
-							Create Account
-						</Link>
-					</>
+					<Link
+						href="/login"
+						className="rounded-md bg-primary px-6 py-2 text-lg font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+						onClick={onClose}
+					>
+						Sign In
+					</Link>
 				)}
 			</nav>
 		</div>

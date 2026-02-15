@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { getCreatorOverview } from "@/modules/creator/queries/get-creator-analytics";
@@ -48,23 +47,20 @@ export default async function CreatorDashboardPage() {
 		data: { user },
 	} = await supabase.auth.getUser();
 
-	if (!user) {
-		redirect("/login");
-	}
-
-	// Fetch profile to check role
-	const { data: profile } = await supabase
-		.from("profiles")
-		.select("role, display_name")
-		.eq("id", user.id)
-		.single();
-
-	if (!profile) {
-		redirect("/login");
+	// Fetch profile if logged in
+	let profile: { role: string; display_name: string | null } | null = null;
+	if (user) {
+		const { data } = await supabase
+			.from("profiles")
+			.select("role, display_name")
+			.eq("id", user.id)
+			.single();
+		profile = data;
 	}
 
 	// Apply demo role override (only allows downgrade)
-	const effectiveRole = await getEffectiveRole(profile.role as "viewer" | "creator" | "admin");
+	const actualRole = (profile?.role ?? "admin") as "viewer" | "creator" | "admin";
+	const effectiveRole = await getEffectiveRole(actualRole);
 
 	// Viewer: show apply CTA
 	if (effectiveRole === "viewer") {
@@ -93,12 +89,14 @@ export default async function CreatorDashboardPage() {
 	}
 
 	// Creator/Admin: show overview
-	const overview = await getCreatorOverview(user.id);
+	// Use first mock creator as fallback for demo (unauthenticated) visitors
+	const userId = user?.id ?? "00000000-0000-0000-0000-000000000000";
+	const overview = await getCreatorOverview(userId);
 
 	return (
 		<div className="py-4">
 			<h1 className="text-3xl font-bold text-foreground">
-				Welcome back{profile.display_name ? `, ${profile.display_name}` : ""}
+				{profile?.display_name ? `Welcome back, ${profile.display_name}` : "Creator Dashboard"}
 			</h1>
 			<p className="mt-2 text-muted-foreground">
 				Here is an overview of your content performance.

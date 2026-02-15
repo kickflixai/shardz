@@ -689,13 +689,11 @@ async function seedEngagement(
 async function seedFeatured(seriesMappings: SeriesMapping[]): Promise<void> {
 	console.log("\n=== Step 6: Setting featured flags ===\n");
 
-	// Select 5 series to feature: the hero series + 4 others across genres
+	// Featured series -- curated selection
 	const featuredSlugs = [
-		"mock-signal-lost", // Hero series (sci-fi) -- always featured
-		"mock-dead-drop", // Thriller
-		"mock-fractured-glass", // Drama
+		"mock-aegis-protocol", // Sci-Fi
+		"mock-sleep-study", // Horror
 		"mock-flashpoint", // Action
-		"mock-resonance", // Music
 	];
 
 	let featuredCount = 0;

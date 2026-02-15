@@ -8,6 +8,9 @@ import type {
 	FeaturedSeriesItem,
 } from "@/modules/admin/queries/get-homepage-data";
 import { getEditorialPicks, getFeaturedSeries } from "@/modules/admin/queries/get-homepage-data";
+import { getSeriesByGenre } from "@/modules/content/queries/get-series-by-genre";
+import { GenreFilter } from "@/components/series/genre-filter";
+import { SeriesGrid } from "@/components/series/series-grid";
 
 const SECTION_HEADINGS: Record<string, string> = {
 	trending: "Trending Now",
@@ -123,8 +126,17 @@ function PickCard({ pick }: { pick: EditorialPickItem }) {
 	);
 }
 
-export default async function HomePage() {
-	const [featured, allPicks] = await Promise.all([getFeaturedSeries(), getEditorialPicks()]);
+interface HomePageProps {
+	searchParams: Promise<{ genre?: string }>;
+}
+
+export default async function HomePage({ searchParams }: HomePageProps) {
+	const { genre } = await searchParams;
+	const [featured, allPicks, allSeries] = await Promise.all([
+		getFeaturedSeries(),
+		getEditorialPicks(),
+		getSeriesByGenre(genre),
+	]);
 
 	// Group editorial picks by section, excluding "featured" (shown in hero section)
 	const picksBySection: Record<string, EditorialPickItem[]> = {};
@@ -136,7 +148,7 @@ export default async function HomePage() {
 		picksBySection[pick.section].push(pick);
 	}
 
-	const hasContent = featured.length > 0 || Object.keys(picksBySection).length > 0;
+	const hasCurated = featured.length > 0 || Object.keys(picksBySection).length > 0;
 
 	return (
 		<div>
@@ -159,12 +171,6 @@ export default async function HomePage() {
 					<p className="mx-auto mt-4 max-w-lg text-lg text-muted-foreground">
 						Short-form series. Big stories. Watch free, unlock more.
 					</p>
-					<Link
-						href="/browse"
-						className="mt-8 inline-block rounded-md bg-primary px-8 py-3 text-lg font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-					>
-						Browse Series
-					</Link>
 				</div>
 			</section>
 
@@ -196,20 +202,12 @@ export default async function HomePage() {
 				);
 			})}
 
-			{/* Empty state */}
-			{!hasContent && (
-				<section className="mx-auto max-w-3xl px-4 py-16 text-center">
-					<p className="text-lg text-muted-foreground">
-						Our curated collections are coming soon. Browse all available series to get started.
-					</p>
-					<Link
-						href="/browse"
-						className="mt-6 inline-block rounded-md border border-border px-6 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted"
-					>
-						Browse All Series
-					</Link>
-				</section>
-			)}
+			{/* Browse All Series with genre filter */}
+			<section id="browse" className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+				<h2 className="text-2xl font-bold text-foreground sm:text-3xl">Browse All Series</h2>
+				<GenreFilter />
+				<SeriesGrid series={allSeries} />
+			</section>
 
 			{/* CTA section */}
 			<section className="border-t border-border bg-muted/30 px-4 py-16 text-center">

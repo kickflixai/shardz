@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { createClient } from "@/lib/supabase/client";
+import { useState } from "react";
 import { useDemoRole } from "@/components/providers/demo-role-provider";
 
 type UserRole = "viewer" | "creator" | "admin";
@@ -15,60 +14,6 @@ const roles: { value: UserRole; label: string }[] = [
 export function DemoRoleSwitcher() {
 	const { demoRole, setDemoRole } = useDemoRole();
 	const [expanded, setExpanded] = useState(false);
-	const [actualRole, setActualRole] = useState<UserRole | null>(null);
-
-	useEffect(() => {
-		const supabase = createClient();
-
-		const fetchRole = async (userId: string) => {
-			const { data: profile, error } = await supabase
-				.from("profiles")
-				.select("role")
-				.eq("id", userId)
-				.single();
-
-			if (error) {
-				console.warn("[DemoRoleSwitcher] profile fetch error:", error.message);
-				return;
-			}
-			if (profile?.role) {
-				setActualRole(profile.role as UserRole);
-			}
-		};
-
-		// Try getSession first (local, fast) then getUser (server-verified)
-		const init = async () => {
-			const { data: { session } } = await supabase.auth.getSession();
-			if (session?.user) {
-				fetchRole(session.user.id);
-			}
-			// Also verify with server
-			const { data: { user } } = await supabase.auth.getUser();
-			if (user) {
-				fetchRole(user.id);
-			}
-		};
-
-		init();
-
-		// Listen for auth changes (login/logout)
-		const {
-			data: { subscription },
-		} = supabase.auth.onAuthStateChange((_event, session) => {
-			if (session?.user) {
-				fetchRole(session.user.id);
-			} else {
-				setActualRole(null);
-			}
-		});
-
-		return () => {
-			subscription.unsubscribe();
-		};
-	}, []);
-
-	// Only show for admins
-	if (actualRole !== "admin") return null;
 
 	const isOverriding = demoRole !== null;
 	const currentLabel = demoRole
