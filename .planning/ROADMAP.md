@@ -177,13 +177,13 @@ Plans:
   3. User can save series to favorites and follow creators
   4. User can see emoji reactions from other viewers popping on screen during playback, and accumulated past reactions synced to timestamps
   5. User can see scrolling comments while watching and toggle cinematic mode to hide all social overlays
-**Plans**: TBD
+**Plans**: 4 plans (2 waves)
 
 Plans:
-- [ ] 09-01: User profile creation (display name, avatar) and public activity page
-- [ ] 09-02: Watch history tracking, unlocked content list, favorites, and follow creators
-- [ ] 09-03: Live emoji reactions (Supabase Realtime broadcast) and accumulated timestamp-synced reactions
-- [ ] 09-04: Scrolling comments overlay and cinematic mode toggle
+- [ ] 09-01-PLAN.md — Database migration (comments, reactions, favorites, watch_history tables), profanity filter, server actions, queries, avatar upload (Wave 1)
+- [ ] 09-02-PLAN.md — Profile route group (favorites, history, settings), public activity page, FavoriteButton, watch tracker (Wave 2)
+- [ ] 09-03-PLAN.md — Live emoji reactions (Supabase Realtime broadcast), accumulated timestamp-synced replay, reaction overlay + picker (Wave 2)
+- [ ] 09-04-PLAN.md — Scrolling comments overlay (timestamp-synced), pause-to-comment, cinematic mode toggle (Wave 2)
 
 ## Progress
 
