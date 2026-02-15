@@ -19,9 +19,9 @@ Progress: [▓▓▓▓▓▓▓▓░░] 82%
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 25
+- Total plans completed: 26
 - Average duration: 4min
-- Total execution time: 1.67 hours
+- Total execution time: 1.8 hours
 
 **By Phase:**
 
@@ -33,10 +33,10 @@ Progress: [▓▓▓▓▓▓▓▓░░] 82%
 | 04-content-browsing-sharing | 3 | 10min | 3min |
 | 05-payments-monetization | 3 | 15min | 5min |
 | 06-creator-dashboard | 6 | 23min | 4min |
-| 07-admin-panel | 3 | 13min | 4min |
+| 07-admin-panel | 4 | 21min | 5min |
 
 **Recent Trend:**
-- Last 5 plans: 6min, 6min, 4min, 5min, 4min
+- Last 5 plans: 6min, 4min, 5min, 4min, 8min
 - Trend: stable
 
 *Updated after each plan completion*
@@ -131,6 +131,10 @@ Recent decisions affecting current work:
 - [07-01]: requireAdmin() checks auth + role in server components/actions, not middleware (keeps middleware simple)
 - [07-01]: Admin panel uses createAdminClient() for cross-user data access; admin RLS policies are defense-in-depth only
 - [07-01]: ApplicationReviewForm uses useTransition + toast pattern instead of useActionState (simpler for two-button approve/reject flow)
+- [07-02]: Supabase untyped admin client FK joins typed with 'as unknown as' casts to match runtime shape (objects not arrays)
+- [07-02]: AdminSearch uses form submission pattern (not real-time debounce) for simplicity and server component compatibility
+- [07-02]: Content moderation uses status change to 'archived' (soft delete) rather than hard delete, preserving data for compliance
+- [07-02]: Revenue page computes summary metrics client-side from query results rather than separate aggregate queries
 - [07-03]: FeaturedCard and PickCard built inline in homepage (not reusing SeriesCard) because query shapes differ from SeriesWithCreator type
 - [07-03]: Editorial picks 'featured' section excluded from homepage display (already covered by getFeaturedSeries section)
 - [07-03]: Next.js Image with unoptimized flag for dynamic Supabase Storage thumbnail URLs (avoids remotePatterns config)
@@ -151,5 +155,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-15
-Stopped at: Completed 07-03-PLAN.md (gap fill, Phase 7 complete)
-Resume file: .planning/phases/07-admin-panel/07-03-SUMMARY.md
+Stopped at: Completed 07-02-PLAN.md (entity management pages)
+Resume file: .planning/phases/07-admin-panel/07-02-SUMMARY.md
